@@ -223,3 +223,13 @@ The platform must support pharmacies that want management software only.
 - Establishment licence information, where needed for a regulated workflow or a clearly described public verification claim, is distinct from an individual's professional credential. Do not turn either into a universal sign-up gate without a demonstrated legal basis.
 
 The initial public-facing feature set remains discovery and information. Online ordering, reservation, payment, delivery, and other commerce functions remain separate decisions requiring legal and operational review.
+
+## 8. Management-only is a complete product mode
+
+Management-only is a first-class supported operating mode, not a trial, degraded tier, temporary onboarding state, or incomplete version of public commerce.
+
+A pharmacy organization may use approved private operational capabilities while choosing not to publish a public profile, catalogue, product, price, or availability. Public-facing capabilities are independent entitlements and publication controls. Enabling one does not silently enable another.
+
+The product must distinguish platform account state, organization membership state, management-service entitlement, establishment-evidence state, individual professional-credential state, public-participation state, and commerce-capability state. No one state substitutes for another. A pending public-listing review must not disable private management. Turning off public participation must not delete business records, inventory history, staff memberships, or audit evidence.
+
+The exact management features and any legal prerequisites for particular establishment types remain subject to market and regulatory validation. Platform access itself does not establish legal authority to operate a pharmacy.
