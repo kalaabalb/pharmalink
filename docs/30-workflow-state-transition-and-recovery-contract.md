@@ -65,18 +65,18 @@ The tables below define the minimum candidate transitions for the first-release 
 
 | Aggregate | From | Command / to | Required guards and effects |
 |---|---|---|---|
-| Organization | absent | Create → Draft | Authenticated account; duplicate check; record creator and claimed authority; create private workspace only |
-| Organization | Draft | Activate permitted management → Active | Required workspace configuration and membership/owner invariants pass; does not assert legal establishment authorization |
-| Organization | Active | Restrict capability → Restricted | Defined capability, evidence/policy basis, reason, scope, review date; unrelated management capabilities remain available |
+| Organization | absent | Create → Draft | organization.manage; authenticated account; duplicate check; record creator and claimed authority; create private workspace only |
+| Organization | Draft | Activate permitted management → Active | organization.manage; required workspace configuration and membership/owner invariants pass; does not assert legal establishment authorization |
+| Organization | Active | Restrict capability → Restricted | platform.organization.restrict; defined capability, evidence/policy basis, reason, scope, review date; unrelated management capabilities remain available |
 | Organization | Restricted | Restore capability → Active or Restricted | Restriction-specific review passes; only reviewed capability restored |
-| Organization | Active/Restricted | Suspend service scope → Suspended | Approved policy, scope, reason, notification and appeal path; retain records/export/legal access |
-| Organization | Active/Restricted/Suspended | Begin offboarding → Closing | Authorized request and identity/authority check; export/retention plan created |
-| Organization | Closing | Complete closure → Closed | Export, retention, legal hold, and deletion obligations completed or explicitly tracked; irreversible actions evidenced |
+| Organization | Active/Restricted | Suspend service scope → Suspended | platform.organization.restrict and, where applicable, platform.entitlement.manage; approved policy, scope, reason, notification and appeal path; retain records/export/legal access |
+| Organization | Active/Restricted/Suspended | Begin offboarding → Closing | organization.manage; authorized request and identity/authority check; export/retention plan created |
+| Organization | Closing | Complete closure → Closed | organization.manage; export, retention, legal hold, and deletion obligations completed or explicitly tracked; irreversible actions evidenced |
 | Branch | absent | Create → Draft | Organization membership and branch.manage; private setup does not imply legal operating authorization |
-| Branch | Draft | Activate internal operations → Active | Branch configuration and required internal controls pass; legal/evidence gates apply only to dependent capabilities |
-| Branch | Active | Restrict / temporarily close → Restricted / Temporarily closed | Reason, scope, effective period, open-workflow handling, notifications |
-| Branch | Active/Restricted/Temporarily closed | Permanently close → Permanently closed | Authorized decision; unresolved stock, cash, orders, records, and retention handled |
-| Branch | Permanently closed | Archive → Archived | No open operational workflow; history remains immutable and queryable under retention rules |
+| Branch | Draft | Activate internal operations → Active | branch.manage; branch configuration and required internal controls pass; legal/evidence gates apply only to dependent capabilities |
+| Branch | Active | Restrict / temporarily close → Restricted / Temporarily closed | branch.manage; reason, scope, effective period, open-workflow handling, notifications |
+| Branch | Active/Restricted/Temporarily closed | Permanently close → Permanently closed | branch.manage; authorized decision; unresolved stock, cash, orders, records, and retention handled |
+| Branch | Permanently closed | Archive → Archived | branch.manage; no open operational workflow; history remains immutable and queryable under retention rules |
 
 Branch status and public profile publication are separate aggregates. Pausing a public profile never closes a branch; a private branch remaining active does not authorize an unlawful physical operation.
 
@@ -85,11 +85,11 @@ Branch status and public profile publication are separate aggregates. Pausing a 
 | Aggregate | From | Command / to | Required guards and effects |
 |---|---|---|---|
 | Invitation | absent | Invite → Invited | membership.invite; inviter may delegate proposed scope; single-use token, expiry, intended identity |
-| Invitation | Invited | Accept → Accepted/pending activation | Authenticated intended invitee; show tenant/branch/role scope; acceptance is not credential verification |
-| Invitation | Invited | Revoke / expire → Revoked / Expired | Authorized inviter/admin or expiry process; token unusable |
-| Membership | Accepted/pending activation | Activate → Active | Membership and minimum required scope checks; no blanket professional credential requirement |
-| Membership | Active | Restrict / suspend → Restricted / Suspended | Defined permission/scope, reason, effective time, review path; revoke affected sessions/subscriptions promptly |
-| Membership | Active/Restricted/Suspended | Revoke → Revoked | Authorized actor; revoke sessions, subscriptions, queued command eligibility; preserve historical attribution |
+| Invitation | Invited | Accept → Accepted/pending activation | membership.accept; authenticated intended invitee; show tenant/branch/role scope; acceptance is not credential verification |
+| Invitation | Invited | Revoke / expire → Revoked / Expired | membership.revoke or expiry process; token unusable |
+| Membership | Accepted/pending activation | Activate → Active | membership.accept; membership and minimum required scope checks; no blanket professional credential requirement |
+| Membership | Active | Restrict / suspend → Restricted / Suspended | membership.restrict; defined permission/scope, reason, effective time, review path; revoke affected sessions/subscriptions promptly |
+| Membership | Active/Restricted/Suspended | Revoke → Revoked | membership.revoke; authorized actor; revoke sessions, subscriptions, queued command eligibility; preserve historical attribution |
 | Role grant | absent | Assign → Active grant | role.assign; assigner delegation authority; tenant/branch/resource scope; approved grant mapping |
 | Role grant | Active grant | Revoke / expire → Revoked / Expired | Authorized revocation or expiry; authorization re-evaluated on every command and reconnect |
 | Credential evidence | absent | Submit → Submitted | verification.evidence.submit; person, credential type, issuer, scope, dates, source/evidence reference |
@@ -104,18 +104,18 @@ A credential transition changes eligibility only for actions whose approved poli
 | Aggregate | From | Command / to | Required guards and effects |
 |---|---|---|---|
 | Supplier | absent | Create → Draft | supplier.create; tenant scope; duplicate candidate check |
-| Supplier | Draft | Activate → Active | Required operational fields and review pass |
+| Supplier | Draft | Activate → Active | supplier.update; required operational fields and review pass |
 | Supplier | Active | Deactivate / block / review → Inactive / Blocked / Under review | supplier.block or approved lifecycle authority; reason; prohibit configured new operations while preserving history |
-| Supplier | Inactive/Under review | Reactivate → Active | Review and authorization pass; blocked supplier requires explicit unblock decision |
+| Supplier | Inactive/Under review | Reactivate → Active | supplier.update; review and authorization pass; blocked supplier requires explicit unblock decision |
 | Requisition (if included) | Draft | Submit → Pending approval | requisition.submit; valid items, units, branch, quantities |
 | Requisition | Pending approval | Approve / reject → Approved / Rejected | requisition.approve; threshold and separation rules; reason |
-| Purchase order | Draft | Submit → Pending approval | purchase_order.submit; supplier and line validation; expected cost/unit snapshot |
+| Purchase order | Draft | Create → Draft | purchase_order.create; valid supplier, branch, lines, units and expected cost snapshot |\n| Purchase order | Draft | Submit → Pending approval | purchase_order.submit; supplier and line validation; expected cost/unit snapshot |
 | Purchase order | Pending approval | Approve / reject → Approved / Rejected | purchase_order.approve; approval threshold and requester/approver separation |
 | Purchase order | Approved | Issue → Issued | purchase_order.issue; supplier channel/address and immutable issued version captured |
 | Purchase order | Issued | Record acknowledgement → Acknowledged | Evidence of supplier response; does not create stock |
 | Purchase order | Issued/Acknowledged/Partially received | Accept receipt effect → Partially received / Fully received | Goods receipt accepted by inventory workflow; accepted/rejected/outstanding line quantities reconciled |
 | Purchase order | Draft/Pending approval/Approved/Issued/Acknowledged/Partially received | Cancel → Cancelled | purchase_order.cancel; resolve outstanding quantities and supplier communication; preserve receipts/invoices already committed |
-| Purchase order | Fully received/Cancelled | Close → Closed | All line quantities resolved and required invoice/financial workflow handled under explicit closure policy |
+| Purchase order | Fully received/Cancelled | Close → Closed | purchase_order.close; all line quantities resolved and required invoice/financial workflow handled under explicit closure policy |
 
 **Important separation:** “Fully received” means physical line quantities are resolved under the receipt policy. “Closed” means the order's remaining operational and financial follow-up has been resolved under the closure policy. Receipt, invoice acceptance, payable recognition, supplier payment, and settlement are distinct aggregates/transitions.
 
@@ -127,17 +127,17 @@ The precise conditions for rejection, over-delivery, substitutions, backorders, 
 |---|---|---|---|
 | Goods receipt | Draft | Submit for acceptance → Pending inspection/acceptance | goods_receipt.create; source order/reference if required; item/unit and branch validation |
 | Goods receipt line | Pending inspection/acceptance | Accept / reject / quarantine → Accepted / Rejected / Quarantined | goods_receipt.accept; quantity, presentation, batch/expiry, condition, evidence and category policy checked |
-| Goods receipt | All lines resolved | Commit receipt → Accepted/Partially accepted | One authoritative receipt commit; accepted quantities create stock movements atomically with outbox; rejected/quarantined lines excluded from available stock |
+| Goods receipt | All lines resolved | Commit receipt → Accepted/Partially accepted | goods_receipt.accept and inventory.receive; one authoritative receipt commit; accepted quantities create stock movements atomically with outbox; rejected/quarantined lines excluded from available stock |
 | Stock batch | Eligible | Place hold → Held | inventory.hold; reason, scope, source, actor; available quantity reduced immediately |
 | Stock batch | Held | Release hold → Eligible or another restricted status | inventory.release; release authority and evidence; recalculate eligibility, do not assume saleable |
 | Stock count | Draft | Record count → Count recorded | inventory.count; count scope/time/device and counted quantities; count is evidence, not stock overwrite |
-| Stock count | Count recorded | Review variance → Adjustment requested | Compare count to ledger at defined cutoff; preserve intervening movements |
+| Stock count | Count recorded | Review variance → Adjustment requested | inventory.adjust.request; compare count to ledger at defined cutoff; preserve intervening movements |
 | Stock adjustment | Requested | Approve/reject → Approved/Rejected | inventory.adjust.approve; reason/evidence; separation/threshold policy |
 | Stock adjustment | Approved | Commit adjustment → Posted | Append compensating movement; unique command; no direct balance overwrite |
 | Branch transfer | Draft | Create → Requested | inventory.transfer.create; source/destination tenant consistency; item/unit and available quantity |
 | Branch transfer | Requested | Dispatch → In transit | inventory.transfer.dispatch; atomic source availability reduction and in-transit movement |
 | Branch transfer | In transit | Receive → Received / Partially received | inventory.transfer.receive; destination accepted quantity; discrepancy recorded; never duplicate availability |
-| Branch transfer | Requested | Cancel → Cancelled | No dispatch committed; audit cancellation |
+| Branch transfer | Requested | Cancel → Cancelled | inventory.transfer.cancel; no dispatch committed; audit cancellation |
 | Branch transfer | In transit | Resolve discrepancy → Received with exception / Disputed | Reconcile dispatched vs received; do not silently recreate missing quantity |
 
 Batch expiry, recall, damage, disposal, returns, and valuation follow Specifications 13 and 27. No state label alone makes a batch saleable: sale eligibility is a server-side predicate over product category, batch status, dates, holds, recall, quantity, and any required authorization.
@@ -152,7 +152,7 @@ Batch expiry, recall, damage, disposal, returns, and valuation follow Specificat
 | Sale | Pending validation | Commit → Committed | sale.commit; atomic sale, line snapshots, stock issue, audit, and outbox; this does not imply payment confirmation or an unapproved accounting posting |
 | Sale | Committed | Request void → Correction pending | sale.void.request; original reference, reason, affected lines; no immediate erase/reversal |
 | Sale correction | Correction pending | Approve/reject → Approved/Rejected | sale.void.approve or applicable approval; separation and policy checks |
-| Sale | Committed | Accept return → Partially returned / Returned | Return references original lines/quantities; stock disposition is a separate inventory decision |
+| Sale | Committed | Reflect accepted return → Partially returned / Returned | Derived from an accepted customer-return aggregate; no direct sale status mutation; stock disposition remains separate |
 | Sale | Committed | Complete approved void → Voided | Linked reversal/correction; stock restoration only through separate validated inventory movement |
 | Payment | absent | Initiate → Initiated | payment.initiate; sale reference, amount/currency, method, idempotency key |
 | Payment | Initiated | Await provider/customer → Awaiting action / Pending confirmation | Provider request/reference captured; no paid status |
