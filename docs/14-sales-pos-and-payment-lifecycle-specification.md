@@ -38,14 +38,13 @@ Candidate sale states:
 - **Draft:** editable cart; no stock or financial commitment.
 - **Pending validation:** submitted for server-side validation.
 - **Committed:** sale transaction and stock issue movements are durably recorded.
-- **Payment pending:** committed sale has an unresolved payment obligation under an approved policy.
-- **Partially paid:** only if the supported payment policy explicitly permits split/partial settlement.
-- **Paid:** all required payment evidence is confirmed and reconciled to the sale.
 - **Voided:** sale has been voided through an authorized linked correction workflow.
 - **Partially returned / returned:** one or more sale lines have an accepted return.
-- **Disputed / reconciliation required:** a payment or transaction mismatch requires review.
+- **Correction pending:** a linked void, return, or other correction is awaiting required review.
 
-The final state machine must define allowed transitions, who may initiate/approve them, whether they are reversible, and their effect on stock and financial records. A sale must not be silently deleted.
+Payment states belong to the payment record, not the sale state. A committed sale may have one or more payment records that are pending, partially settled, confirmed, failed, reversed, refunded, or disputed according to the supported policy. The UI may display a derived combined summary, but the database must not collapse sale lifecycle and payment lifecycle into one state machine.
+
+The final sale state machine must define allowed transitions, who may initiate/approve them, whether they are reversible, and their effect on stock and financial records. A sale must not be silently deleted.
 
 ## 4. Sale draft and validation
 
