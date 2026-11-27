@@ -121,3 +121,52 @@ Professional credential data is collected and checked only when there is a defin
 Establishment licence evidence, an individual's professional credential, and Pharmalink's own organization/account verification are separate records and statuses. A pharmacy's choice not to publish or sell through the public-facing app must not prevent its staff from using private management features.
 
 **Permission design consequence:** distinguish platform permissions (manage catalogue, stock, suppliers, reports, staff) from regulated professional permissions. The latter must be gated by applicable role, credential status, and current law; the former must not inherit a blanket professional-licence requirement.
+
+## 11. Independent access, evidence, and publication states
+
+The authorization model must not collapse platform access, establishment licensing, professional credentials, and public participation into one “verified pharmacy” flag.
+
+| Dimension | Subject | Example states | What it controls |
+|---|---|---|---|
+| Person account | Person | pending activation, active, locked, closed | Authentication only |
+| Organization | Tenant | setup, active, suspended, closed | Tenant lifecycle and service relationship |
+| Membership | Person–tenant relationship | invited, active, suspended, revoked | Whether the person may act for that tenant |
+| Branch membership/scope | Membership–branch relationship | assigned, suspended, removed | Which branch resources are accessible |
+| Management entitlement | Tenant and capability | enabled, read-only/grace, suspended, ended | Contractual/service availability, not professional authority |
+| Establishment evidence | Organization or branch | not requested, required, submitted, under review, verified, rejected, expired, suspended, superseded | Only the specific operation or public claim for which evidence is required |
+| Professional credential | Person and credential scope | not requested, submitted, under review, verified, rejected, expired, suspended, revoked | Only professional actions requiring that credential and scope |
+| Public participation | Organization/branch and capability | opted out, draft, submitted, published, paused, rejected, withdrawn | Public projection and discovery |
+| Commerce capability | Organization/branch and approved capability | unavailable, review required, enabled, paused, revoked | Only the separately approved commerce workflow |
+
+These are separate aggregates or independently versioned state records. A transition in one dimension must not implicitly mutate another unless a documented business rule explicitly requires it.
+
+### Authorization decision sequence
+
+For each command, the server evaluates:
+1. Is the account authenticated and not locked or revoked?
+2. Does the person have an active membership in the target tenant?
+3. Does the membership have the required permission for the target resource and branch?
+4. Is the tenant's relevant management entitlement active for this capability?
+5. Is the resource in a state that permits the requested transition?
+6. Does this exact action require establishment evidence, and if so is the correct evidence valid for this establishment, branch, region, and action?
+7. Does this exact action require a professional credential, and if so is the credential verified, current, and within its scope?
+8. Are separation-of-duties, approval, re-authentication, and other risk controls satisfied?
+
+Only applicable checks are required. An irrelevant check must not become an accidental global gate. The server must return a structured, actionable denial reason without exposing private verification evidence.
+
+### Role design constraints
+
+- Organization owners and business administrators may be non-professionals. Their management permissions do not grant professional authority.
+- Cashiers, inventory operators, purchasing staff, accountants, and other ordinary staff accounts do not need an individual professional licence merely to join or use permitted functions.
+- A professional may also hold management roles, but the professional credential is an additional scoped authorization attribute, not the source of all permissions.
+- A role title, uploaded credential image, self-entered licence number, or owner's assertion is not proof of verified professional authority.
+- A verified credential must be checked for issuer, identity match, validity, professional category, permitted scope, applicable location, and current status to the extent supported by authoritative sources.
+- If a credential expires or is suspended, remove only permissions that depend on it. Preserve unrelated management access and historical attribution.
+- If establishment evidence expires or is suspended, evaluate each affected operation and public claim separately. Do not automatically lock every staff account.
+- Public listing publication and commerce enablement require explicit organization authorization and capability-specific review. They are not implied by creating a tenant or branch.
+
+## 12. Minimum permission-matrix deliverable
+
+Before implementation, create a matrix with one row per permission and at least these columns: permission identifier, description, allowed actor/role, tenant scope, branch scope, resource scope, management entitlement, establishment evidence dependency, professional credential dependency, approval requirement, re-authentication requirement, offline eligibility, audit event, and negative-test cases.
+
+The matrix must include allowed and denied examples for owner, manager, pharmacist/professional, cashier, inventory operator, purchasing operator, accountant, auditor, and platform support. “Owner” must never be treated as a universal bypass for professional or regulatory constraints.
