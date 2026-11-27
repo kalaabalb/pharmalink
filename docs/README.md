@@ -31,7 +31,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 15-supplier-and-purchasing-lifecycle-specification.md | Supplier records, purchase orders, receipts, invoices, returns, and supplier payments | Draft |
 | 16-medicine-catalogue-and-product-identity-specification.md | Canonical medicine identity, presentations, barcodes, provenance, search, and correction | Draft |
 | 17-finance-and-reconciliation-specification.md | Financial records, cashbook, receivables/payables, reconciliation, and reporting | Draft |
-| 18-proposed-permission-matrix.md | Draft role-to-permission matrix with evidence dependencies and negative authorization tests | Draft |
+| 18-proposed-permission-matrix.md | Canonical permission registry, action-specific evidence gates, and proposed first-release role-grant baseline | Draft |
 | 19-public-discovery-and-availability-specification.md | Public pharmacy discovery, opt-in profiles, medicine search, availability freshness, moderation, and privacy | Draft |
 | 20-organization-branch-and-membership-lifecycle-specification.md | Tenant, legal-entity relationships, branches, invitations, roles, ownership, suspension, and offboarding | Draft |
 | 21-external-integrations-and-provider-lifecycle-specification.md | Provider due diligence, webhooks, payment, messaging, maps, storage, outages, and exit | Draft |
@@ -42,7 +42,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 26-data-migration-import-export-backup-and-restoration-specification.md | Controlled imports, opening balances, tenant export, backups, restore testing, and disaster recovery | Draft |
 | 27-inventory-valuation-stock-reconciliation-and-cost-integrity-specification.md | Cost provenance, valuation policy decision framework, stock reconciliation, write-offs, and cost integrity | Draft |
 | 28-production-operations-incident-response-and-service-continuity-specification.md | Service ownership, observability, alerting, incident response, support access, releases, and continuity | Draft |
-| 29-application-architecture-api-database-and-deployment-contract.md | Domain module boundaries, API semantics, database integrity, events, deployment topology, and architecture decisions | Draft |
+| 29-application-architecture-api-database-and-deployment-contract.md | Domain boundaries, API/database/deployment contracts, and first-release workflow-to-operation traceability | Draft |
 | 30-workflow-state-transition-and-recovery-contract.md | Explicit workflow transitions, guards, cross-module ordering, failure recovery, and acceptance tests | Draft |
 
 ## Review dimensions
