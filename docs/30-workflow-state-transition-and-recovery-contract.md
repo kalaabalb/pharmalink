@@ -122,7 +122,7 @@ A credential transition changes eligibility only for actions whose approved poli
 
 **Important separation:** “Fully received” means physical line quantities are resolved under the receipt policy. “Closed” means the order's remaining operational and financial follow-up has been resolved under the closure policy. Receipt, invoice acceptance, payable recognition, supplier payment, and settlement are distinct aggregates/transitions.
 
-The precise conditions for rejection, over-delivery, substitutions, backorders, invoice completion, and closure remain product/accounting decisions. Adjustment posting and approved-void completion are internal, idempotent continuations of explicitly authorized transitions, not unguarded background status changes. Until resolved, the affected path must be disabled or routed to a controlled exception state.
+The precise conditions for rejection, over-delivery, substitutions, backorders, invoice completion, and closure remain product/accounting decisions. Until resolved, the affected path must be disabled or routed to a controlled exception state.
 
 ### 3.4 Goods receipt and inventory
 
