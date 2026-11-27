@@ -246,3 +246,41 @@ Resolve each decision, or explicitly defer the affected capability with a safe o
 - [Specification 30](30-workflow-state-transition-and-recovery-contract.md): aggregate state, unknown outcomes, idempotent replay, and post-restore transition/reconciliation rules.
 
 Before migration scripts or production backup procedures are approved, the selected source/destination schema and recovery process must be reconciled against the physical ownership registry and database constraints required by Specification 29. The migration must preserve aggregate identity, tenant/branch ownership, immutable source facts, correction links, and event/outbox consistency; a structurally successful import is not sufficient if those invariants fail.
+
+## 12. Tenant and branch isolation during portability and recovery
+
+Tenant isolation remains mandatory throughout import, export, backup, restore, and tenant exit. A data portability operation is not a privileged shortcut around the normal ownership model.
+
+### 12.1 Import scope
+
+Every import job is bound at creation to one tenant, an explicit set of branches or organization-wide scope, an initiating actor, an approved dataset, and a mapping/schema version. The scope is immutable after approval; changing tenant or branch scope requires cancelling the uncommitted job and creating a newly authorized job. Each source row and every resolved reference is checked against the target tenant and permitted branch before commit. A row that references another tenant's supplier, branch, catalogue-private record, attachment, or aggregate is rejected or quarantined; it is never silently rebound by matching a name. Worker retries reload the persisted job scope and current authorization/policy rather than trusting mutable queue payload fields.
+
+### 12.2 Export completeness and non-disclosure
+
+An export manifest must record tenant ID, included branch IDs or explicit organization-wide scope, requesting identity, authorization evidence, dataset and filters, schema version, source cutoff/as-of time, record counts by entity, attachment counts, checksums, warnings/exclusions, creation and expiry times, and artifact status. The export query must enforce scope before joins and aggregation. Shared canonical reference data may be represented by stable references or an approved portable snapshot; it must not expose platform-only review notes or another tenant's private aliases, prices, or configuration. Excluded data and attachments must be listed with reasons so that “complete” is not misrepresented.
+
+Download authorization is checked against the requesting tenant and current grant at download time. A copied artifact URL or object key must not provide access after expiry or revocation. Temporary archives, manifests, staging files, and generated attachment bundles inherit the source classification and must be encrypted, access-controlled, logged, and deleted after the defined expiry. Support staff cannot download an export merely because they can see its support case.
+
+### 12.3 Backup and restore boundaries
+
+Backups must preserve the relationships needed to prove ownership: tenant and branch IDs, composite references, membership/audit attribution, immutable source records, correction links, and the outbox/inbox/idempotency state needed to prevent duplicate effects after recovery. Backup metadata identifies environment, source database/schema version, time range or recovery point, encryption/key reference, integrity result, and custody/access history without exposing secrets.
+
+A full-system restore is performed into an isolated recovery environment first. Before any restored system can serve tenants or publish events, verify schema/migration compatibility, database constraints, tenant/branch ownership invariants, record counts and hashes, object-to-metadata links, event/outbox cursors, provider callback deduplication, and absence of cross-environment credentials or active production side effects. Production cutover requires an explicit recovery decision and reconciliation of transactions/events that occurred after the recovery point.
+
+A selective tenant or branch restore is a dependency-aware migration, not a raw row copy. It must enumerate required owned records, shared reference dependencies, attachments, audit/provenance, and event state; preserve stable IDs where safe; detect collisions; and prove that no unrelated tenant records are copied or exposed. If safe selective restoration cannot be demonstrated, restore the full environment into isolation and use a reviewed export/re-import procedure rather than improvising SQL row copying.
+
+### 12.4 Restore and export acceptance tests
+
+Before launch and after material changes to schema, storage, or export logic, demonstrate:
+- tenant A exports only tenant A and its explicitly authorized branches, including when related rows or attachments contain foreign tenant IDs;
+- branch-limited exports exclude other branches and do not leak their totals through aggregate summaries;
+- an expired/revoked export grant and guessed object key cannot retrieve an artifact;
+- import rejects cross-tenant and unauthorized cross-branch references at both validation and persistence boundaries;
+- a full restore preserves all tenant boundaries, constraints, stable identifiers, audit attribution, and event/idempotency state;
+- selective tenant restore detects dependency/collision cases and cannot introduce foreign tenant records;
+- restored files match metadata, checksums, ownership, retention, and access policy;
+- restored outbox/provider state cannot republish a completed external side effect or process an event under the wrong tenant;
+- counts, hashes, financial/inventory control totals, and exception reports reconcile to the selected recovery point;
+- every operator action and artifact access is attributable and recorded.
+
+Record the tested dataset shape, source and destination versions, execution identity, recovery point, expected and observed counts/hashes, exceptions, duration, and reviewer. A provider “backup succeeded” status or a successful database start is not evidence that tenant isolation and business integrity survived restoration.
