@@ -367,17 +367,17 @@ Each policy entry must contain:
 - stable policy ID/version and exact logical action(s);
 - jurisdiction and effective-from/effective-to dates;
 - establishment category and product/regulatory classification predicates, where relevant;
-- required evidence mode: \`no_evidence_required\`, \`establishment_evidence_required\`, \`professional_credential_required\`, \`both_required\`, or \`unresolved\`;
+- required evidence mode: `no_evidence_required`, `establishment_evidence_required`, `professional_credential_required`, `both_required`, or `unresolved`;
 - establishment evidence type, issuer/source, legal entity/branch binding, licence scope, validity and verification method, if required;
 - professional credential type, issuer/source, person identity match, professional scope, jurisdiction, validity and current status, if required;
 - permitted actor/role and any delegation, approval, witness, re-authentication, or separation constraints;
 - source citations, accountable legal/regulatory reviewer, decision rationale, approval date, and regression-test references.
 
-The server derives the applicable policy from trusted resource and tenant context, including jurisdiction, establishment category, product classification, action, and effective date. The client cannot choose a policy version, claim an exemption, set a verification result, or substitute a different establishment/person. If classification or policy resolution is ambiguous, the affected regulated action fails closed with a safe \`EVIDENCE_REQUIRED\` or policy-review denial; unrelated management operations remain available.
+The server derives the applicable policy from trusted resource and tenant context, including jurisdiction, establishment category, product classification, action, and effective date. The client cannot choose a policy version, claim an exemption, set a verification result, or substitute a different establishment/person. If classification or policy resolution is ambiguous, the affected regulated action fails closed with a safe `EVIDENCE_REQUIRED` or policy-review denial; unrelated management operations remain available.
 
 Evidence evaluation returns an internal decision reference containing policy ID/version, evidence record references, verification method/result, checked-at time, and expiry/recheck boundary. The decision reference is auditable and revalidated for delayed approvals/execution. Do not expose raw credential or establishment documents in API responses, events, logs, analytics, or push payloads. Only the minimum decision and reference metadata needed by authorized consumers may cross module boundaries.
 
-No regulated action may be enabled in production while its policy is \`unresolved\`, lacks an authoritative/manual verification method, or lacks accountable legal/regulatory approval and positive/negative tests. A change in law, issuer source, establishment category, product classification, or policy version must trigger impact analysis and controlled reauthorization; it must not silently rewrite historical decisions.
+No regulated action may be enabled in production while its policy is `unresolved`, lacks an authoritative/manual verification method, or lacks accountable legal/regulatory approval and positive/negative tests. A change in law, issuer source, establishment category, product classification, or policy version must trigger impact analysis and controlled reauthorization; it must not silently rewrite historical decisions.
 
 
 
