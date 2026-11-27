@@ -131,3 +131,21 @@ Do not assume consent is the only lawful basis or that consent can cure an other
 - Which cloud regions and subprocessors may be used after legal review?
 - What security assurance or independent testing is required before launch?
 - Which data classes, if any, will be present in the first release beyond staff and business records?
+
+## 12. Authorization must evaluate the requested action, not a global verification flag
+
+Do not implement a universal `pharmacy_verified`, `professional_user`, or equivalent boolean as the sole gate for platform access. These labels collapse different legal, business, and identity concepts and are unsafe as authorization primitives.
+
+For each protected request, the server evaluates authenticated account state, active tenant membership, branch/resource scope, explicit permission, relevant management entitlement, workflow state, and only those establishment or professional evidence checks that apply to that exact action. Public publication and commerce capabilities have their own opt-in and approval states.
+
+Required negative tests include:
+- an owner with no professional credential can manage permitted organization settings but cannot perform a regulated professional action reserved to a qualified person;
+- a cashier or inventory operator can use granted ordinary functions without presenting a professional credential;
+- an expired professional credential blocks only credential-dependent actions, not unrelated membership or management access;
+- pending establishment evidence does not automatically block account creation or private management setup;
+- a rejected public listing does not disable private management or delete operational data;
+- a platform support agent cannot use verification access to browse unrelated tenant records;
+- a public visitor cannot infer private establishment evidence, professional identity data, stock quantities, or internal verification notes;
+- a role or credential change is enforced server-side for existing sessions and queued offline commands.
+
+Verification evidence is confidential. Store the minimum necessary reference and metadata, restrict reviewer access, log every view/download, and define retention/deletion rules. Do not expose document URLs or raw evidence in ordinary API responses, logs, analytics, or push notifications.
