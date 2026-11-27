@@ -174,6 +174,7 @@ Candidate permissions:
 - purchase_order.approve;
 - purchase_order.issue;
 - purchase_order.cancel;
+- purchase_order.close;
 - goods_receipt.create;
 - goods_receipt.accept;
 - supplier_invoice.record;
