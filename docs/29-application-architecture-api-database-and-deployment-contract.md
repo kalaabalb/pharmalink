@@ -250,6 +250,8 @@ This is a logical traceability baseline for the proposed private-operations rele
 
 ### 4.9.1 Operation contract completion requirements
 
+Operation IDs are not automatically client commands. Each operation must be classified as **client-invoked**, **authenticated provider callback**, or **internal continuation**. Internal continuations are invoked only by their owning server module after a committed prerequisite and policy revalidation; they have no public/client endpoint, no independent tenant-role grant, and no client-controlled state transition. The prerequisite human action carries the relevant permission(s), while the continuation enforces a service/module trust boundary, committed approval or acceptance reference, expected aggregate version, and stable idempotency identity. Provider callbacks use a dedicated authenticated service identity and are not tenant-user permissions.
+
 Before implementation, each logical command/query above must have a versioned API schema that specifies:
 - request fields, validation, canonical identifiers, and prohibited client-controlled fields;
 - response shape, aggregate version, stable operation ID, and error codes;
