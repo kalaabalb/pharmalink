@@ -187,8 +187,19 @@ Each evidence record should preserve:
 - source and verification method;
 - submitted, reviewed, approved, rejected, expired, revoked, or superseded state;
 - reviewer, decision rationale, timestamps, and appeal/re-review history.
+- exact claim/action scope for which the evidence may be relied upon; evidence must not become a general organization/person verification flag;
+- identity-match result for person credentials, or legal-entity/establishment/branch binding for establishment evidence;
+- authoritative source reference or documented manual-review method, source-check timestamp, source result, and reviewer identity;
+- licence/credential scope and restrictions as stated by the issuer, without expanding the issuer's wording;
+- document integrity metadata and restricted storage reference; raw evidence is never copied into ordinary logs, events, analytics, or client notifications;
+- policy ID/version and jurisdiction/category/action context under which the evidence was evaluated;
+- next re-verification date or event trigger, plus any expiry, suspension, revocation, appeal, or supersession reason.
 
 Uploaded evidence is not verified merely because it is present. Reviewers must be assigned, conflicts of interest prevented, evidence access logged, and retention/deletion rules applied.
+
+Evidence submission and evidence approval are separate transitions. A submission creates an unverified claim; it must not set an establishment or professional status to verified. The reviewer must use the configured source/method and evaluate issuer, subject identity, scope, jurisdiction, validity, and any restrictions. A manual review is recorded as manual and must not be represented as direct authoritative-register verification. Reviewer self-approval is prohibited. Every decision is bound to the action-policy version that requested the check.
+
+Evidence status is not itself an authorization grant. At command time, the authorization service must match the evidence to the exact action, person or establishment, branch, product/category where relevant, jurisdiction, and effective date. A mismatch, unresolved policy, stale source check, expired validity, suspension, or revocation denies only the dependent action. The system preserves the evidence and decision history for audit/retention purposes and does not rewrite prior transactions.
 
 An expired professional credential affects only the actions that depend on it. An expired establishment record affects only operations or public claims that depend on it. Do not automatically revoke every ordinary membership.
 
