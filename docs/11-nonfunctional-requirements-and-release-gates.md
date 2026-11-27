@@ -107,7 +107,11 @@ A release cannot be approved until:
 - support, monitoring, incident response, and rollback/recovery are ready;
 - public claims match actual verification and freshness capabilities.
 
-## 10. Migration, backup, and recovery evidence\n\nThe detailed control model is defined in [Specification 26](26-data-migration-import-export-backup-and-restoration-specification.md). Release evidence must demonstrate controlled import and opening-balance reconciliation, usable tenant export, protected backups, and an end-to-end restore exercise. A configured backup job without a successful restore test does not satisfy this gate.\n\n## 11. Numeric targets still open
+## 10. Migration, backup, and recovery evidence
+
+The detailed control model is defined in [Specification 26](26-data-migration-import-export-backup-and-restoration-specification.md). Release evidence must demonstrate controlled import and opening-balance reconciliation, usable tenant export, protected backups, and an end-to-end restore exercise. A configured backup job without a successful restore test does not satisfy this gate.
+
+## 11. Numeric targets still open
 
 Do not invent service-level objectives. Establish targets after user research, representative device/network measurements, architecture evaluation, and cost analysis. At minimum, set:
 - p50/p95/p99 latency for critical journeys;
