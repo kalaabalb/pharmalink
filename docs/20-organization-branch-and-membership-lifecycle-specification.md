@@ -261,6 +261,7 @@ Cross-tenant platform data (billing, verification, moderation, security) must ha
 - Membership activation, role changes, ownership transfer, evidence decisions, suspension, entitlement changes, and offboarding are online-only authoritative transitions.
 - A local pending invitation or role change must not be represented as active server authorization.
 - Membership, permission, branch, and entitlement changes emit committed versioned events.
+- Candidate event names include OrganizationCreated, OrganizationCapabilityRestricted, ServiceEntitlementChanged, BranchCreated, BranchRestricted, MembershipInvitationCreated, MembershipActivated, MembershipRestricted, MembershipRevoked, and RoleGrantChanged. Evidence decisions and support-access grants require separately classified event payloads and consumers.
 - Existing sessions and clients subscribe to relevant changes and refresh authorization; do not continuously poll for unchanged membership state.
 - Revocation events invalidate or re-evaluate sessions, caches, queued commands, and active device grants within the approved objective.
 - Missed events are recovered through durable replay/cursor or authoritative snapshot reconciliation.
