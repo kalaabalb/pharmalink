@@ -229,7 +229,9 @@ Automated tests must prove:
 - invoice mismatches enter an exception workflow;
 - invoice dispute and exception resolution require their distinct permissions; approval cannot silently clear a dispute;
 - payment initiation is not treated as settlement;
+- a supplier payment timeout is treated as unknown until the original idempotency/provider reference is reconciled; retry cannot create a second payment;
 - duplicate/late payment callbacks do not duplicate payments or allocations;
+- a supplier invoice is not marked paid until the supplier payment is authoritatively confirmed and allocated; repeated confirmation/reconciliation cannot duplicate allocation;
 - blocked suppliers cannot perform prohibited new operations but historical records remain available;
 - branch/tenant isolation is enforced in reads, writes, reports, events, and exports;
 - revoked permissions block queued commands on synchronization.
