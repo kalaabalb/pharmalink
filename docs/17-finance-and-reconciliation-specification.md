@@ -70,6 +70,13 @@ If a ledger is implemented, specify:
 
 Do not silently label a cashbook or summary report as a full accounting ledger. The chart of accounts and posting rules require qualified accounting review.
 
+### Recommended first-release finance boundary (proposal, not approval)
+
+For the first production release, the lower-risk candidate is operational finance rather than a full general ledger: authoritative sale/return/payment records, cash sessions and cashbook movements where validated, supplier invoice/payment references, reconciliation status, and traceable operational reports. Defer journal posting, period close, statutory tax filing, complex receivables/payables accounting, and a full chart of accounts until the pilot cohort and a qualified Ethiopian accountant establish the actual requirement.
+
+This is a scope recommendation only. It does not waive required accounting records, tax obligations, fiscal-device requirements, or statutory invoice rules. The enabled transaction and receipt behavior must still be reviewed for the launch establishment category and jurisdiction. The first-release scope framework is in [Specification 25](25-first-release-scope-and-launch-decision-framework.md).
+
+
 ## 5. Revenue, sales, returns, and cost of goods sold
 
 Sales and payments are specified in [Specification 14](14-sales-pos-and-payment-lifecycle-specification.md). Inventory cost and valuation depend on [Specification 13](13-inventory-and-batch-lifecycle-specification.md).
