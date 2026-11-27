@@ -258,3 +258,8 @@ Automated tests must prove:
 12. What transaction volume, cashier concurrency, and receipt-printing hardware must be supported?
 
 No payment provider, tax treatment, regulated dispensing workflow, or public commerce flow should be marked production-enabled until the relevant evidence and approval are recorded.
+
+
+## 15. Cross-module transition alignment
+
+The shared sale, payment, return, refund, cash-session, and recovery transition contract is defined in [Specification 30](30-workflow-state-transition-and-recovery-contract.md). The sale and payment state machines remain separate. Method-specific payment ordering is not approved until the open decisions in this document are resolved.
