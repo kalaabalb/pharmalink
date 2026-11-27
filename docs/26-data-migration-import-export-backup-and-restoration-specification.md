@@ -120,7 +120,7 @@ An authorized tenant export must be complete for the agreed scope, machine-reada
 
 Exports must preserve relationships and distinguish current projections from immutable source facts. They must not expose other tenants' data, internal security secrets, unrelated platform data, or personal data beyond the authorized purpose.
 
-Provide a documented export request, authorization, preparation, expiry/download, audit, and deletion lifecycle. Subscription suspension must not silently erase tenant records or prevent access to records that must remain available under law or contract. Tenant exit must define export, retention, legal hold, deletion, and proof-of-completion responsibilities.
+Provide a documented export request, authorization, preparation, expiry/download, audit, and deletion lifecycle. Candidate export lifecycle events are TenantExportRequested, TenantExportCompleted, and TenantExportExpired. They must contain artifact identifiers and scope metadata, not exported personal/financial payloads. Subscription suspension must not silently erase tenant records or prevent access to records that must remain available under law or contract. Tenant exit must define export, retention, legal hold, deletion, and proof-of-completion responsibilities.
 
 ## 8. Backup architecture and policy
 
