@@ -132,6 +132,19 @@ The ledger must retain both effective time and recorded time so delayed synchron
 
 A timed-out client must query the authoritative transaction outcome using its idempotency/command reference before retrying.
 
+### 7.1 Receiving data capture, inspection, and stock availability are distinct
+
+The receiving workflow must not make every staff member who records a delivery appear to be the legally accountable inspector or professional approver.
+
+- **Delivery data capture:** an appropriately scoped purchasing or inventory operator may record observed quantities, batch/lot, expiry, condition, documents, and discrepancies without an individual professional credential solely for ordinary data entry, subject to the applicable law and establishment policy.
+- **Inspection and accountable sign-off:** where law, an applicable standard, or the approved establishment procedure reserves an inspection, quality/suitability attestation, or acceptance decision to a technical manager or pharmacy professional, that is a separate action. The system must identify the responsible person and evaluate the exact credential and establishment-linked designation required by the approved action policy.
+- **Operational acceptance and posting:** `goods_receipt.accept` and its internal posting continuation authorize the defined software workflow only. They do not, by themselves, prove that a legally required professional inspection occurred. The server must require a linked, valid inspection/sign-off decision before affected stock becomes sale-eligible whenever the applicable policy requires it.
+- **Stock status:** a receipt may be recorded and, where permitted, posted into a received, held, quarantined, or inspection-pending status. Receipt posting must not automatically make every line available for sale. Eligibility is evaluated per line/batch against required evidence, quality/condition, expiry, recall, and regulatory policy.
+- **No blanket gate:** if the reviewed action policy confirms that a particular receipt-data or administrative posting step needs no professional evidence, record an explicit `no_evidence_required` decision for that action and context. Do not propagate the requirement from a separate inspection or dispensing action.
+- **Unresolved policy:** if the inspection responsibility, permitted delegation, or required evidence is unresolved, keep the affected stock unavailable for sale and disable only the unresolved accountable action. Preserve unrelated purchasing, delivery capture, and private management functions.
+
+Any separate professional inspection/sign-off operation and permission must be defined only after qualified local review; do not invent a role grant or imply that an existing inventory permission supplies professional authority.
+
 ## 8. Sale allocation and stock deduction
 
 - Sale allocation must use only stock positions eligible for sale under product, branch, quality, expiry, and regulatory rules.
