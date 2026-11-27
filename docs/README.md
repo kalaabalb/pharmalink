@@ -43,6 +43,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 27-inventory-valuation-stock-reconciliation-and-cost-integrity-specification.md | Cost provenance, valuation policy decision framework, stock reconciliation, write-offs, and cost integrity | Draft |
 | 28-production-operations-incident-response-and-service-continuity-specification.md | Service ownership, observability, alerting, incident response, support access, releases, and continuity | Draft |
 | 29-application-architecture-api-database-and-deployment-contract.md | Domain module boundaries, API semantics, database integrity, events, deployment topology, and architecture decisions | Draft |
+| 30-workflow-state-transition-and-recovery-contract.md | Explicit workflow transitions, guards, cross-module ordering, failure recovery, and acceptance tests | Draft |
 
 ## Review dimensions
 
@@ -79,6 +80,7 @@ Every module must be reviewed for:
 - Non-functional requirements and measurable service objectives.
 - Test strategy, migration plan, backup/restore verification, release and incident plans.
 - Enforceable application architecture, API contracts, database integrity, event delivery, deployment topology, and technology decision records.
+- Cross-module state-transition rules, approval guards, transaction ordering, and failure/recovery behavior.
 
 ## Evidence discipline
 
