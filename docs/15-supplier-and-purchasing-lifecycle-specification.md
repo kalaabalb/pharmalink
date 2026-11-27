@@ -179,6 +179,7 @@ Candidate permissions:
 - supplier_invoice.record;
 - supplier_invoice.match;
 - supplier_invoice.exception.resolve;
+- supplier_invoice.dispute;
 - supplier_invoice.approve;
 - supplier_return.create;
 - supplier_return.approve;
@@ -225,6 +226,7 @@ Automated tests must prove:
 - supplier substitution cannot silently change product identity;
 - expired/damaged/ineligible receipt lines do not enter available stock;
 - invoice mismatches enter an exception workflow;
+- invoice dispute and exception resolution require their distinct permissions; approval cannot silently clear a dispute;
 - payment initiation is not treated as settlement;
 - duplicate/late payment callbacks do not duplicate payments or allocations;
 - blocked suppliers cannot perform prohibited new operations but historical records remain available;
