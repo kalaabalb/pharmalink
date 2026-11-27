@@ -38,6 +38,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 22-privacy-and-personal-data-lifecycle-specification.md | Data inventory, purpose limitation, notices, rights, retention, deletion, processors, and privacy incidents | Draft |
 | 23-user-experience-accessibility-and-localization-specification.md | Navigation, workflow feedback, accessibility, localization, responsive and offline UX | Draft |
 | 24-cross-module-transaction-and-implementation-contract.md | Shared transaction boundaries, state-machine rules, identity, authorization, event, and offline contracts | Draft |
+| 25-first-release-scope-and-launch-decision-framework.md | Proposed first-release scope, end-to-end journeys, exclusions, pilot model, and launch gates | Draft |
 
 ## Review dimensions
 
