@@ -26,6 +26,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 10-security-privacy-and-threat-model.md | Trust boundaries, threats, access control, data protection | Draft |
 | 11-nonfunctional-requirements-and-release-gates.md | Quality attributes, testing, migration, recovery, release gates | Draft |
 | 12-functional-product-and-production-deployability-contract.md | Definition of a real functional, deployable, supportable product | Draft |
+| 13-inventory-and-batch-lifecycle-specification.md | Inventory, batch/lot traceability, stock movements, transfers, expiry, and recall | Draft |
 
 ## Review dimensions
 
@@ -106,3 +107,8 @@ Document completion is not permission to ship a demo. The selected first release
 The production deployability contract in [12-functional-product-and-production-deployability-contract.md](12-functional-product-and-production-deployability-contract.md) is mandatory across all modules. Mock services and synthetic fixtures are permitted only in isolated development/test contexts and must never silently substitute for production functionality.
 
 A capability that is not fully implemented and verified must be marked unavailable, internal-only, pilot, paused, or deferred—not presented as working.
+
+
+## Module-specification rule
+
+Module specifications must define state transitions, transaction boundaries, concurrency, idempotency, permissions, event behavior, offline eligibility, audit, failure recovery, migration, reporting, and negative acceptance tests. Inventory and batch traceability is the first detailed module specification because it underpins sales, purchasing, public availability, and recall handling.
