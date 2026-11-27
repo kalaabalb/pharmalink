@@ -295,3 +295,8 @@ Automated and operational tests must prove:
 14. Which regional and federal establishment rules alter onboarding or branch capability eligibility?
 
 Resolve tenant/legal-entity modeling and branch ownership before database schema lock. Do not build authorization around an assumed one-tenant/one-licence/one-professional relationship.
+
+
+## 16. Cross-module transition alignment
+
+The shared organization, branch, membership, role-grant, and credential-evidence transition contract is defined in [Specification 30](30-workflow-state-transition-and-recovery-contract.md). Account access, ordinary management, establishment evidence, professional credentials, and public participation remain separate lifecycle concerns.
