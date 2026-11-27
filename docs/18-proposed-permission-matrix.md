@@ -330,6 +330,21 @@ Unless Specification 25 is amended and its release gates pass, do not grant cust
 - full general-ledger posting/reversal, period close, or other deferred accounting capabilities;
 - any regulated dispensing, prescription, restricted-category, or clinical workflow that has not received action-specific Ethiopian legal/regulatory review.
 
+#### 12.3.1 Explicit disposition of other canonical permissions
+
+The canonical registry contains 136 identifiers; 92 are mapped to the proposed first-release operation baseline. The remaining identifiers are intentionally not ordinary tenant-role grants. Their disposition is:
+
+- `account.register` and `account.sign_in` are self-service identity actions, not tenant-role grants; their controls are defined by authentication policy.
+- `catalogue_correction.review`, `catalogue_correction.approve`, `barcode_mapping.propose`, `barcode_mapping.review`, `regulatory_classification.read`, and `regulatory_classification.review` belong to canonical catalogue governance/review. They are not enabled as first-release tenant roles; tenant-local catalogue maintenance remains separate.
+- `supplier.sensitive_data.read` is a separately controlled, purpose-bound sensitive-field permission and is not included in the baseline.
+- `supplier_return.create` and `supplier_return.approve` remain excluded with supplier returns unless a complete pilot workflow is explicitly approved.
+- `finance.expense.create` and `finance.expense.approve` remain excluded because expense tracking is not in the candidate first release.
+- `finance.journal.read`, `finance.journal.post`, `finance.journal.reverse`, and `finance.period.close` remain excluded with full general-ledger and accounting-period capabilities.
+- `finance.sensitive_payment_data.read` is separately controlled and is not implied by ordinary payment, finance, or reconciliation access.
+- `support.case.create` may be made available to authenticated tenant members as a case-scoped service capability under abuse controls; it is not an operational tenant-role grant. It never grants `support.tenant_data.access`.
+
+These dispositions are explicit exclusions or separate control paths, not missing permission mappings. A future release must add the relevant operations, role/scope rules, evidence gates, and tests before enabling any excluded capability.
+
 Support case creation may remain available to all authenticated tenant members, but it does not grant support staff access to tenant data. Platform support access requires its separate case-scoped, time-limited approval.
 
 ### 12.4 Required grant resolution before implementation
