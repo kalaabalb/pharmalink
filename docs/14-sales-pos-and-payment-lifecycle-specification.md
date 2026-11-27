@@ -31,6 +31,8 @@ Public ordering, payment collection, reservation, and delivery remain separate c
 11. Prescription-related or otherwise regulated workflows are not bypassed by an ordinary POS permission.
 12. Internal POS availability is independent of public listing or public commerce participation.
 
+The cross-module transaction, idempotency, event, and correction rules in [Specification 24](24-cross-module-transaction-and-implementation-contract.md) are mandatory. In particular, sale commitment and stock issue are atomic; external payment confirmation and settlement are separate, independently verified state transitions.
+
 ## 3. Sale lifecycle
 
 Candidate sale states:
