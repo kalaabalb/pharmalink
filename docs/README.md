@@ -23,6 +23,8 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 07-domain-model-and-data-ownership.md | Domain boundaries, entities, ownership, and data lifecycle | Draft |
 | 08-event-driven-and-offline-requirements.md | Push/event requirements, offline behavior, synchronization, freshness | Draft |
 | 09-ethiopia-regulatory-evidence-register.md | Primary-source legal/regulatory evidence and unresolved interpretation | Draft |
+| 10-security-privacy-and-threat-model.md | Trust boundaries, threats, access control, data protection | Draft |
+| 11-nonfunctional-requirements-and-release-gates.md | Quality attributes, testing, migration, recovery, release gates | Draft |
 
 ## Review dimensions
 
