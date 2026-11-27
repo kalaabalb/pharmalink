@@ -82,6 +82,17 @@ https://www.ethiostandards.org/sites/default/files/2023-11/ES%207084_2024.pdf
 
 The standard's stated scope covers pharmacy practices, premises, professionals, and products for new and existing pharmacies throughout Ethiopia, excluding pharmacy services provided as part of health-facility services. Its text defines the pharmacy/technical-manager/professional concepts and includes establishment competence and professional-practice requirements.
 
+Relevant clauses surfaced for legal review include:
+- Section 3 defines a pharmacy professional by reference to a pharmacist, druggist, or pharmacy technician licensed by the appropriate health-professional regulatory organ; it defines the technical manager as a licensed pharmacist designated for responsibility over the pharmacy and named in the certificate of competence.
+- Sections 4.1 and 4.4 address a certificate of competence and the requirement that a pharmacy not operate without a registered and licensed pharmacist.
+- Section 5.1.2 assigns dispensing responsibilities to pharmacy professionals and includes the dispensing workflow; the OTC exception in the prescription rule must not be assumed to remove professional-scope requirements.
+- Sections 5.1.7–5.1.8 address procurement, stock management, receiving, traceability, and records; the standard assigns specific responsibilities to the technical manager or pharmacy professional.
+- Section 5.1.13 addresses medicines-waste management and assigns responsibility to pharmacy professionals.
+
+The standard uses the term **certificate of competence** for a permit connected to a person carrying out pharmacy services, and ties the technical-manager designation to that certificate. This is not safely interchangeable with either the establishment licence or the individual's professional competency licence. The exact legal subject, issuer, scope, and relationship of this certificate must be confirmed with the relevant authority and qualified local counsel before the data model treats it as equivalent to either.
+
+
+
 **Relevant provisions surfaced for qualified review:** Sections 3–4 address pharmacy, technical-manager, pharmacy-professional and certificate-of-competence concepts and general operating requirements; Section 5 addresses practice, professional dispensing, procurement/stock management, records, and other pharmacy operations. The full standard and applicable regional laws/directives must be reviewed before translating any clause into a product rule.
 
 ### 5.2 ES 7085:2024 — Drug-shop requirements
@@ -90,6 +101,15 @@ The standard's stated scope covers pharmacy practices, premises, professionals, 
 https://gov.ethiostandards.org/sites/default/files/2023-12/ES%207085%20Drug%20shop%20requirement_2024.pdf
 
 The standard has a separate scope and definitions for drug shops, including its own technical-manager and professional categories. It addresses establishment competence, professional practice, procurement/stock management, records, and other drug-shop requirements. It is not a substitute for the pharmacy standard.
+
+Relevant clauses surfaced for legal review include:
+- Section 3 defines the drug-shop technical manager and pharmacy-professional categories, and defines a certificate of competence for carrying out pharmacy services at community-pharmacy level.
+- Sections 4.1 and 4.4 address the certificate of competence and the requirement that a drug shop not operate without a registered and licensed pharmacist, druggist, or level IV pharmacy technician.
+- Section 5.1.2 addresses dispensing responsibilities; Sections 5.1.5–5.1.6 address procurement, stock management, records, and supporting documentation.
+- Section 5.1.10 addresses medicines-waste management and assigns responsibility to pharmacy professionals, while also requiring staff training and appropriate handling controls.
+
+As with ES 7084, the certificate of competence must be modeled as a distinct, establishment-linked person-authority record until its exact legal nature and issuer are confirmed. Do not collapse it into the establishment licence or professional competency licence.
+
 
 **Product implications proposed for review:**
 - Establishment category must be a first-class, jurisdiction-specific compliance attribute. Do not apply a pharmacy rule set to a drug shop or vice versa.
