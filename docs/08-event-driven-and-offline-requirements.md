@@ -41,6 +41,7 @@ This is an initial taxonomy; each event requires a schema and ownership review.
 | Public projection | PublicProfilePublicationConfigured, PublicProfilePublished, PublicProfilePaused, PublicProfileChanged, PublicCatalogueEntryPublished, PublicCatalogueEntryPaused, PublicAvailabilityConfirmed, PublicAvailabilityUpdated, PublicAvailabilityBecameStale, PublicEnquiryReceived, PublicReportSubmitted, ModerationCaseOpened, PublicContentSuppressed, ModerationDecisionRecorded, ModerationAppealFiled, VerificationClaimChanged |
 | Subscription | SubscriptionChanged, EntitlementChanged, InvoiceStatusChanged |
 | Platform | VerificationDecisionRecorded, SupportCaseUpdated, PrivilegedAccessGranted, SecurityIncidentRecorded |
+| Integrations | ProviderConnectionChanged, IntegrationWebhookReceived, IntegrationEventProcessed, IntegrationDeliveryFailed, IntegrationReconciliationCompleted |
 
 Events must describe facts, not commands. “SaleCommitted” means the transaction is committed; “TryToCommitSale” is a command, not an event.
 
