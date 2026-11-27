@@ -253,7 +253,7 @@ Server-side isolation must apply to:
 
 Never rely only on client-supplied tenant/branch IDs. Derive authorized scope from authenticated membership and server-side resource relationships.
 
-Cross-tenant platform data (billing, verification, moderation, security) must have explicit ownership and access policy. Support access is purpose-bound, case-scoped, time-limited, and audited.
+Cross-tenant platform data (billing, verification, moderation, security) must have explicit ownership and access policy. Support access is purpose-bound, case-scoped, time-limited, and audited. Organization-level capability restrictions require the designated platform policy permission `platform.organization.restrict`; software plan/entitlement changes require `platform.entitlement.manage`. Neither permission belongs to customer pharmacy roles, and neither represents legal authorization to operate.
 
 ## 13. Offline and event-driven behavior
 
