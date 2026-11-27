@@ -122,7 +122,7 @@ A credential transition changes eligibility only for actions whose approved poli
 
 **Important separation:** “Fully received” means physical line quantities are resolved under the receipt policy. “Closed” means the order's remaining operational and financial follow-up has been resolved under the closure policy. Receipt, invoice acceptance, payable recognition, supplier payment, and settlement are distinct aggregates/transitions.
 
-The precise conditions for rejection, over-delivery, substitutions, backorders, invoice completion, and closure remain product/accounting decisions. Until resolved, the affected path must be disabled or routed to a controlled exception state.
+The precise conditions for rejection, over-delivery, substitutions, backorders, invoice completion, and closure remain product/accounting decisions. Adjustment posting and approved-void completion are internal, idempotent continuations of explicitly authorized transitions, not unguarded background status changes. Until resolved, the affected path must be disabled or routed to a controlled exception state.
 
 ### 3.4 Goods receipt and inventory
 
@@ -136,7 +136,7 @@ The precise conditions for rejection, over-delivery, substitutions, backorders, 
 | Stock count | Draft | Record count → Count recorded | inventory.count; count scope/time/device and counted quantities; count is evidence, not stock overwrite |
 | Stock count | Count recorded | Review variance → Adjustment requested | inventory.adjust.request; compare count to ledger at defined cutoff; preserve intervening movements |
 | Stock adjustment | Requested | Approve/reject → Approved/Rejected | inventory.adjust.approve; reason/evidence; separation/threshold policy |
-| Stock adjustment | Approved | Commit adjustment → Posted | Append compensating movement; unique command; no direct balance overwrite |
+| Stock adjustment | Approved | Internal commit → Posted | Inventory invokes the internal `inventory.adjustment.commit` continuation only after a committed approval; it carries the approval reference, aggregate version, and stable idempotency identity; no client endpoint or additional role grant can bypass the approval; append one compensating movement and never overwrite the ledger |
 | Branch transfer | Draft | Create → Requested | inventory.transfer.create; source/destination tenant consistency; item/unit and available quantity |
 | Branch transfer | Requested | Dispatch → In transit | inventory.transfer.dispatch; atomic source availability reduction and in-transit movement |
 | Branch transfer | In transit | Receive → Received / Partially received | inventory.transfer.receive; destination accepted quantity; discrepancy recorded; never duplicate availability |
@@ -154,9 +154,9 @@ Batch expiry, recall, damage, disposal, returns, and valuation follow Specificat
 | Sale | Pending validation | Validation failure → Draft or Rejected | Return line-specific safe errors; no stock/financial commitment |
 | Sale | Pending validation | Commit → Committed | sale.commit; atomic sale, line snapshots, stock issue, audit, and outbox; this does not imply payment confirmation or an unapproved accounting posting |
 | Sale | Committed | Request void → Correction pending | sale.void.request; original reference, reason, affected lines; no immediate erase/reversal |
-| Sale correction | Correction pending | Approve/reject → Approved/Rejected | sale.void.approve or applicable approval; separation and policy checks |
+| Sale correction | Correction pending | Approve/reject → Approved/Rejected | sale.void.approve; only enabled when Specification 25's void policy gate is approved; separation, thresholds, reason, accounting treatment, and policy-version checks |
 | Sale | Committed | Reflect accepted return → Partially returned / Returned | Derived from an accepted customer-return aggregate; no direct sale status mutation; stock disposition remains separate |
-| Sale | Committed | Complete approved void → Voided | Linked reversal/correction; stock restoration only through separate validated inventory movement |
+| Sale | Committed | Internal completion of approved void → Voided | Sales invokes the internal `sale.void.complete` continuation only against a committed approval and linked correction; it rechecks policy/version and coordinates any separately validated Inventory movement; clients cannot set the sale state directly |
 | Payment | absent | Initiate → Initiated | payment.initiate; sale reference, amount/currency, method, idempotency key |
 | Payment | Initiated | Await provider/customer → Awaiting action / Pending confirmation | Provider request/reference captured; no paid status |
 | Payment | Pending confirmation | Confirm → Confirmed | Verified authoritative evidence; provider callback or approved manual confirmation; deduplicate and reconcile |
