@@ -267,6 +267,90 @@ The IDs in the matrix are planning identifiers, not evidence that tests already 
 
 Public profile/catalogue/availability publication, public enquiries, moderation, verification claims, platform support data access, full general-ledger posting, statutory tax filing, fiscal-device integrations, and regulated product workflows remain outside this matrix unless Specification 25 is formally amended and the relevant legal, operational, security, and product gates pass.
 
+
+
+## 4.10 Common command, query, and response envelope
+
+The transport is not selected yet. The following is a transport-neutral semantic contract. REST/JSON, typed RPC, or another transport must preserve these meanings. It is not permission to expose a generic command endpoint that accepts arbitrary domain mutations.
+
+### 4.10.1 Command request envelope
+
+Every state-changing application command has:
+- **operation ID:** stable logical operation identifier from the operation registry;
+- **command ID:** unique client-generated identifier for this attempted business intent;
+- **idempotency key:** stable across retries of the same semantic request; scoped to authenticated actor, tenant, operation, and resource as appropriate;
+- **resource reference:** aggregate type and ID for existing resources; creation commands omit an existing ID;
+- **expected version:** required for updates/transitions against an existing aggregate, except where a create command has no prior version;
+- **payload:** only operation-specific business fields, validated against an explicit schema;
+- **reason/evidence references:** mandatory for corrections, exceptions, disputes, restrictions, adjustments, and other policy-defined actions;
+- **client context:** optional client version, locale, timezone, and device reference for diagnostics and presentation only.
+
+The server derives authenticated actor, tenant membership, branch scope, effective permissions, service identity, and trusted device/session state. Client-supplied actor IDs, role names, permission lists, tenant IDs, branch IDs, professional status, approval identity, and authoritative timestamps must be rejected or ignored as authorization inputs. Where tenant/branch identifiers are needed for routing, the server verifies them against the authenticated membership and resource ownership before processing.
+
+The request schema for each operation must state whether each field is required, optional, nullable, server-generated, immutable after submission, or prohibited. Unknown fields are rejected. A client cannot set aggregate status directly.
+
+### 4.10.2 Command result envelope
+
+A successful command response identifies:
+- operation ID and command ID;
+- authoritative aggregate type, ID, and new version;
+- committed domain state and a safe result summary;
+- server commit timestamp;
+- durable result reference for later retrieval after timeout/reconnect;
+- whether an external side effect remains pending;
+- correlation ID.
+
+A response may report a committed internal sale while payment remains pending, or an approved refund while provider execution remains pending. It must never collapse these into a generic “success” boolean that implies every downstream effect is complete.
+
+A duplicate request with the same idempotency key and semantic payload returns the original durable result/reference. The same key with a different semantic payload returns a stable conflict error. A client timeout triggers outcome lookup by the original command/idempotency reference; it never justifies a new business command.
+
+### 4.10.3 Query request and response envelope
+
+Queries declare:
+- logical query ID and API contract version;
+- server-derived tenant/branch/resource scope;
+- explicit field-level permission requirements;
+- allow-listed filters, sort fields, and maximum page size;
+- opaque cursor where cursor pagination is used;
+- source-of-truth versus projection/read-model designation;
+- freshness/as-of metadata and stale/unknown state where relevant;
+- data classification and permitted export behavior.
+
+A query response includes the requested resource/list, stable IDs, resource versions where relevant, server as-of time, projection freshness when applicable, and a next cursor when another page exists. It does not include fields that the caller is not authorized to see. The server must not disclose whether a foreign-tenant resource exists through different error messages or timing behavior.
+
+### 4.10.4 Standard error code vocabulary
+
+The following stable codes are the minimum semantic set; exact HTTP/RPC status mapping depends on the transport:
+
+| Error code | Meaning | Client behavior |
+|---|---|---|
+| **UNAUTHENTICATED** | No valid authenticated identity/session | Re-authenticate through the approved flow |
+| **FORBIDDEN** | Authenticated but lacks the required permission/scope/evidence | Do not retry unchanged; show a safe denial |
+| **NOT_FOUND_OR_NOT_VISIBLE** | Resource absent or intentionally hidden by scope policy | Do not infer cross-tenant existence |
+| **VALIDATION_FAILED** | Field or business-rule validation failed before commit | Correct the identified fields; no authoritative change |
+| **RESOURCE_STATE_INVALID** | Command is not allowed from the current aggregate state | Refresh authorized state and use a valid workflow |
+| **VERSION_CONFLICT** | Expected version is stale | Refresh and explicitly resolve; never overwrite silently |
+| **IDEMPOTENCY_KEY_REUSED** | Same key was used with a different semantic request | Stop; create a new key only for a genuinely new intent |
+| **APPROVAL_REQUIRED** | An independent approval transition is required | Create/continue the approval workflow; do not retry as the same actor |
+| **EVIDENCE_REQUIRED** | Required source/credential/establishment evidence is missing or invalid | Provide/verify evidence for this exact capability only |
+| **OUTCOME_PENDING** | An external side effect or durable command result is not yet resolved | Query/reconcile the original attempt; do not repeat collection or execution |
+| **DEPENDENCY_UNAVAILABLE** | Required provider/service is unavailable | Preserve pending state and use bounded retry/recovery guidance |
+| **RATE_LIMITED** | Configured request limit reached | Honor retry guidance; do not create duplicate commands |
+| **INTERNAL_ERROR** | Unexpected server failure | Show correlation ID; do not expose internal details |
+
+Error responses include a server-generated correlation ID and localized safe message. They must not expose SQL, stack traces, provider secrets, raw provider payloads, hidden resource identifiers, or sensitive evidence.
+
+### 4.10.5 External callback and asynchronous job envelopes
+
+Provider callbacks and asynchronous job completions are not ordinary user commands:
+- callbacks authenticate a provider/service identity, verify provider signature/authenticity, validate schema, correlate to a known attempt, deduplicate, and persist evidence before a domain transition;
+- background jobs run under narrowly scoped service identities and revalidate job ownership, tenant scope, resource version, and idempotency;
+- job status is distinct from the business aggregate state;
+- retries are bounded and observable; unknown external outcomes enter reconciliation rather than being guessed;
+- the UI subscribes to authorized state-change events and may query a job status as a bounded recovery action, not poll continuously.
+
+The API contract/OpenAPI or equivalent schema must instantiate these envelopes per operation before coding. This common contract does not replace operation-specific request/response schemas, authorization rules, or acceptance tests.
+
 ## 5. Database architecture and integrity contract
 
 The database technology and hosting provider remain open. A relational transactional database, with PostgreSQL as a candidate, is the leading hypothesis because the domain requires relational integrity, multi-row transactions, uniqueness, concurrency control, and reporting. Validate it against hosting, operations, backup, regional availability, cost, and team expertise before selection.
