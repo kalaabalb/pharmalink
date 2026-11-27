@@ -28,18 +28,18 @@ This is an initial taxonomy; each event requires a schema and ownership review.
 
 | Domain | Candidate committed events |
 |---|---|
-| Organization | OrganizationCreated, OrganizationUpdated, OrganizationStatusChanged, OrganizationOwnershipTransferred, BranchCreated, BranchUpdated, BranchStatusChanged |
-| Membership and access | InvitationIssued, InvitationExpired, MembershipActivated, MembershipRestricted, MembershipRevoked, RoleAssignmentChanged, PermissionChanged, DeviceAccessRevoked |
-| Catalogue governance | CanonicalCatalogueVersionPublished, CatalogueEntryLinked, TenantCatalogueEntryChanged, CatalogueCorrectionProposed, CatalogueCorrectionReviewed, BarcodeMappingReviewed |
-| Inventory ledger | StockMovementCommitted, StockCountPosted, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
-| Branch transfer | StockTransferDispatched, StockTransferReceived |
-| Purchasing | SupplierChanged, PurchaseOrderSubmitted, PurchaseOrderApproved, PurchaseOrderIssued, PurchaseOrderCancelled, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentStatusChanged |
-| Sales/POS | SaleCommitted, SaleVoided, ReturnAccepted, RefundStatusChanged, CashSessionOpened, CashSessionClosed |
-| Payments | PaymentAttemptInitiated, PaymentStatusChanged, PaymentReconciled |
-| Finance | FinancialEntryPosted, FinancialEntryReversed, ReconciliationBatchImported, ReconciliationExceptionResolved, FinancialPeriodClosed |
+| Organization | OrganizationCreated, OrganizationUpdated, OrganizationCapabilityRestricted, OrganizationOwnershipTransferred, BranchCreated, BranchUpdated, BranchRestricted, ServiceEntitlementChanged |
+| Membership and access | MembershipInvitationCreated, MembershipInvitationExpired, MembershipActivated, MembershipRestricted, MembershipRevoked, RoleGrantChanged, DeviceRegistered, DeviceRevoked |
+| Catalogue governance | CanonicalCatalogueVersionPublished, CatalogueEntryLinked, TenantCatalogueItemCreated, TenantCatalogueItemUpdated, TenantCatalogueItemDisabled, CatalogueCorrectionProposed, CatalogueCorrectionReviewed, BarcodeMappingReviewed |
+| Inventory ledger | StockMovementCommitted, StockCountRecorded, StockAdjustmentRequested, StockHoldApplied, StockHoldReleased, RecallNoticeRecorded, RecallDecisionRecorded, QualityDispositionRecorded |
+| Branch transfer | StockTransferDispatched, StockTransferReceived, StockTransferCancelled |
+| Purchasing | SupplierChanged, RequisitionSubmitted, RequisitionApproved, QuotationRecorded, PurchaseOrderSubmitted, PurchaseOrderApproved, PurchaseOrderIssued, PurchaseOrderCancelled, PurchaseOrderClosed, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceMatched, SupplierInvoiceExceptionResolved, SupplierInvoiceDisputed, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentInitiated, SupplierPaymentConfirmed, SupplierPaymentReconciled, SupplierBalanceReconciled |
+| Sales/POS | SaleCommitted, SaleDiscountApproved, SaleVoidRequested, SaleVoided, CustomerReturnSubmitted, CustomerReturnAccepted, CustomerReturnRejected, CustomerReturnDispositionRecorded, ReceiptReissued, CashSessionOpened, CashSessionCounted, CashSessionClosed |
+| Payments | PaymentInitiated, PaymentConfirmed, PaymentFailed, PaymentDisputed, RefundRequested, RefundApproved, RefundConfirmed, RefundFailed, PaymentReconciled |
+| Finance | CashMovementPosted, ReconciliationImported, ReconciliationMatched, ReconciliationExceptionResolved, FinancialEntryPosted, FinancialEntryReversed, FinancialPeriodClosed |
 | Quality | AffectedStockFlagged, QualityDispositionRecorded |
 | Public projection | PublicProfilePublicationConfigured, PublicProfilePublished, PublicProfilePaused, PublicProfileChanged, PublicCatalogueEntryPublished, PublicCatalogueEntryPaused, PublicAvailabilityConfirmed, PublicAvailabilityUpdated, PublicAvailabilityBecameStale, PublicEnquiryReceived, PublicReportSubmitted, ModerationCaseOpened, PublicContentSuppressed, ModerationDecisionRecorded, ModerationAppealFiled, VerificationClaimChanged |
-| Subscription | SubscriptionChanged, EntitlementChanged, InvoiceStatusChanged |
+| Subscription | SubscriptionChanged, ServiceEntitlementChanged, InvoiceStatusChanged |
 | Platform | VerificationDecisionRecorded, SupportCaseUpdated, PrivilegedAccessGranted, SecurityIncidentRecorded |
 | Integrations | ProviderConnectionChanged, IntegrationWebhookReceived, IntegrationEventProcessed, IntegrationDeliveryFailed, IntegrationReconciliationCompleted |
 | Privacy and data rights | DataSubjectRequestOpened, DataSubjectRequestResolved, PersonalDataCorrectionCommitted, PersonalDataDeletionCompleted, PrivacyIncidentRecorded, ProcessorDeletionConfirmed |
