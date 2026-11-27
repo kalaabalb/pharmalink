@@ -80,12 +80,22 @@ The surfaced standard identifies requirements concerning drug-shop practices, pr
 
 ## 6. Electronic Transactions Proclamation No. 1205/2020
 
-**Source surfaced:** secondary legal repository copy of Proclamation No. 1205/2020  
-https://www.metaappz.com/References/ethiopian_laws/federal/pr_1205_2020/en/pdf
+**Primary-source Gazette copy:** Federal Negarit Gazette, 26th Year No. 57, Addis Ababa, 30 June 2020; Proclamation No. 1205/2020 begins at Gazette page 12,581. The Ministry of Trade and Regional Integration hosts a copy of the Gazette:
+https://www.motri.gov.et/sites/default/files/resource/%E1%8B%A8%E1%8A%A4%E1%88%8C%E1%8A%AD%E1%83%...%20.pdf
 
-This source is not the preferred primary-source evidence for implementation. It indicates a legal framework for electronic transactions, but this register does not make conclusions about the validity of particular e-signature, e-commerce, payment, or pharmacy-ordering flows.
+**Official Ministry of Justice law-register copy:**  
+https://laws.moj.gov.et/registries/view/1414/am
 
-**Required follow-up:** obtain and verify the official Federal Negarit Gazette text and relevant implementing instruments. Review electronic records, signatures, consumer disclosures, contracting, evidence, intermediary responsibilities, and payment-provider obligations.
+The Gazette text identifies Proclamation No. 1205/2020 as the Electronic Transaction Proclamation and includes definitions for electronic commerce, electronic commerce operators, electronic commerce platform operators, electronic documents, electronic records, and electronic signatures. The Ministry of Justice registry hosts the Gazette record. This replaces the earlier secondary-repository-only citation.
+
+**Product implications proposed for legal review:**
+- Preserve electronic records and transaction evidence with integrity, access control, provenance, and reproducible export.
+- Do not treat a typed name, checkbox, OTP, or click as legally sufficient for every kind of signature or regulated approval without reviewing the applicable legal requirements and evidence standard.
+- Evaluate Pharmalink's legal role against the actual feature set. Private pharmacy-management software, public discovery, public enquiries, and any later marketplace/trading workflow may raise different questions; do not assume that the product's label determines its legal classification.
+- Before enabling public orders, matching that facilitates trading, payment collection, or other commerce, obtain a written assessment of the obligations applicable to the actual platform/operator model.
+- Review current implementing instruments and any subsequent amendments before relying on this proclamation for a production flow.
+
+**Not established by this initial review:** whether any proposed Pharmalink feature falls within a particular operator category, whether a particular electronic consent/signature mechanism is sufficient for a specific record, or the complete current set of implementing rules and sector-specific obligations. These require clause-level review by qualified Ethiopian counsel.
 
 ## 7. Initial regulatory product boundaries
 
