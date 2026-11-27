@@ -37,6 +37,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 21-external-integrations-and-provider-lifecycle-specification.md | Provider due diligence, webhooks, payment, messaging, maps, storage, outages, and exit | Draft |
 | 22-privacy-and-personal-data-lifecycle-specification.md | Data inventory, purpose limitation, notices, rights, retention, deletion, processors, and privacy incidents | Draft |
 | 23-user-experience-accessibility-and-localization-specification.md | Navigation, workflow feedback, accessibility, localization, responsive and offline UX | Draft |
+| 24-cross-module-transaction-and-implementation-contract.md | Shared transaction boundaries, state-machine rules, identity, authorization, event, and offline contracts | Draft |
 
 ## Review dimensions
 
