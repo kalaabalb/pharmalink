@@ -351,6 +351,53 @@ Provider callbacks and asynchronous job completions are not ordinary user comman
 
 The API contract/OpenAPI or equivalent schema must instantiate these envelopes per operation before coding. This common contract does not replace operation-specific request/response schemas, authorization rules, or acceptance tests.
 
+
+
+## 4.11 Critical command schema minimums
+
+The following are minimum semantic request/response requirements for high-impact operations. They are not final field names or wire schemas. The approved API contract must turn them into exact versioned schemas and operation tests.
+
+| Logical operation | Minimum request information | Server-controlled or prohibited client claims | Commit/result semantics |
+|---|---|---|---|
+| sale.commit | Sale ID, expected sale version, idempotency key, optional explicit client confirmation of the reviewed draft | Final total, tax result, payment status, stock balance, batch eligibility, cashier identity, tenant/branch authorization | Revalidate draft and current batch eligibility; atomically commit sale lines, price/tax snapshots, stock issue, audit, and outbox |
+| goods_receipt.commit | Receipt ID, expected receipt version, idempotency key | Accepted quantity, batch validity, available stock balance, supplier acceptance, actor identity | Revalidate inspected lines; atomically post accepted stock movements and receipt result; rejected/quarantined quantities stay unavailable |
+| payment.initiate | Sale ID, amount/currency intent, enabled method, idempotency key | Provider transaction ID before provider response, paid/confirmed status, settlement status | Create durable payment attempt; provider request outcome may remain pending/unknown |
+| payment.confirm.manual | Payment ID, expected payment version, amount/currency evidence, source/evidence reference, reason where required, idempotency key | Client assertion that payment is confirmed; fabricated bank/provider reference; initiator/approver identity | Independently authorize and verify evidence; commit confirmation or leave pending/disputed; audit reviewer |
+| payment.provider.callback | Authenticated provider identity, provider event/reference, signed payload, correlation to known attempt | User-supplied tenant/actor, unsigned status, arbitrary payment ID without correlation | Verify signature/schema/correlation; persist untrusted evidence; deduplicate; only then commit a valid payment transition |
+| payment.refund.approve | Refund request ID, expected version, approve/reject decision, reason/evidence where required | Refund-completed status, provider settlement, altered original payment | Commit approval decision only; execution remains asynchronous and separately confirmed |
+| customer_return.review | Return ID, expected version, accept/reject decision, reason, evidence and inspected line/condition facts | Client-created original sale relationship, automatic restock, automatic refund | Commit customer-return decision; inventory disposition and payment refund remain separate |
+| inventory.return.disposition | Accepted return ID, return-line IDs, actual quantity/unit, batch/condition, disposition decision, evidence, idempotency key | Client assertion that returned stock is saleable; fabricated batch/expiry; refund status | Inventory validates physical and regulatory eligibility; any stock movement is committed through the inventory ledger |
+| inventory.adjust.approve | Adjustment request ID, expected version, approve/reject decision, reason/evidence | Direct on-hand balance, fabricated count, requester identity | Commit approval; posting creates a linked stock movement and cannot overwrite the ledger |
+| inventory.transfer.dispatch / receive | Transfer ID, expected version, dispatched/received line quantities, batch/condition, discrepancy evidence, idempotency key | Client-computed source/destination balances; simultaneous availability at both branches | Dispatch moves quantity to in-transit; receipt posts accepted destination movement; discrepancy remains explicit |
+| supplier_invoice.approve | Invoice ID, expected version, match result reference, approve/reject decision, reason/evidence | Client assertion that a mismatch is resolved or payable has been paid | Commit invoice approval/dispute state under accounting policy; payment and settlement remain separate |
+| finance.cash_session.close | Session ID, expected version, counted amounts by currency/tender as supported, variance reason/evidence | Rewritten sale/payment totals, expected cash supplied by client as authority, silent variance suppression | Commit immutable close/count snapshot; variance is a linked exception, not a rewrite of source transactions |
+
+### 4.11.1 Server-side authority and derived values
+
+For the operations above and all other state-changing commands:
+- the server calculates authoritative totals, stock availability, eligibility, and state transitions from current records and approved policy;
+- clients may submit observed facts (for example, a physical count or received quantity), but the server validates scope, version, unit, evidence, and allowed transition;
+- provider/bank evidence is verified independently and remains linked to the source;
+- no command may set a status field directly;
+- the response identifies which aggregate committed and which dependent aggregates remain pending;
+- outbox events are emitted only for committed facts and are not proof of external settlement.
+
+### 4.11.2 Required operation-specific negative tests
+
+At minimum:
+- sale commit rejects stale price/tax configuration, expired/recalled/held stock, duplicate command, and concurrent oversell;
+- goods receipt rejects duplicate receipt, invalid batch/expiry, unit mismatch, and unaccepted/rejected lines;
+- manual payment confirmation rejects insufficient/invalid evidence, wrong amount/currency, wrong scope, and prohibited self-confirmation;
+- provider callback rejects invalid signatures, unknown attempts, replay, duplicate, and out-of-order events without corrupting state;
+- refund approval does not mark refund complete and cannot be replayed into duplicate execution;
+- return acceptance cannot directly make stock saleable or trigger refund;
+- stock disposition rejects mismatched batch/quantity and requires inventory permission independently of return review;
+- stock adjustment and transfer enforce expected versions and prevent duplicated or negative movements;
+- invoice approval cannot clear unresolved dispute or mark supplier payment settled;
+- cash close cannot rewrite source sales/payments or conceal variance.
+
+The operation-specific schema and test set must be approved with the relevant domain specification. A generic JSON schema alone does not establish business correctness.
+
 ## 5. Database architecture and integrity contract
 
 The database technology and hosting provider remain open. A relational transactional database, with PostgreSQL as a candidate, is the leading hypothesis because the domain requires relational integrity, multi-row transactions, uniqueness, concurrency control, and reporting. Validate it against hosting, operations, backup, regional availability, cost, and team expertise before selection.
