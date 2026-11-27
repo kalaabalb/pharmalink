@@ -116,7 +116,7 @@ If any included journey cannot be completed without a manual database edit, deve
 | Legal/regulatory boundary | Current source register and qualified review for establishment/product/action scope | Keep affected capability disabled |
 | Data and catalogue readiness | Provenance, identity rules, import rights, correction process | Do not import or publish unverified catalogue |
 | Transaction integrity | Concurrency, idempotency, reversal, reconciliation, and negative tests | Block release |
-| Authorization and privacy | Tenant/branch isolation, action-specific credential gates, privacy assessment, export tests, and approved role grants for every canonical permission used by the release | Block release |
+| Authorization and privacy | Tenant/branch isolation, the approved action-policy registry for establishment/professional evidence (including explicit no-evidence-required decisions), privacy assessment, export tests, and approved role grants for every canonical permission used by the release | Block release |
 | Operational readiness | Monitoring, alert ownership, incident process, support path, provider outage plan | Block production launch |
 | Backup and recovery | Restore drill, integrity comparison, recovery time evidence | Block production launch |
 | Deployment and migration | Reproducible environment, versioned migrations, rollback/forward-fix plan, release verification | Block production launch |
