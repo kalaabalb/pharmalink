@@ -102,7 +102,7 @@ If any included journey cannot be completed without a manual database edit, deve
 | Legal/regulatory boundary | Current source register and qualified review for establishment/product/action scope | Keep affected capability disabled |
 | Data and catalogue readiness | Provenance, identity rules, import rights, correction process | Do not import or publish unverified catalogue |
 | Transaction integrity | Concurrency, idempotency, reversal, reconciliation, and negative tests | Block release |
-| Authorization and privacy | Tenant/branch isolation, credential/action gates, privacy assessment, export tests | Block release |
+| Authorization and privacy | Tenant/branch isolation, action-specific credential gates, privacy assessment, export tests, and approved role grants for every canonical permission used by the release | Block release |
 | Operational readiness | Monitoring, alert ownership, incident process, support path, provider outage plan | Block production launch |
 | Backup and recovery | Restore drill, integrity comparison, recovery time evidence | Block production launch |
 | Deployment and migration | Reproducible environment, versioned migrations, rollback/forward-fix plan, release verification | Block production launch |
@@ -147,6 +147,7 @@ The release candidate is ready for implementation only when:
 - each included journey has complete, cross-consistent specifications;
 - no critical unresolved question is hidden in code assumptions;
 - authoritative data ownership, state machines, transaction boundaries, permissions, events, privacy, retention, and recovery are defined;
+- every enabled action maps to a canonical permission identifier, approved role/scope grant, approval rule, audit event, and positive/negative authorization tests;
 - testable acceptance criteria exist for normal, alternate, denied, failure, retry, concurrency, offline, and recovery cases;
 - architecture and provider choices are justified by the actual workflows;
 - legal/accounting review is complete for the enabled capabilities;
