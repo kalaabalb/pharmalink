@@ -198,6 +198,12 @@ The client must not decide whether an action is authorized. Hidden UI controls a
 - A platform support agent cannot access tenant data without an approved case-scoped grant.
 - A reviewer cannot approve their own evidence submission.
 - A credential or establishment-evidence expiry blocks only the capability that depends on it.
+- A permission grant cannot override an action-policy entry marked `unresolved`, or a required establishment/professional evidence check that is missing, expired, revoked, suspended, out of scope, or bound to another person/establishment/branch.
+- The client cannot choose the action-policy ID/version, jurisdiction, establishment category, product classification, exemption, or evidence-verification outcome.
+- A policy lookup with an unknown jurisdiction, ambiguous product classification, or unsupported establishment category blocks only the affected regulated action and returns a safe review-required outcome; ordinary private management remains usable.
+- A delayed approval/execution rechecks the current policy version and required evidence; a credential or establishment status changed after the original request cannot be reused without revalidation.
+- Evidence submission, upload, or self-entered licence number never produces a verified status without the configured authoritative/manual review.
+- Evidence access is restricted and audited; raw evidence documents do not appear in logs, events, analytics, or push notifications.
 
 ## 10. Approval and maintenance
 
