@@ -29,6 +29,7 @@ A person may hold multiple roles. The effective permission set is the union of e
 | branch.read | Yes | Assigned | Assigned | Assigned | Assigned | Assigned | Assigned | Read-only grant | No default | Branch scope |
 | branch.manage | Yes | Assigned if delegated | No by default | No | No | No | No | No | No default | Owner or delegated manager; scope-limited |
 | membership.invite | Yes | If delegated | No by default | No | No | No | No | No | No default | Invitation scope and intended role/branch required |
+| membership.accept | Self | Self | Self | Self | Self | Self | Self | Self | No default | Authenticated invitee accepts only the invitation addressed to them |
 | membership.revoke | Yes | If delegated | No | No | No | No | No | No | No default | Revocation invalidates access within defined objective |
 | role.assign / role.revoke | Yes | If delegated | No | No | No | No | No | No | No default | Cannot grant permissions beyond assigner's authority |
 | device.manage | Yes | If delegated | No by default | No | No | No | No | No | No default | Register/revoke devices for tenant/branch |
@@ -92,7 +93,9 @@ A person may hold multiple roles. The effective permission set is the union of e
 | finance.read | Yes | Limited | No by default | No | No | Limited | Yes | Read-only grant | No default | Branch/tenant scope |
 | finance.reconcile | Yes if delegated | No by default | No | No | No | No | Yes | No | No default | Source evidence and exception handling |
 | finance.export | Yes | If delegated | No | No | No | No | Yes | Read-only grant | No default | Sensitive export audit |
-| cash_session.open / close | Yes | Yes | If granted | Open; close if policy permits | No | No | Review | No | No default | Cashier/session attribution and count |
+| finance.cash_session.open | Yes | Yes | If granted | Open if assigned | No | No | No | No | No default | Cashier/session and till scope |
+| finance.cash_session.count | Yes | Yes | If granted | Count own session if policy permits | No | No | Review if granted | No | No default | Count does not close or rewrite the session |
+| finance.cash_session.close | Yes if authorized | If delegated | If granted | Close own session only if policy permits | No | No | Review/close if granted | No | No default | Variance policy and separation apply |
 
 ## 6. Public participation and platform operations
 
@@ -176,7 +179,7 @@ The following identifiers are the canonical draft vocabulary. The module specifi
 
 | Domain | Canonical permission identifiers | Source |
 |---|---|---|
-| Identity and organization | `account.register`, `account.sign_in`, `organization.read`, `organization.manage`, `branch.read`, `branch.manage`, `membership.invite`, `membership.revoke`, `role.assign`, `role.revoke`, `device.manage` | This specification; Spec 20 |
+| Identity and organization | `account.register`, `account.sign_in`, `organization.read`, `organization.manage`, `branch.read`, `branch.manage`, `membership.invite`, `membership.accept`, `membership.revoke`, `role.assign`, `role.revoke`, `device.manage` | This specification; Spec 20 |
 | Catalogue | `catalogue.read`, `catalogue.search`, `catalogue.export`, `tenant_catalogue.create`, `tenant_catalogue.update`, `tenant_catalogue.disable`, `catalogue_correction.propose`, `catalogue_correction.review`, `catalogue_correction.approve`, `barcode_mapping.propose`, `barcode_mapping.review`, `regulatory_classification.read`, `regulatory_classification.review` | Spec 16 |
 | Inventory | `inventory.read`, `inventory.receive`, `inventory.count`, `inventory.adjust.request`, `inventory.adjust.approve`, `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.hold`, `inventory.release`, `inventory.disposal.request`, `inventory.disposal.approve`, `inventory.return.disposition`, `inventory.export` | Spec 13 |
 | Supplier and purchasing | `supplier.read`, `supplier.create`, `supplier.update`, `supplier.block`, `supplier.sensitive_data.read`, `requisition.create`, `requisition.submit`, `requisition.approve`, `quotation.record`, `purchase_order.create`, `purchase_order.submit`, `purchase_order.approve`, `purchase_order.issue`, `purchase_order.cancel`, `goods_receipt.create`, `goods_receipt.accept`, `supplier_invoice.record`, `supplier_invoice.match`, `supplier_invoice.exception.resolve`, `supplier_invoice.dispute`, `supplier_invoice.approve`, `supplier_return.create`, `supplier_return.approve`, `supplier_payment.initiate`, `supplier_payment.confirm`, `supplier_payment.reconcile`, `purchasing.export` | Spec 15 |
