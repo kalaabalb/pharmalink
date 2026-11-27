@@ -183,6 +183,25 @@ A failed printer or email must not undo a committed sale. Reprinting must be mar
 - Duplicate void/refund requests must be idempotent.
 - Late corrections and closed accounting periods require an explicit approval and accounting treatment.
 
+### 9.1 Return acceptance, physical disposition, restock eligibility, and refund are independent decisions
+
+The return workflow must never collapse four different facts into one “return completed” status:
+
+1. **Customer-return review:** determines whether the request is accepted under the retailer's documented return policy and records the original sale/line, claimant or permitted anonymous reference, reason, time, actor, evidence, and inspected facts.
+2. **Physical custody and condition:** records whether goods were actually received, their quantity, packaging/seal/temperature or other condition facts where relevant, batch/expiry identity, and chain-of-custody evidence. A customer statement or accepted return request is not proof that goods physically returned.
+3. **Inventory disposition:** separately determines quarantine/hold, supplier return, disposal, or (only where legally and operationally permitted) release to saleable stock. Returned medicine/product stock is non-saleable by default until the exact category-specific policy and required inspection/sign-off permit release. Do not assume an unopened package, short elapsed time, or a successful refund makes it eligible for resale.
+4. **Financial refund:** separately requests, approves where required, executes, and confirms a refund against the original payment/cash transaction. A return acceptance does not prove a refund; a refund does not prove physical return or authorize stock restoration.
+
+Required invariants:
+
+- No return path may directly increment available stock or set a batch to saleable. Only the Inventory-owned disposition operation may create a stock-ledger effect after server-side validation.
+- If a product category's return-to-sale eligibility rule is unresolved, the system may record the return and preserve evidence, but must keep the affected goods held/quarantined and unavailable for sale.
+- A refund may be approved or completed while inventory disposition remains pending, or inventory disposition may be completed without a refund, only where the documented retailer/legal policy allows that combination. The system must preserve the independent states and their links.
+- Partial returns and partial refunds must identify exact original sale lines, quantities, amounts, and currency. They must not reverse unrelated lines or stock movements.
+- A return that cannot be linked to a source sale must enter an exception workflow; it must not be silently admitted as saleable inventory.
+- Repeated review, disposition, or refund commands must be idempotent and must not create duplicate stock or financial effects.
+- Any required professional inspection, witness, or establishment-linked approval is evaluated for the exact product category and action. Ordinary staff may record observations and custody facts where permitted without being represented as the professional approver.
+
 ## 10. Cash sessions and reconciliation
 
 If cash register/shift functionality is included in the first release, define:
