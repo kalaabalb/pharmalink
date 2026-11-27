@@ -123,6 +123,11 @@ Do not invent service-level objectives. Establish targets after user research, r
 - backup restore verification frequency;
 - security incident acknowledgement and response targets.
 
+
+## 10A. Operational readiness and incident response
+
+The operating model, ownership register, alerting, severity model, support-access controls, event/provider runbooks, and post-deployment verification are specified in [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). This is a blocking production gate: the team must demonstrate that named owners can execute the runbooks, not merely that documents exist.
+
 ## 11. Approval record
 
 Every release gate should record scope, evidence links, test results, known limitations, unresolved risks, approver, date, and any time-bounded exception. Exceptions must not silently become permanent requirements.
