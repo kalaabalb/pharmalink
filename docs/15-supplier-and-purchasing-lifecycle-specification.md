@@ -161,6 +161,12 @@ No payment integration is production-enabled until provider access, security, se
 
 Candidate permissions:
 - supplier.read;
+- requisition.read;
+- quotation.read;
+- purchase_order.read;
+- goods_receipt.read;
+- supplier_invoice.read;
+- supplier_payment.read;
 - supplier.create;
 - supplier.update;
 - supplier.block;
