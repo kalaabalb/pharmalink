@@ -94,13 +94,13 @@ The product must support review queues and traceable status changes for stock th
 
 ## 9. Public discovery and availability publication
 
-1. A pharmacy explicitly opts into public listing and selects the fields it will publish.
-2. The platform verifies the establishment status according to its documented verification method.
-3. The branch publishes only approved public profile information.
-4. Availability is derived from eligible branch stock and a successful server-side confirmation.
-5. The public view includes a last-confirmed time and freshness state.
+1. An authorized organization representative explicitly opts the organization/branch into a specific public capability and selects the fields to publish.
+2. The platform evaluates eligibility and the establishment evidence required for that exact capability under the reviewed rules for the relevant jurisdiction and establishment category. Do not infer that every public field requires the same evidence.
+3. A public verification claim is shown only when the exact subject, evidence type, issuer, verification method, scope, and current status support that claim. If verification cannot be completed, do not imply that it has been completed. Whether a non-verified profile may publish at all remains a legal/product decision for the launch jurisdiction.
+4. The branch publishes only approved, intentionally public profile information. Private operational records remain inaccessible through public endpoints.
+5. Availability is derived from eligible branch stock and a successful server-side confirmation. The public view includes a last-confirmed time and freshness state.
 6. When the data exceeds the freshness threshold, it becomes stale or unknown rather than remaining “available”.
-7. A pharmacy can pause publication or a specific listing, with an auditable reason.
+7. A pharmacy can pause publication or a specific listing, with an auditable reason. Withdrawal removes the public projection but preserves private source records and publication history.
 8. Public discovery is informational only in the initial scope; it does not reserve stock, accept prescriptions, authorize dispensing, or guarantee that stock remains available.
 
 ## 10. Offline operation and recovery
@@ -133,14 +133,15 @@ For every workflow, create tests for:
 - reversal/correction path;
 - data export and retention implications.
 
-## 14. Management-only onboarding and optional public participation
+## 14. Management-only mode and workflow linkage
 
-1. A retailer creates an account and an organization profile using the minimum information required to establish the tenant and secure its access.
-2. The retailer selects management-only use by default; no public listing or selling is enabled implicitly.
-3. The retailer configures branches, staff, roles, catalogue, suppliers, inventory, and other permitted management capabilities.
-4. The retailer may separately opt into a public business profile, product discovery, and availability publication.
-5. Each public capability has its own eligibility checks, disclosure, publication controls, and pause/withdrawal behavior.
-6. Any future ordering, reservation, payment, or delivery capability is a separate opt-in workflow and must not be assumed merely because a pharmacy is listed.
-7. Professional credentials are requested only when a specific regulated workflow or legal verification requirement needs them. A missing professional credential must not block unrelated management-only use.
+The authoritative organization onboarding and branch-setup sequence is defined in [Workflow 2](#2-organization-onboarding-and-branch-setup). This section is retained as a cross-workflow invariant:
 
-A retailer can turn public participation off while retaining its management account and historical records. Platform access does not itself certify that the establishment is licensed, nor does it authorize any regulated professional activity.
+- Management-only is the default operating mode and a complete supported product mode.
+- Account creation, organization membership, and ordinary permitted management use do not require an individual's professional licence.
+- Establishment evidence and professional credentials are separate evidence records. They are requested only for a specific operation or verification claim that requires them.
+- Public profile, product discovery, availability publication, and any future commerce capability are independent opt-ins with separate eligibility and lifecycle controls.
+- Turning off public participation must not disable private management or erase private operational history.
+- Platform access is not proof of establishment licensing and does not authorize a regulated professional act.
+
+These boundaries apply to all workflows in this document. A capability-specific legal review may restrict a particular operation, but must not be converted into an unrelated account-wide gate.
