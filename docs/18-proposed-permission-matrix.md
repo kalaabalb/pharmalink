@@ -255,6 +255,7 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `role.revoke` | Owner; delegated Manager | Immediate server-side re-evaluation and documented revocation objective |
 | `device.manage` | Owner; delegated Manager | Tenant/branch device ownership and revocation audit |
 | `catalogue.read`, `catalogue.search` | Owner, Manager, assigned Professional, Cashier, Inventory, Purchasing; Accountant/Auditor read-only where needed | Tenant catalogue and permitted shared catalogue only |
+| `catalogue.export` | Owner; Manager, Inventory, Purchasing, Accountant, Auditor only with explicit scope grant | Tenant-scoped export with audit and field minimization |
 | `tenant_catalogue.create`, `tenant_catalogue.update` | Owner, Manager; individually assigned Inventory/Purchasing/Professional | Tenant-local catalogue; provenance and version history |
 | `tenant_catalogue.disable` | Owner; delegated Manager | Preserve references from historical transactions |
 | `catalogue_correction.propose` | Owner, Manager, assigned Professional, Inventory, Purchasing | Proposal only; cannot mutate canonical shared catalogue |
@@ -285,6 +286,7 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `supplier_invoice.approve` | Accountant or Owner/Manager specifically delegated; not the requester | Approved matching/accounting policy and separation of duties |
 | `supplier_payment.initiate` | Owner; Purchasing only if explicitly assigned | Approved obligation, amount/currency, idempotency and evidence |
 | `supplier_payment.confirm`, `supplier_payment.reconcile` | Accountant; Owner only under a separately approved control model | Authoritative bank/provider evidence; initiation is not settlement |
+| `sale.read` | Owner, Manager, assigned Professional, Cashier for permitted sales history; Accountant/Auditor read-only where needed | Original sale and permitted branch scope |
 | `sale.create`, `sale.commit` | Cashier, Owner, Manager; Professional if assigned | Branch/session; category eligibility and exact regulated-action gate |
 | `sale.discount.request` | Cashier, Owner, Manager, assigned Professional | Threshold and reason |
 | `sale.discount.approve` | Owner or delegated Manager; not requester | Threshold and separation |
