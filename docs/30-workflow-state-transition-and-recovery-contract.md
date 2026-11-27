@@ -174,7 +174,7 @@ Batch expiry, recall, damage, disposal, returns, and valuation follow Specificat
 | Supplier invoice | Approved | Record settlement allocation → Partially paid / Paid | Only after independently confirmed supplier payment and reconciliation; never from invoice approval alone |
 | Refund | absent | Request → Pending approval or Pending provider | payment.refund.request; original payment/sale, eligible amount, reason |
 | Refund | Pending approval | Approve/reject → Approved/Rejected | payment.refund.approve; authority, amount and separation checks |
-| Refund | Approved | Initiate → Pending provider/cash execution | Provider/cash reference and idempotency key |
+| Refund | Approved | Internal execution → Pending provider/cash execution | Payments invokes internal `payment.refund.execute` only after committed approval and policy revalidation; no client endpoint or separate role grant; stable idempotency identity and provider/cash reference |
 | Refund | Pending execution | Confirm/fail/dispute → Refunded / Failed / Disputed | Authoritative confirmation/reconciliation; no completed label on initiation alone |
 
 **Sale/payment separation:** the sale may be committed while its payment is pending only if the approved sales policy permits it. If policy requires payment first, the method-specific orchestration must reserve/confirm payment safely before the sale commit and handle uncertain provider outcomes without duplicate collection. The product owner and accounting/legal reviewers must approve the ordering for each enabled payment method.
