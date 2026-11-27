@@ -160,3 +160,48 @@ This matrix must be reconciled with every module's permission vocabulary before 
 - owner and review date.
 
 Do not create broad permissions such as `admin.all`, `pharmacy.verified`, or `professional.user` as authorization shortcuts. Emergency access must be separate, time-limited, approved, alerted, and reviewed.
+
+
+## 11. Canonical permission vocabulary and reconciliation status
+
+The existing role tables above are a high-level draft. Module specifications define more granular actions. A broad row such as `inventory.receive` or `sale.create / commit` must not be interpreted as an automatic grant of every related approval, export, correction, or reconciliation action.
+
+The following identifiers are the canonical draft vocabulary. The module specification is the source of the action's business meaning; this register is the source of the stable identifier. **Role grants for identifiers marked “grant review required” are not approved and must not be enabled in production by inference.** The role-by-role grant table must be completed against the approved first-release workflows before implementation.
+
+| Domain | Canonical permission identifiers | Source |
+|---|---|---|
+| Identity and organization | `account.register`, `account.sign_in`, `organization.read`, `organization.manage`, `branch.read`, `branch.manage`, `membership.invite`, `membership.revoke`, `role.assign`, `role.revoke`, `device.manage` | This specification; Spec 20 |
+| Catalogue | `catalogue.read`, `catalogue.search`, `catalogue.export`, `tenant_catalogue.create`, `tenant_catalogue.update`, `tenant_catalogue.disable`, `catalogue_correction.propose`, `catalogue_correction.review`, `catalogue_correction.approve`, `barcode_mapping.propose`, `barcode_mapping.review`, `regulatory_classification.read`, `regulatory_classification.review` | Spec 16 |
+| Inventory | `inventory.read`, `inventory.receive`, `inventory.count`, `inventory.adjust.request`, `inventory.adjust.approve`, `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.hold`, `inventory.release`, `inventory.disposal.request`, `inventory.disposal.approve`, `inventory.export` | Spec 13 |
+| Supplier and purchasing | `supplier.read`, `supplier.create`, `supplier.update`, `supplier.block`, `supplier.sensitive_data.read`, `requisition.create`, `requisition.submit`, `requisition.approve`, `quotation.record`, `purchase_order.create`, `purchase_order.submit`, `purchase_order.approve`, `purchase_order.issue`, `purchase_order.cancel`, `goods_receipt.create`, `goods_receipt.accept`, `invoice.record`, `invoice.approve`, `supplier_return.create`, `supplier_return.approve`, `supplier_payment.initiate`, `supplier_payment.confirm`, `supplier_payment.reconcile`, `purchasing.export` | Spec 15 |
+| Sales and payments | `sale.create`, `sale.read`, `sale.commit`, `sale.discount.request`, `sale.discount.approve`, `sale.void.request`, `sale.void.approve`, `payment.initiate`, `payment.confirm_manual`, `payment.refund.request`, `payment.refund.approve`, `receipt.read`, `receipt.reissue`, `sales.export` | Spec 14 |
+| Cash and finance | `finance.read`, `finance.cashbook.read`, `finance.cash_movement.create`, `finance.cash_session.open`, `finance.cash_session.count`, `finance.cash_session.close`, `finance.reconcile`, `finance.reconciliation_exception.resolve`, `finance.expense.create`, `finance.expense.approve`, `finance.journal.read`, `finance.journal.post`, `finance.journal.reverse`, `finance.period.close`, `finance.export`, `finance.sensitive_payment_data.read` | Spec 17; Spec 14 |
+| Public participation | `public_profile.configure`, `public_profile.publish`, `public_profile.pause`, `public_profile.update_contact`, `public_profile.update_location`, `public_catalogue.configure`, `public_catalogue.publish`, `public_catalogue.pause`, `public_availability.confirm`, `public_availability.publish`, `public_availability.pause`, `public_enquiry.read`, `public_report.submit` | Spec 19 |
+| Moderation and verification | `moderation.case.read`, `moderation.case.triage`, `moderation.content.suppress`, `moderation.decision.record`, `moderation.appeal.review`, `verification.evidence.submit`, `verification.evidence.review`, `verification.claim.publish` | Spec 19; Spec 20 |
+| Platform operations and support | `support.case.create`, `support.tenant_data.access`, `platform.security.admin` | This specification; Specs 20, 28 |
+
+### 11.1 Naming normalization
+
+- Cash-session actions use the `finance.cash_session.*` namespace because the session creates and reconciles cash-control records. Specification 14 must use these same identifiers when describing POS permissions.
+- Cash and financial reconciliation actions use `finance.reconcile` and `finance.reconciliation_exception.resolve`; generic `reconciliation.read/resolve` must not be used as a separate ambiguous grant.
+- Public profile/catalogue/availability identifiers in Specification 19 are canonical. Generic `listing.configure` and `listing.publish` are descriptive labels only and are not permission identifiers.
+- `catalogue_correction.review` and `catalogue_correction.approve` are distinct actions. A reviewer may prepare a recommendation without having final approval authority.
+- Compound labels in the earlier role tables (for example, `sale.create / commit`) are explanatory groupings, not a single permission that bypasses the separate draft and commit checks.
+
+### 11.2 Required grant-resolution work
+
+For every identifier above, the approved matrix must record:
+- allowed role(s) and whether the grant is default, delegated, or individually assigned;
+- tenant, branch, resource, and platform-global scope;
+- requester/approver separation and amount or risk thresholds;
+- professional credential or establishment-evidence dependency, if any, for this exact action;
+- entitlement and public opt-in dependency, if any;
+- re-authentication and audit requirements;
+- online/offline eligibility and revocation behavior;
+- positive, negative, cross-tenant, cross-branch, and revoked-grant tests.
+
+A role title never grants a permission by implication. In particular, an owner, manager, or professional does not receive every action in the domain automatically. No blanket professional credential gate may be introduced for account access or ordinary management.
+
+### 11.3 Implementation blocker
+
+The current role tables do not yet assign every canonical identifier to roles with sufficient precision. This is an explicit unresolved authorization gap, not permission to let developers guess. Before implementing a capability, complete its role/scope/approval rows and tests. Capabilities without an approved grant mapping remain disabled or unavailable in production.
