@@ -42,6 +42,7 @@ This is an initial taxonomy; each event requires a schema and ownership review.
 | Subscription | SubscriptionChanged, EntitlementChanged, InvoiceStatusChanged |
 | Platform | VerificationDecisionRecorded, SupportCaseUpdated, PrivilegedAccessGranted, SecurityIncidentRecorded |
 | Integrations | ProviderConnectionChanged, IntegrationWebhookReceived, IntegrationEventProcessed, IntegrationDeliveryFailed, IntegrationReconciliationCompleted |
+| Privacy and data rights | DataSubjectRequestOpened, DataSubjectRequestResolved, PersonalDataCorrectionCommitted, PersonalDataDeletionCompleted, PrivacyIncidentRecorded, ProcessorDeletionConfirmed |
 
 Events must describe facts, not commands. “SaleCommitted” means the transaction is committed; “TryToCommitSale” is a command, not an event.
 
