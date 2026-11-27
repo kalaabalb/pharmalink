@@ -40,6 +40,7 @@ A person may hold multiple roles. The effective permission set is the union of e
 | Permission | Owner | Manager | Professional | Cashier | Inventory | Purchasing | Accountant | Auditor | Platform support | Scope / conditions |
 |---|---|---|---|---|---|---|---|---|---|---|
 | catalogue.read / catalogue.search | Yes | Yes | Yes | Yes | Yes | Yes | Read if needed | Read-only grant | No default | Tenant data and permitted shared catalogue |
+| catalogue.export | Yes | If delegated | No by default | No | If granted | If granted | If granted | Read-only grant | No default | Tenant-scoped export with audit and field minimization |
 | tenant_catalogue.create / update | Yes | Yes | If granted | No by default | If granted | If granted | No | No | No default | Tenant-local data only |
 | catalogue_correction.propose | Yes | Yes | Yes | If granted | If granted | If granted | No | If granted | No default | Proposal does not mutate canonical data |
 | catalogue_correction.approve | No self-approval | No self-approval | Only if designated reviewer | No | No | No | No | No | Platform reviewer only | Platform-global governance, separated from proposal |
@@ -83,6 +84,7 @@ A person may hold multiple roles. The effective permission set is the union of e
 
 | Permission | Owner | Manager | Professional | Cashier | Inventory | Purchasing | Accountant | Auditor | Platform support | Scope / conditions |
 |---|---|---|---|---|---|---|---|---|---|---|
+| sale.read | Yes | Yes | If granted | Assigned sales only | No by default | No | Limited report | Read-only grant | No default | Original sale and permitted branch scope |
 | sale.create / commit | Yes if granted | Yes if granted | Yes if granted | Yes if granted | No by default | No | No | No | No default | Item eligibility and any regulated-action gate evaluated separately |
 | sale.discount.request | Yes | Yes | If granted | If granted | No | No | No | No | No default | Threshold and reason |
 | sale.discount.approve | Not self-approve where required | If delegated | If delegated | No self-approval | No | No | No | No | No default | Amount/role policy |
