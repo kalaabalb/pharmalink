@@ -185,7 +185,7 @@ Candidate permissions:
 - supplier_payment.reconcile;
 - purchasing.export.
 
-The final permission matrix must define tenant/branch scope, thresholds, approval separation, re-authentication, sensitive-data access, audit events, and offline eligibility. Owners do not automatically bypass approval or regulated-action constraints.
+Canonical identifiers and the unresolved role-grant register are maintained in [Specification 18](18-proposed-permission-matrix.md). The final grant mapping must define tenant/branch scope, thresholds, approval separation, re-authentication, sensitive-data access, audit events, and offline eligibility. Owners do not automatically bypass approval or regulated-action constraints.
 
 ## 12. Offline and event-driven behavior
 
