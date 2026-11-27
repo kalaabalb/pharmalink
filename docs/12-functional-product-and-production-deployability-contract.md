@@ -78,6 +78,9 @@ The implementation specification must define, at minimum:
 
 ## 5. Architecture and implementation specifications required
 
+The module specifications are complemented by [Specification 21](21-external-integrations-and-provider-lifecycle-specification.md), which governs external provider selection, contracts, secrets, webhooks, outage handling, and provider exit. No third-party capability is production-enabled merely because a sandbox integration succeeds.
+
+
 Before coding a module, its specification must include:
 - module responsibility and explicit non-responsibilities;
 - authoritative data owner and database transaction boundary;
