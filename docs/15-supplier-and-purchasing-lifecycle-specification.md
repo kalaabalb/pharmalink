@@ -176,8 +176,10 @@ Candidate permissions:
 - purchase_order.cancel;
 - goods_receipt.create;
 - goods_receipt.accept;
-- invoice.record;
-- invoice.approve;
+- supplier_invoice.record;
+- supplier_invoice.match;
+- supplier_invoice.exception.resolve;
+- supplier_invoice.approve;
 - supplier_return.create;
 - supplier_return.approve;
 - supplier_payment.initiate;
