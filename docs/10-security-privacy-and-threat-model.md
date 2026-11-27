@@ -154,3 +154,8 @@ Verification evidence is confidential. Store the minimum necessary reference and
 ## 13. External provider security boundary
 
 External providers, webhooks, file storage, messaging, maps, and payment services are governed by [Specification 21](21-external-integrations-and-provider-lifecycle-specification.md). Provider callbacks are untrusted external inputs until authenticated, validated, replay-protected, and processed through an authorized domain command. Provider secrets and sensitive payloads must not enter client bundles, source control, or ordinary logs.
+
+
+## 14. Personal-data lifecycle requirements
+
+Detailed privacy controls—including purpose inventory, notices, data-subject requests, retention, deletion, processor management, cross-border data flows, and privacy incident response—are specified in [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md). Treat pharmacy transaction and medicine-search data as potentially health-revealing when linked to an identifiable person; do not use it for unrelated profiling or advertising.
