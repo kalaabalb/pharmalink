@@ -80,3 +80,16 @@ Do not lock the architecture or regulated workflows until:
 4. The public discovery boundary is validated with regulators or qualified counsel.
 5. The offline action matrix is approved.
 6. A first-release workflow set is selected and validated with real pharmacy operators.
+
+## 8. Cross-cutting access and continuity risks
+
+| Risk | Consequence | Required treatment |
+|---|---|---|
+| Establishment verification is incorrectly used as a universal platform gate | Legitimate management-only users are blocked; product policy is contradicted | Separate account, membership, management entitlement, establishment evidence, professional credential, and public-participation states |
+| A professional credential is required for ordinary staff accounts | Owners, cashiers, inventory staff, accountants, and other non-professional users cannot perform permitted work | Gate only the specific regulated action or claim that requires the credential |
+| A pending public review blocks private operations | A public-listing dispute or missing document interrupts pharmacy management | Separate public publication lifecycle from management-service lifecycle |
+| Disabling a listing deletes or hides operational source records | Loss of business history or inability to reconcile past activity | Public projections are reversible views; preserve authoritative private records and audit history |
+| Platform verification is presented as legal authorization | Users or the public misunderstand what Pharmalink has verified | Name the exact subject, evidence type, issuer, method, scope, and date of every verification claim |
+| Subscription or service suspension destroys access to records | Business continuity, export, and retention failures | Define proportionate restrictions; preserve lawful read/export, audit, support, and exit paths |
+
+**Open design question:** Which management operations, if any, must be restricted for a specific establishment category when required establishment evidence is absent, expired, or suspended? Resolve this per operation and applicable law; do not turn it into a blanket rule for all accounts or all management functions.
