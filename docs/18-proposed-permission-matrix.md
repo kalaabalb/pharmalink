@@ -220,3 +220,103 @@ A role title never grants a permission by implication. In particular, an owner, 
 ### 11.3 Implementation blocker
 
 The current role tables do not yet assign every canonical identifier to roles with sufficient precision. This is an explicit unresolved authorization gap, not permission to let developers guess. Before implementing a capability, complete its role/scope/approval rows and tests. Capabilities without an approved grant mapping remain disabled or unavailable in production.
+
+
+## 12. Proposed first-release role-grant baseline (review draft)
+
+This section narrows grant design to the private pharmacy-operations candidate in Specification 25. It is a **proposal for product-owner, pharmacy-operator, accounting, and regulatory review**, not an approved grant set. “Eligible” means a role may be considered for an explicit scoped grant; it does not mean the permission is automatically assigned.
+
+### 12.1 Grant semantics
+
+- Account registration and sign-in are self-service identity actions, not tenant permissions.
+- The first organization owner receives only the minimum bootstrap grants required to create the workspace, manage its initial branch, invite staff, and assign explicitly approved roles. Ownership does not imply every operational or regulated permission.
+- Every other grant is explicit, tenant-scoped, and branch-scoped where the resource is branch-owned. Role templates are convenience bundles, not authorization evidence.
+- A person may hold multiple roles, but each effective permission is still recorded and evaluated independently.
+- No professional credential is required for ordinary membership, account access, purchasing, inventory management, or general software administration. A credential gate is added only to the exact regulated action/category that qualified review identifies.
+- Where an approval action is listed, the requester cannot approve their own request unless a documented, legally/accountingly acceptable single-person exception is approved with compensating review.
+- Cashier, inventory, purchasing, and accountant grants are constrained to assigned branches and duties. A job title alone never creates access.
+- Public discovery/availability permissions and platform-global support/security permissions are not part of the private first-release grant baseline. They remain disabled or separately controlled until their own release gates pass.
+
+### 12.2 Candidate role eligibility by first-release permission
+
+| Permission identifier | Candidate eligible roles | Mandatory scope and control |
+|---|---|---|
+| `organization.read` | Owner, Manager; Auditor read-only; Accountant if needed | Own tenant only |
+| `organization.manage` | Owner; Manager only by explicit delegation | Tenant-level configuration; no professional authority |
+| `branch.read` | Owner, Manager, assigned Professional, Cashier, Inventory, Purchasing, Accountant; Auditor read-only | Assigned branch; accountant/auditor read scopes |
+| `branch.manage` | Owner; delegated Manager | Own tenant; preserve branch history |
+| `membership.invite` | Owner; delegated Manager | Invitation role/scope cannot exceed inviter delegation |
+| `membership.accept` | Intended authenticated invitee | Self only; invitation token and intended identity verified |
+| `membership.restrict` | Owner; delegated Manager | Reason, scope, effective time, review path, session/queue revocation |
+| `membership.revoke` | Owner; delegated Manager | Preserve attribution and historical records |
+| `role.assign` | Owner; delegated Manager within a bounded grant allowlist | Cannot grant beyond own delegation or approve own privilege escalation |
+| `role.revoke` | Owner; delegated Manager | Immediate server-side re-evaluation and documented revocation objective |
+| `device.manage` | Owner; delegated Manager | Tenant/branch device ownership and revocation audit |
+| `catalogue.read`, `catalogue.search` | Owner, Manager, assigned Professional, Cashier, Inventory, Purchasing; Accountant/Auditor read-only where needed | Tenant catalogue and permitted shared catalogue only |
+| `tenant_catalogue.create`, `tenant_catalogue.update` | Owner, Manager; individually assigned Inventory/Purchasing/Professional | Tenant-local catalogue; provenance and version history |
+| `tenant_catalogue.disable` | Owner; delegated Manager | Preserve references from historical transactions |
+| `catalogue_correction.propose` | Owner, Manager, assigned Professional, Inventory, Purchasing | Proposal only; cannot mutate canonical shared catalogue |
+| `inventory.read` | Owner, Manager, assigned Professional, Inventory; Cashier limited to sale-relevant availability; Purchasing limited to purchasing scope; Accountant/Auditor read-only | Branch scope and field-level filtering |
+| `inventory.receive`, `goods_receipt.create` | Owner, Manager, Inventory; Purchasing if explicitly assigned | Actual branch, item, batch, expiry, unit, quantity and source evidence |
+| `goods_receipt.accept` | Owner or delegated Manager; assigned Inventory/Purchasing operator | Inspection/discrepancy policy; approval separation for material exceptions |
+| `inventory.count` | Owner, Manager, Inventory; Professional if assigned | Count scope, cutoff, counter identity, device and version |
+| `inventory.adjust.request` | Owner, Manager, Inventory | Reason and evidence; requester identity retained |
+| `inventory.adjust.approve` | Owner or delegated Manager; never the requester | Threshold, evidence, separation and audit |
+| `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.transfer.cancel` | Owner, Manager, Inventory; Purchasing only if explicitly assigned | Source/destination branch scopes differ; cancellation only before dispatch |
+| `inventory.hold` | Owner, Manager, Inventory; assigned Professional where appropriate | Any staff may report concern; only an authorized role applies the hold |
+| `inventory.release` | Owner, Manager, Inventory; verified Professional only where the hold reason/legal rule requires it | Evidence-specific release; expiry/recall restrictions remain independently enforced |
+| `inventory.disposal.request` | Owner, Manager, Inventory | Reason, quantity, batch, evidence and method |
+| `inventory.disposal.approve` | Owner or delegated Manager; separate approver where required | No self-approval; legal witness/evidence rules remain open |
+| `inventory.return.disposition` | Owner, Manager, Inventory; Professional only where a reviewed product rule requires it | Separate from customer-return acceptance and refund; returned goods remain non-saleable until disposition |
+| `supplier.read` | Owner, Manager, Purchasing; Inventory/Accountant limited | Tenant scope; sensitive banking/contact fields excluded unless separately granted |
+| `supplier.create`, `supplier.update` | Owner, Manager, Purchasing | Tenant scope and duplicate review |
+| `supplier.block` | Owner; delegated Manager | Reason, impact on open orders and appeal/review path |
+| `requisition.create`, `requisition.submit`, `quotation.record` | Owner, Manager, Purchasing; Inventory may create requisitions if assigned | Branch, units, supplier, quote validity and source evidence |
+| `requisition.approve` | Owner or delegated Manager; not the requester | Threshold and separation rules |
+| `purchase_order.create`, `purchase_order.submit` | Owner, Manager, Purchasing; Inventory if assigned | Supplier, branch, approved item/unit and quotation snapshot |
+| `purchase_order.approve` | Owner or delegated Manager; not the requester | Threshold and separation rules |
+| `purchase_order.issue`, `purchase_order.cancel`, `purchase_order.close` | Owner, Manager, Purchasing; Accountant may close only if explicitly delegated | Issue only approved version; cancellation resolves outstanding quantity; closure checks financial follow-up |
+| `supplier_invoice.record` | Purchasing, Accountant, Owner/Manager if assigned | Preserve supplier-stated values and document provenance |
+| `supplier_invoice.match` | Accountant, Purchasing | Match to PO/accepted receipt; retain line-level discrepancies |
+| `supplier_invoice.exception.resolve` | Accountant; Owner/Manager only by explicit delegation | Evidence and reason; material exceptions cannot be self-approved |
+| `supplier_invoice.dispute` | Purchasing, Accountant, Owner/Manager if assigned | Dispute blocks payable settlement pending resolution |
+| `supplier_invoice.approve` | Accountant or Owner/Manager specifically delegated; not the requester | Approved matching/accounting policy and separation of duties |
+| `supplier_payment.initiate` | Owner; Purchasing only if explicitly assigned | Approved obligation, amount/currency, idempotency and evidence |
+| `supplier_payment.confirm`, `supplier_payment.reconcile` | Accountant; Owner only under a separately approved control model | Authoritative bank/provider evidence; initiation is not settlement |
+| `sale.create`, `sale.commit` | Cashier, Owner, Manager; Professional if assigned | Branch/session; category eligibility and exact regulated-action gate |
+| `sale.discount.request` | Cashier, Owner, Manager, assigned Professional | Threshold and reason |
+| `sale.discount.approve` | Owner or delegated Manager; not requester | Threshold and separation |
+| `sale.void.request` | Cashier, Owner, Manager | Original sale and reason |
+| `sale.void.approve` | Owner or delegated Manager; not requester | Linked correction; stock disposition remains separate |
+| `customer_return.create`, `customer_return.submit` | Cashier, Owner, Manager; Professional if assigned | Original sale, lines, quantities, condition, timing and reason |
+| `customer_return.review` | Owner or delegated Manager; designated Professional only where policy requires | Not requester; acceptance does not imply refund or restock |
+| `payment.initiate` | Cashier, Owner, Manager; Accountant if specifically assigned | Enabled payment method/provider and sale reference |
+| `payment.confirm_manual` | Accountant or Owner/Manager with explicit confirmation grant; never the initiator where separation is required | Evidence review; client assertion is insufficient |
+| `payment.refund.request` | Cashier, Owner, Manager | Original payment/sale and eligible amount |
+| `payment.refund.approve` | Owner, delegated Manager, or Accountant; not requester | Provider/cash policy, amount threshold and authoritative completion |
+| `receipt.read`, `receipt.reissue` | Cashier, Owner, Manager; Accountant read-only if needed | Original transaction; reissue never creates a new sale |
+| `finance.read`, `finance.cashbook.read` | Owner, Accountant; Manager limited; Auditor read-only | Branch/tenant scope and sensitive-field minimization |
+| `finance.cash_movement.create` | Owner, Manager; Cashier only for assigned session types | Reason, source transaction, actor and session |
+| `finance.cash_session.open` | Cashier, Owner, Manager | Assigned branch/till; no conflicting active session under selected policy |
+| `finance.cash_session.count` | Assigned Cashier for own session; Manager/Accountant as reviewer | Count evidence; cannot rewrite underlying sales/payments |
+| `finance.cash_session.close` | Owner, Manager, Accountant if assigned; Cashier only for own session if policy permits | Variance and late-movement policy; separation where required |
+| `finance.reconcile` | Accountant; Owner only if explicitly assigned | Source file/provider evidence, hash, period and currency |
+| `finance.reconciliation_exception.resolve` | Accountant; Owner/Manager only by explicit delegation and not requester | Evidence, reason, linked correction and reviewer |
+| `finance.export`, `sales.export`, `purchasing.export`, `inventory.export` | Owner; Accountant for finance/sales reports; relevant functional role only for its own export; Auditor read-only where approved | Tenant/branch filters, purpose, audit and data minimization |
+
+### 12.3 Explicitly outside this first-release grant baseline
+
+Unless Specification 25 is amended and its release gates pass, do not grant customer-tenant roles any of the following merely because the permission exists in the canonical registry:
+- public profile/catalogue/availability publication, public enquiry handling, or public reporting;
+- moderation, verification approval, or publication of verification claims;
+- platform organization restriction, entitlement administration, platform security administration, or support tenant-data access;
+- full general-ledger posting/reversal, period close, or other deferred accounting capabilities;
+- any regulated dispensing, prescription, restricted-category, or clinical workflow that has not received action-specific Ethiopian legal/regulatory review.
+
+Support case creation may remain available to all authenticated tenant members, but it does not grant support staff access to tenant data. Platform support access requires its separate case-scoped, time-limited approval.
+
+### 12.4 Required grant resolution before implementation
+
+For each permission selected for the approved release, convert this proposal into an explicit row containing: role, default/delegated/individual grant type, tenant/branch/resource scope, grantor, revocation behavior, requester/approver separation, thresholds, re-authentication, action-specific evidence gate, online/offline eligibility, audit event, and positive/negative tests.
+
+The table above is a review baseline, not a production grant. If a role or permission is not explicitly approved, deny it by default. A permission not required by the selected first-release journeys should remain unassigned and its corresponding UI/API capability disabled.
