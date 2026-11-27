@@ -111,7 +111,7 @@ Until review is complete:
 
 Before implementing regulated workflows, obtain:
 1. A current federal law and implementing-directive matrix.
-2. A region-by-region establishment and professional verification matrix for the launch geography.
+2. A region-by-region, establishment-category-by-establishment-category, and action-by-action establishment/professional evidence matrix for the launch geography. It must distinguish ordinary sale recording from legally reserved dispensing or other professional acts, identify exact product categories and evidence sources, and state which checks are not required.
 3. A product-category and public-display boundary assessment.
 4. A written assessment of online ordering, reservation, delivery, and payment model legality.
 5. A data protection impact and cross-border processing assessment.
@@ -120,7 +120,7 @@ Before implementing regulated workflows, obtain:
 
 ## 9. Source quality and caveats
 
-The Food and Medicine Administration Proclamation PDF and Ministry of Justice law record are primary official sources. The Addis Ababa licensing portal is an official regional operational source. The drug-shop standard is surfaced through the Ethiopian Standards Institute portal and must be checked for current edition/status. The electronic-transactions source above is secondary and must be replaced by an official Gazette copy before reliance.
+The Food and Medicine Administration Proclamation PDF and Ministry of Justice law record are primary official sources. The Addis Ababa licensing portal is an official regional operational source. The drug-shop standard is surfaced through the Ethiopian Standards Institute portal and must be checked for current edition/status. The Electronic Transactions Proclamation is linked to the Ministry of Justice official law registry in Section 6; the Gazette-hosted copy and current amendments/implementing instruments must still be checked during clause-level legal review.
 
 This register is an initial evidence map, not a complete regulatory survey. No legal conclusion should be inferred from an omitted topic.
 
