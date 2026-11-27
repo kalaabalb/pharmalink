@@ -212,6 +212,7 @@ The canonical identifiers are registered in [Specification 18](18-proposed-permi
 - inventory.release;
 - inventory.disposal.request;
 - inventory.disposal.approve;
+- inventory.return.disposition;
 - inventory.export.
 
 A role template may group permissions, but the server evaluates explicit grants and scope. A non-professional user may perform permitted inventory-management tasks without a professional licence. A regulated professional credential is checked only when the specific action requires it under the reviewed rules.
