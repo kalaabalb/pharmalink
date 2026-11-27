@@ -193,7 +193,11 @@ The implementation must prove at least:
 
 The module and transaction rules in this contract must be realized through the enforceable boundaries, API semantics, database constraints, transactional outbox, and deployment controls in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). The architecture may choose different technologies, but it may not weaken these business invariants or introduce undocumented cross-module writes.
 
-## 13. Readiness rule
+## 13. State-transition and recovery alignment
+
+[Specification 30](30-workflow-state-transition-and-recovery-contract.md) defines the cross-module transition register and minimum failure/recovery contract. Every module must use its aggregate-specific state identifiers and enforce the shared transition guards. If a module's candidate states do not yet define a transition, that transition remains unavailable until specified and approved.
+
+## 14. Readiness rule
 
 A module is not implementation-ready merely because its own document has a workflow diagram or a list of states. Its state transitions, transaction boundaries, permissions, events, data ownership, privacy rules, failure recovery, and acceptance tests must agree with this cross-module contract and with every upstream/downstream module it touches.
 
