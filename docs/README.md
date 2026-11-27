@@ -34,6 +34,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 18-proposed-permission-matrix.md | Draft role-to-permission matrix with evidence dependencies and negative authorization tests | Draft |
 | 19-public-discovery-and-availability-specification.md | Public pharmacy discovery, opt-in profiles, medicine search, availability freshness, moderation, and privacy | Draft |
 | 20-organization-branch-and-membership-lifecycle-specification.md | Tenant, legal-entity relationships, branches, invitations, roles, ownership, suspension, and offboarding | Draft |
+| 21-external-integrations-and-provider-lifecycle-specification.md | Provider due diligence, webhooks, payment, messaging, maps, storage, outages, and exit | Draft |
 
 ## Review dimensions
 
