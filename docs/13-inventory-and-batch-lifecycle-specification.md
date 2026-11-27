@@ -247,7 +247,7 @@ At minimum, automated tests must prove:
 - reversal preserves original history and creates a linked compensating record;
 - public availability never exposes private quantity or stale stock as freshly confirmed.
 
-## 16. Open decisions before implementation
+## 16. Valuation and cost-integrity boundary\n\nThe detailed cost provenance, valuation-method decision framework, landed-cost allocation, stock-count reconciliation, returns/write-off treatment, and valuation acceptance tests are defined in [Specification 27](27-inventory-valuation-stock-reconciliation-and-cost-integrity-specification.md). Until the accounting method and source-data quality are approved, inventory quantity operations must remain distinct from valuation, gross-margin, and cost-of-goods-sold claims.\n\n## 17. Open decisions before implementation
 
 1. Which establishment categories and product categories are in the first release?
 2. Which batch/expiry fields are mandatory for each supported product category, based on current law and actual pharmacy practice?
