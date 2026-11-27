@@ -101,7 +101,7 @@ The product must support review queues and traceable status changes for stock th
 5. Availability is derived from eligible branch stock and a successful server-side confirmation. The public view includes a last-confirmed time and freshness state.
 6. When the data exceeds the freshness threshold, it becomes stale or unknown rather than remaining “available”.
 7. A pharmacy can pause publication or a specific listing, with an auditable reason. Withdrawal removes the public projection but preserves private source records and publication history.
-8. Public discovery is informational only in the initial scope; it does not reserve stock, accept prescriptions, authorize dispensing, or guarantee that stock remains available.
+8. Public discovery is informational only in the initial scope; it does not reserve stock, accept prescriptions, authorize dispensing, or guarantee that stock remains available. See [Specification 19](19-public-discovery-and-availability-specification.md) for publication consent, public projection, privacy, freshness expiry, moderation, and appeal requirements.
 
 ## 10. Offline operation and recovery
 
