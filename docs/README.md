@@ -41,7 +41,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 25-first-release-scope-and-launch-decision-framework.md | Proposed first-release scope, end-to-end journeys, exclusions, pilot model, and launch gates | Draft |
 | 26-data-migration-import-export-backup-and-restoration-specification.md | Controlled imports, opening balances, tenant export, backups, restore testing, and disaster recovery | Draft |
 | 27-inventory-valuation-stock-reconciliation-and-cost-integrity-specification.md | Cost provenance, valuation policy decision framework, stock reconciliation, write-offs, and cost integrity | Draft |
-| 28-production-operations-incident-response-and-service-continuity-specification.md | Service ownership, observability, alerting, incident response, support access, releases, and continuity | Draft |
+| 28-production-operations-incident-response-and-service-continuity-specification.md | Service ownership, observability, alerting, incident response, support access, releases, and continuity | Draft |\n| 29-application-architecture-api-database-and-deployment-contract.md | Domain module boundaries, API semantics, database integrity, events, deployment topology, and architecture decisions | Draft |
 
 ## Review dimensions
 
@@ -76,7 +76,7 @@ Every module must be reviewed for:
 - UX specifications, accessibility, localization, and error-state behavior.
 - Integration/provider evaluation and failure handling.
 - Non-functional requirements and measurable service objectives.
-- Test strategy, migration plan, backup/restore verification, release and incident plans.
+- Test strategy, migration plan, backup/restore verification, release and incident plans.\n- Enforceable application architecture, API contracts, database integrity, event delivery, deployment topology, and technology decision records.
 
 ## Evidence discipline
 
