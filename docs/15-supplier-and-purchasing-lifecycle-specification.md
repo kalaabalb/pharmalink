@@ -245,3 +245,8 @@ Automated tests must prove:
 12. Which supplier, purchasing, and financial actions may be drafted offline, if any?
 
 Resolve these decisions through pharmacy field research and qualified accounting/legal review. Do not make an unverified supplier or payment process appear production-ready.
+
+
+## 16. Cross-module transition alignment
+
+The shared supplier, purchase-order, goods-receipt, and recovery transition contract is defined in [Specification 30](30-workflow-state-transition-and-recovery-contract.md). “Fully received” and “closed” remain distinct; unresolved PO closure and partial receipt policy must not be invented during implementation.
