@@ -153,6 +153,52 @@ Every request has a server-generated correlation ID propagated to logs, traces, 
 - Limits must not create a bypass around tenant isolation or prevent authorized emergency recovery.
 - Record aggregate abuse signals without collecting unnecessary sensitive content.
 
+### 4.7 Required command and query inventory
+
+The following is the minimum application-operation inventory implied by the current first-release candidate and module specifications. Names are logical operation identifiers, not final HTTP routes or a claim that every operation is approved for launch. The API contract/OpenAPI document must define the exact request, response, authorization, idempotency, concurrency, error, and audit behavior for every enabled operation.
+
+| Domain | Commands (state-changing) | Queries (read-only) |
+|---|---|---|
+| Identity and organization | Register/sign in; create/update organization; create/update branch; invite/revoke membership; assign/revoke role; transfer ownership; register/revoke device; change organization lifecycle state | Current account/session; organizations and memberships; branches; invitation state; effective permissions; device/session state |
+| Catalogue | Create/update/disable tenant item; propose/review/approve canonical correction; propose/review barcode mapping; review regulatory classification; publish approved catalogue projection | Canonical search/detail; tenant catalogue search/detail; product presentation and unit conversion; barcode lookup; correction/evidence history |
+| Inventory | Create/post goods receipt; open/record/post count; request/approve adjustment; create/dispatch/receive transfer; place/release hold; request/approve disposal; process return disposition; process recall decision | Stock position by branch/batch/status; movement history; receipt/transfer/count detail; expiry/recall queue; discrepancy and reconciliation report |
+| Purchasing | Create/update/block supplier; create/submit/approve requisition; record quotation; create/submit/approve/issue/cancel purchase order; create/accept receipt; record/approve invoice; create/approve supplier return; initiate/confirm/reconcile supplier payment | Supplier list/detail; requisition and quotation status; purchase-order status; receipt/invoice matching; supplier balances; payment/reconciliation status |
+| Sales and payments | Create/update sale draft; validate sale; commit sale; request/approve void; initiate payment; confirm permitted manual payment; process authenticated provider callback; request/approve refund; reissue receipt; open/count/close cash session | Sale and line detail; sale history; payment attempt/status; receipt; return/refund status; cash session and variance |
+| Finance | Create cash movement; create/approve expense; post/reverse journal; reconcile source; resolve reconciliation exception; close accounting period; initiate authorized export | Cashbook; finance summary; journal and posting history; payment/settlement reconciliation; expense list; period status; finance reports |
+| Public discovery | Configure/publish/pause profile; configure/publish/pause catalogue; confirm/publish/pause availability; receive enquiry; submit report; triage/suppress content; record moderation decision/appeal; submit/review evidence; publish verification claim | Public pharmacy and catalogue search; public profile; availability state and freshness; enquiry inbox; moderation queue; verification case |
+| Platform operations | Create support case; approve/revoke scoped support access; change service entitlement; suspend/reinstate capability under policy; record platform security action | Support case; access-grant history; service health and incident view; tenant entitlement and restriction history |
+
+#### Command rules
+
+- A command is named for one intended business transition. Do not expose a generic `update` endpoint that can mutate arbitrary lifecycle fields.
+- Draft creation/editing and final commitment are separate operations wherever the module defines approval or commit states.
+- Approval commands carry the approver identity from the authenticated session and enforce separation of duties server-side.
+- A command that crosses module boundaries is orchestrated by an application use case; each domain module retains authority over its own facts.
+- External callbacks are ingress commands into a provider adapter. They must be authenticated, schema-validated, correlated to a known attempt, deduplicated, and recorded as untrusted provider evidence before any domain transition is accepted.
+- Export requests are commands that create an asynchronous export job. Download is a separately authorized query against a completed, unexpired artifact.
+- Every command must declare whether it is idempotent, its idempotency-key scope, resource-version precondition, authorization permissions, audit event, emitted domain events, and retry/unknown-outcome behavior.
+- Queries must declare tenant/branch scope, sensitive fields, freshness, pagination, sorting/filter allowlists, and whether the result is a source record or a derived projection.
+
+#### Event catalogue requirement
+
+Before implementation, create a versioned event registry with one entry per event type. Each entry must define producer/owning module, triggering committed transition, schema version, stable event ID, aggregate ID/version, tenant/branch scope, payload classification, consumers, ordering assumptions, retention, replay policy, and compatibility/deprecation plan.
+
+The event names already proposed in module specifications—such as `GoodsReceiptAccepted`, `PurchaseOrderApproved`, `PublicAvailabilityUpdated`, and `PublicAvailabilityBecameStale`—are candidate names, not an approved complete catalogue. No consumer may infer a business transition from a generic notification such as `RecordUpdated`.
+
+#### Operation coverage gate
+
+For every enabled first-release workflow, maintain traceability from:
+1. user-visible action and workflow step;
+2. logical command/query;
+3. API contract operation and schema;
+4. permission identifier and scope;
+5. authoritative module and persistence transaction;
+6. emitted event(s) and consumer/projection;
+7. failure, retry, and recovery behavior;
+8. automated contract, authorization, and end-to-end tests.
+
+An operation without this traceability is not implementation-ready. A UI control must not be built as a working feature until its operation contract and backend behavior exist.
+
 ## 5. Database architecture and integrity contract
 
 The database technology and hosting provider remain open. A relational transactional database, with PostgreSQL as a candidate, is the leading hypothesis because the domain requires relational integrity, multi-row transactions, uniqueness, concurrency control, and reporting. Validate it against hosting, operations, backup, regional availability, cost, and team expertise before selection.
