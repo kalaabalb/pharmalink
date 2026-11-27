@@ -38,7 +38,7 @@ This is an initial taxonomy; each event requires a schema and ownership review.
 | Payments | PaymentAttemptInitiated, PaymentStatusChanged, PaymentReconciled |
 | Finance | FinancialEntryPosted, FinancialEntryReversed, ReconciliationBatchImported, ReconciliationExceptionResolved, FinancialPeriodClosed |
 | Quality | AffectedStockFlagged, QualityDispositionRecorded |
-| Public projection | PublicProfilePublished, PublicProfilePaused, PublicAvailabilityUpdated, PublicAvailabilityBecameStale |
+| Public projection | PublicProfilePublicationConfigured, PublicProfilePublished, PublicProfilePaused, PublicProfileChanged, PublicCatalogueEntryPublished, PublicCatalogueEntryPaused, PublicAvailabilityConfirmed, PublicAvailabilityUpdated, PublicAvailabilityBecameStale, PublicEnquiryReceived, PublicReportSubmitted, ModerationCaseOpened, PublicContentSuppressed, ModerationDecisionRecorded, ModerationAppealFiled, VerificationClaimChanged |
 | Subscription | SubscriptionChanged, EntitlementChanged, InvoiceStatusChanged |
 | Platform | VerificationDecisionRecorded, SupportCaseUpdated, PrivilegedAccessGranted, SecurityIncidentRecorded |
 
