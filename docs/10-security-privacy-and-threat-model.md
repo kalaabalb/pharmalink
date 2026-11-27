@@ -167,3 +167,21 @@ Service ownership, observability, incident command, scoped support access, event
 ## Application and infrastructure architecture linkage
 
 API authorization, tenant isolation at persistence boundaries, service identities, deployment secrets, file access, and architecture-level negative tests are specified in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). These controls supplement rather than replace this threat model and the privacy lifecycle in Specification 22.
+
+## 16. Tenant-isolation threat scenarios and security acceptance
+
+Treat cross-tenant disclosure or mutation as a critical security incident and an unconditional release blocker. The threat model and test plan must cover more than direct API object lookup:
+
+- **Object-level authorization:** guessed or substituted IDs, nested child/parent references, bulk actions, cursor reuse, alternate HTTP methods, and stale client context.
+- **Branch escalation:** access to another branch within the same tenant through direct URLs, reports, aggregate totals, exports, files, search suggestions, or realtime channels.
+- **Inference and side channels:** foreign-resource existence, hidden row counts, autocomplete, timing differences, validation messages, shared cache entries, and public/private projection joins.
+- **Asynchronous execution:** queued commands after membership revocation, worker retries, scheduled jobs, dead-letter redrive, event replay, provider callbacks, and jobs with altered tenant metadata.
+- **Storage and portability:** guessed object keys, expired download grants, export artifact reuse, attachment joins, backup exposure, and tenant-selective restore contamination.
+- **Privileged access:** support or platform staff using broad credentials, silent impersonation, expired case grants, or verification/billing permissions to browse operational records.
+- **Infrastructure bypass:** pooled database connections retaining prior tenant context, RLS bypass roles, migration credentials, debug endpoints, analytics pipelines, and operational scripts.
+
+The server must derive authorization from authenticated identity and current membership/permission/branch relationships. Client-supplied tenant or branch values may select a context only after the server verifies it; they never grant access. Denial behavior must not reveal whether an out-of-scope resource exists. Every tenant-owned query, mutation, projection, export, file grant, subscription, and job must have an identifiable enforcement point and negative test.
+
+The release evidence must show tests against the selected database engine and production-equivalent service roles, not only mocked policy functions. Include branch-only and organization-wide memberships, multiple memberships for one person, revoked sessions, changed roles, and concurrent permission changes. Verify that a permission or membership change invalidates cached responses and active subscriptions within the approved revocation objective. If row-level security is used, test transaction-local context, connection reuse, rollback, worker roles, and all bypass-capable administrative roles.
+
+A confirmed cross-tenant leak, unauthorized cross-branch access, or unlogged privileged tenant-data access requires containment, evidence preservation, affected-scope assessment, and incident command under Specification 28. Do not resume the affected path until root cause is corrected and regression tests pass.
