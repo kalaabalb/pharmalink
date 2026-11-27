@@ -156,3 +156,29 @@ Set numeric service objectives only after user research and load modeling. Alert
 - What freshness thresholds are appropriate for public availability by connection quality and operational risk?
 - What are the replay retention window and full-resynchronization procedure?
 - Which event transport best meets cost, device battery, latency, and reliability requirements?
+
+
+## 13. Event coverage for detailed business modules
+
+The following names are candidate domain events aligned to the inventory, POS, purchasing, finance, and catalogue specifications. They are facts that have committed, not commands or UI notifications. Final schemas and ownership must be reviewed before implementation.
+
+| Domain | Candidate committed events |
+|---|---|
+| Catalogue governance | CanonicalCatalogueVersionPublished, CatalogueCorrectionProposed, CatalogueCorrectionReviewed, BarcodeMappingReviewed, TenantCatalogueEntryChanged |
+| Inventory | StockMovementCommitted, StockReceived, StockCountPosted, StockAdjusted, StockTransferDispatched, StockTransferReceived, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
+| Sales/POS | SaleCommitted, SaleVoided, ReturnAccepted, RefundStatusChanged, CashSessionOpened, CashSessionClosed |
+| Payments | PaymentAttemptInitiated, PaymentStatusChanged, PaymentReconciled |
+| Purchasing | SupplierChanged, PurchaseOrderApproved, PurchaseOrderIssued, PurchaseOrderCancelled, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentStatusChanged |
+| Finance | FinancialEntryPosted, FinancialEntryReversed, ReconciliationBatchImported, ReconciliationExceptionResolved, FinancialPeriodClosed |
+| Public projection | PublicProfilePublished, PublicProfilePaused, PublicAvailabilityUpdated, PublicAvailabilityBecameStale |
+
+### Event ownership and transaction alignment
+
+- A business event is emitted only after its owning aggregate transaction commits.
+- Inventory movements, sale commits, receipt acceptance, financial postings, and verification decisions must persist their outbox record in the same transaction as the authoritative state change.
+- A payment-provider callback is an external input. It is verified and processed idempotently; the resulting PaymentStatusChanged event is emitted only after the payment state transition commits.
+- A report refresh, UI toast, or push notification is a downstream reaction, not a replacement for the durable domain event.
+- Do not publish raw prescription/customer health information, full payment credentials, supplier banking data, or verification evidence in event payloads. Use minimal identifiers and safe change metadata.
+- Consumers must be idempotent and version-aware. Event replay must not re-run stock, money, payment, or notification side effects.
+- Public projection events must not expose private stock quantities or tenant-only details.
+- Schema changes must be versioned and tested against all consumers. Breaking event contracts require coordinated migration; do not keep obsolete contracts indefinitely merely for compatibility.
