@@ -30,6 +30,7 @@ A person may hold multiple roles. The effective permission set is the union of e
 | branch.manage | Yes | Assigned if delegated | No by default | No | No | No | No | No | No default | Owner or delegated manager; scope-limited |
 | membership.invite | Yes | If delegated | No by default | No | No | No | No | No | No default | Invitation scope and intended role/branch required |
 | membership.accept | Self | Self | Self | Self | Self | Self | Self | Self | No default | Authenticated invitee accepts only the invitation addressed to them |
+| membership.restrict | Yes | If delegated | No | No | No | No | No | No | No default | Scoped restriction/suspension with reason and review path |
 | membership.revoke | Yes | If delegated | No | No | No | No | No | No | No default | Revocation invalidates access within defined objective |
 | role.assign / role.revoke | Yes | If delegated | No | No | No | No | No | No | No default | Cannot grant permissions beyond assigner's authority |
 | device.manage | Yes | If delegated | No by default | No | No | No | No | No | No default | Register/revoke devices for tenant/branch |
@@ -49,6 +50,7 @@ A person may hold multiple roles. The effective permission set is the union of e
 | inventory.adjust.approve | Yes if not requester | If delegated and not requester | If designated and legally permitted | No | No self-approval | No | No | No | No default | Threshold and separation policy apply |
 | inventory.transfer.create / dispatch | Yes | Yes | If granted | No | Yes | If granted | No | No | No default | Source branch scope |
 | inventory.transfer.receive | Yes | Yes | If granted | No | Yes | If granted | No | No | No default | Destination branch scope |
+| inventory.transfer.cancel | Yes | If delegated | If granted | No | If granted | If granted | No | No | No default | Only before dispatch; dispatched transfer needs discrepancy resolution |
 | inventory.hold | Yes | Yes | If granted | No | Yes | No | No | No | No default | Any staff may report an issue; authorized role applies hold |
 | inventory.release | Yes if authorized | If delegated | If action requires professional review, verified professional only | No | No by default | No | No | No | No default | Release criteria depend on hold reason and law |
 | inventory.disposal.request / approve | Yes / separate approver | If delegated | Where required by reviewed policy | No | Request if granted | No | No | No | No default | Evidence and approval rules required |
@@ -66,6 +68,7 @@ A person may hold multiple roles. The effective permission set is the union of e
 | purchase_order.submit | Yes | If delegated | No | No | If granted | Yes | No | No | No default | Submission does not equal approval |
 | purchase_order.approve | Yes if not requester | If delegated and not requester | No by default | No | No by default | No self-approval | No | No | No default | Threshold and separation rules |
 | purchase_order.issue / cancel | Yes | If delegated | No | No | No | Yes if approved | No | No | No default | External supplier communication logged |
+| purchase_order.close | Yes | If delegated | No | No | If granted | If granted | If granted | No | No default | Only after operational and financial closure conditions pass |
 | goods_receipt.create | Yes | Yes | If granted | No | Yes | If granted | No | No | No default | Actual quantity and batch evidence |
 | goods_receipt.accept | Yes if authorized | If delegated | If required by policy | No | If granted | If granted | No | No | No default | Discrepancy/inspection policy applies |
 | supplier_invoice.record | Yes | If delegated | No | No | No | Yes | Yes | No | No default | Recording does not approve payable |
@@ -108,6 +111,8 @@ A person may hold multiple roles. The effective permission set is the union of e
 | verification.review / approve | No self-review | No | No self-review | No | No | No | No | No | Designated reviewer | Platform role; purpose-bound evidence access |
 | support.case.create | Yes | Yes | Yes | Yes | Yes | Yes | Yes | Yes | Yes | Case-scoped |
 | support.tenant_data.access | No default | No | No | No | No | No | No | No | No default | Requires approved, time-limited, case-scoped grant |
+| platform.organization.restrict | No | No | No | No | No | No | No | No | Designated platform policy admin | Restrict/suspend a defined organization capability with reason and review path |
+| platform.entitlement.manage | No | No | No | No | No | No | No | No | Designated platform entitlement admin | Manage software entitlement only; not legal authorization |
 | platform.security.admin | No | No | No | No | No | No | No | No | Designated security admin | Separate privileged platform role |
 
 ## 7. Professional and establishment checks
@@ -179,15 +184,15 @@ The following identifiers are the canonical draft vocabulary. The module specifi
 
 | Domain | Canonical permission identifiers | Source |
 |---|---|---|
-| Identity and organization | `account.register`, `account.sign_in`, `organization.read`, `organization.manage`, `branch.read`, `branch.manage`, `membership.invite`, `membership.accept`, `membership.revoke`, `role.assign`, `role.revoke`, `device.manage` | This specification; Spec 20 |
+| Identity and organization | `account.register`, `account.sign_in`, `organization.read`, `organization.manage`, `branch.read`, `branch.manage`, `membership.invite`, `membership.accept`, `membership.restrict`, `membership.revoke`, `role.assign`, `role.revoke`, `device.manage` | This specification; Spec 20 |
 | Catalogue | `catalogue.read`, `catalogue.search`, `catalogue.export`, `tenant_catalogue.create`, `tenant_catalogue.update`, `tenant_catalogue.disable`, `catalogue_correction.propose`, `catalogue_correction.review`, `catalogue_correction.approve`, `barcode_mapping.propose`, `barcode_mapping.review`, `regulatory_classification.read`, `regulatory_classification.review` | Spec 16 |
-| Inventory | `inventory.read`, `inventory.receive`, `inventory.count`, `inventory.adjust.request`, `inventory.adjust.approve`, `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.hold`, `inventory.release`, `inventory.disposal.request`, `inventory.disposal.approve`, `inventory.return.disposition`, `inventory.export` | Spec 13 |
-| Supplier and purchasing | `supplier.read`, `supplier.create`, `supplier.update`, `supplier.block`, `supplier.sensitive_data.read`, `requisition.create`, `requisition.submit`, `requisition.approve`, `quotation.record`, `purchase_order.create`, `purchase_order.submit`, `purchase_order.approve`, `purchase_order.issue`, `purchase_order.cancel`, `goods_receipt.create`, `goods_receipt.accept`, `supplier_invoice.record`, `supplier_invoice.match`, `supplier_invoice.exception.resolve`, `supplier_invoice.dispute`, `supplier_invoice.approve`, `supplier_return.create`, `supplier_return.approve`, `supplier_payment.initiate`, `supplier_payment.confirm`, `supplier_payment.reconcile`, `purchasing.export` | Spec 15 |
+| Inventory | `inventory.read`, `inventory.receive`, `inventory.count`, `inventory.adjust.request`, `inventory.adjust.approve`, `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.transfer.cancel`, `inventory.hold`, `inventory.release`, `inventory.disposal.request`, `inventory.disposal.approve`, `inventory.return.disposition`, `inventory.export` | Spec 13 |
+| Supplier and purchasing | `supplier.read`, `supplier.create`, `supplier.update`, `supplier.block`, `supplier.sensitive_data.read`, `requisition.create`, `requisition.submit`, `requisition.approve`, `quotation.record`, `purchase_order.create`, `purchase_order.submit`, `purchase_order.approve`, `purchase_order.issue`, `purchase_order.cancel`, `purchase_order.close`, `goods_receipt.create`, `goods_receipt.accept`, `supplier_invoice.record`, `supplier_invoice.match`, `supplier_invoice.exception.resolve`, `supplier_invoice.dispute`, `supplier_invoice.approve`, `supplier_return.create`, `supplier_return.approve`, `supplier_payment.initiate`, `supplier_payment.confirm`, `supplier_payment.reconcile`, `purchasing.export` | Spec 15 |
 | Sales and payments | `sale.create`, `sale.read`, `sale.commit`, `sale.discount.request`, `sale.discount.approve`, `sale.void.request`, `sale.void.approve`, `customer_return.create`, `customer_return.submit`, `customer_return.review`, `payment.initiate`, `payment.confirm_manual`, `payment.refund.request`, `payment.refund.approve`, `receipt.read`, `receipt.reissue`, `sales.export` | Spec 14 |
 | Cash and finance | `finance.read`, `finance.cashbook.read`, `finance.cash_movement.create`, `finance.cash_session.open`, `finance.cash_session.count`, `finance.cash_session.close`, `finance.reconcile`, `finance.reconciliation_exception.resolve`, `finance.expense.create`, `finance.expense.approve`, `finance.journal.read`, `finance.journal.post`, `finance.journal.reverse`, `finance.period.close`, `finance.export`, `finance.sensitive_payment_data.read` | Spec 17; Spec 14 |
 | Public participation | `public_profile.configure`, `public_profile.publish`, `public_profile.pause`, `public_profile.update_contact`, `public_profile.update_location`, `public_catalogue.configure`, `public_catalogue.publish`, `public_catalogue.pause`, `public_availability.confirm`, `public_availability.publish`, `public_availability.pause`, `public_enquiry.read`, `public_report.submit` | Spec 19 |
 | Moderation and verification | `moderation.case.read`, `moderation.case.triage`, `moderation.content.suppress`, `moderation.decision.record`, `moderation.appeal.review`, `verification.evidence.submit`, `verification.evidence.review`, `verification.claim.publish` | Spec 19; Spec 20 |
-| Platform operations and support | `support.case.create`, `support.tenant_data.access`, `platform.security.admin` | This specification; Specs 20, 28 |
+| Platform operations and support | `support.case.create`, `support.tenant_data.access`, `platform.organization.restrict`, `platform.entitlement.manage`, `platform.security.admin` | This specification; Specs 20, 28 |
 
 ### 11.1 Naming normalization
 
