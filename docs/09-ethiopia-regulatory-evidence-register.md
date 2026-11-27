@@ -52,31 +52,52 @@ The Ministry of Justice record identifies Proclamation No. 1321/2024, dated 24 J
 
 **Next research required:** review the complete proclamation and implementing instruments clause by clause, including lawful bases, sensitive data, minors, transparency, purpose limitation, rights, security, breach obligations, processor/controller duties, and international transfers.
 
-## 4. Regional licensing and establishment verification
+## 4. Regional establishment and professional licensing authorities
 
-**Primary source surfaced:** Addis Ababa Food and Drug Authority licensing portal  
+**Addis Ababa establishment licensing source:** Addis Ababa Food and Drug Authority (AAFDA) licensing portal  
 https://license.aafda.gov.et/
 
-The portal describes establishment licensing services, including new pharmacy licensing, renewal, address change, technical-manager change, and regional registration. It also distinguishes establishment licensing from individual professional competency licensing.
+The current portal describes pharmacy and drug-establishment services including new establishment licensing, renewal, address change, technical-manager change, and regional registration. It states that AAFDA licenses establishments and that individual health-professional competency licences are issued by the Addis Ababa Health Bureau.
+
+**Addis Ababa professional licensing source:** Addis Ababa Health Bureau (AAHB) licensing portal  
+https://license.aahb.gov.et/
+
+The AAHB portal describes professional competency licensing, renewal, upgrade, regional licence transfer/registration, and related professional-record services. These portals are jurisdiction-specific operational sources; they do not establish the complete process for every Ethiopian region.
 
 **Product implications proposed for review:**
-- Model establishment licences and individual professional credentials as different evidence types.
-- Store issuing authority, licence identifier, evidence, effective/expiry dates where supplied, and verification method.
-- Do not treat an uploaded document or a submitted application as an approved licence.
-- Support region-specific authorities and workflows rather than assuming one federal portal covers every establishment.
-- The portal is an operational source for Addis Ababa; it does not establish the complete licensing rules for all Ethiopian regions.
+- Model establishment licences/certificates and individual professional competency credentials as different evidence types, with different issuing authorities and verification paths.
+- Do not infer that an AAFDA establishment licence verifies every employee, or that an individual's professional licence proves that an establishment is licensed.
+- Record the authority, jurisdiction, establishment/person subject, category, scope, validity, source, and verification method. Submission confirmation is not licence approval.
+- Support region-specific authorities and processes. Do not hard-code Addis Ababa authorities as if they issue or verify every regional credential.
+- Preserve private management access independently from a claim that the establishment is legally authorized to operate. Do not display a legal operating claim until the relevant establishment evidence is verified.
 
-## 5. Ethiopian Standard ES 7085:2024 — Drug Shop Requirements
+## 5. Ethiopian Standards Institute standards: pharmacy and drug-shop requirements
 
-**Source surfaced:** Ethiopian Standards Institute standards portal PDF  
+The Institute of Ethiopian Standards (IES) publishes separate 2024 standards for community pharmacies and drug shops. They must not be treated as interchangeable establishment categories.
+
+### 5.1 ES 7084:2024 — Pharmacy requirements
+
+**IES source:**  
+https://www.ethiostandards.org/sites/default/files/2023-11/ES%207084_2024.pdf
+
+The standard's stated scope covers pharmacy practices, premises, professionals, and products for new and existing pharmacies throughout Ethiopia, excluding pharmacy services provided as part of health-facility services. Its text defines the pharmacy/technical-manager/professional concepts and includes establishment competence and professional-practice requirements.
+
+**Relevant provisions surfaced for qualified review:** Sections 3–4 address pharmacy, technical-manager, pharmacy-professional and certificate-of-competence concepts and general operating requirements; Section 5 addresses practice, professional dispensing, procurement/stock management, records, and other pharmacy operations. The full standard and applicable regional laws/directives must be reviewed before translating any clause into a product rule.
+
+### 5.2 ES 7085:2024 — Drug-shop requirements
+
+**IES source:**  
 https://gov.ethiostandards.org/sites/default/files/2023-12/ES%207085%20Drug%20shop%20requirement_2024.pdf
 
-The surfaced standard identifies requirements concerning drug-shop practices, premises, professionals, products, equipment, and materials, and describes applicability to new and existing drug shops.
+The standard has a separate scope and definitions for drug shops, including its own technical-manager and professional categories. It addresses establishment competence, professional practice, procurement/stock management, records, and other drug-shop requirements. It is not a substitute for the pharmacy standard.
 
 **Product implications proposed for review:**
-- Establishment type must be a first-class configuration and compliance attribute.
-- Do not assume a single role model or feature set applies to every pharmacy and drug-shop category.
-- Obtain the full standard and assess its current status, applicability, and related directives with qualified local reviewers before turning it into validation rules.
+- Establishment category must be a first-class, jurisdiction-specific compliance attribute. Do not apply a pharmacy rule set to a drug shop or vice versa.
+- Preserve the distinction between a legal establishment/operating requirement, a person's professional competency credential, a software account, and a tenant's management entitlement.
+- Software account registration, invitation acceptance, sign-in, and ordinary private management are not themselves proof of authority to operate an establishment or perform a regulated professional act.
+- Separate administrative data entry from any professional approval, accountable sign-off, or regulated service that applicable law/standard reserves to a qualified person. Do not let an ordinary POS or inventory permission imply professional authority.
+- Keep regulated workflows disabled where the applicable establishment category, professional scope, product classification, or current legal rule is unresolved.
+- Verify the current edition/status, applicability, implementing directives, and regional interpretation with qualified Ethiopian reviewers before turning either standard into automated eligibility rules.
 
 ## 6. Electronic Transactions Proclamation No. 1205/2020
 
