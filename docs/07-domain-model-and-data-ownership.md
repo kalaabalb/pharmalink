@@ -202,4 +202,8 @@ The organization, tenant, legal-entity, establishment, membership, role assignme
 The data model must not assume one tenant equals one legal entity, one licence, one branch, one owner, or one professional. The customer/tenant relationship must be explicit and reviewed before schema lock. A branch is a real-world establishment record and may have its own evidence, status, and public projection.
 
 Every tenant-owned record has an authoritative tenant owner. A branch-owned record has a branch reference or a documented organization-wide scope. Legal-entity links and evidence must retain effective dates and provenance so ownership changes do not rewrite historical transaction attribution.
-\n\n## Architecture implementation boundary\n\nThis document remains the conceptual domain and data-ownership model, not a physical schema. Module ownership, dependency direction, database integrity, tenant-isolation implementation, API contracts, and deployment boundaries are governed by [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). A physical schema must preserve the ownership and projection rules defined here; it must not turn conceptual entities into shared writable tables without an explicit owner.\n
+
+
+## Architecture implementation boundary
+
+This document remains the conceptual domain and data-ownership model, not a physical schema. Module ownership, dependency direction, database integrity, tenant-isolation implementation, API contracts, and deployment boundaries are governed by [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). A physical schema must preserve the ownership and projection rules defined here; it must not turn conceptual entities into shared writable tables without an explicit owner.
