@@ -17,7 +17,7 @@ Primary dependencies:
 - Specification 16 — medicine catalogue and product identity.
 - Specification 17 — finance and reconciliation.
 - Specification 18 — role and permission matrix.
-- Specifications 20–23 — organization lifecycle, integrations, privacy, and UX.
+- Specifications 20–23 — organization lifecycle, integrations, privacy, and UX.\n- Specification 29 — application architecture, API, database, and deployment contract.
 
 ## 2. Canonical business facts and ownership
 
@@ -188,7 +188,7 @@ The implementation must prove at least:
 | Offline-enabled operations | Product owner + threat/risk analysis + field research | Online-only for finalization and sensitive writes |
 | Public availability freshness thresholds | Pharmacy research + product owner | Unknown/stale when freshness cannot be established |
 
-## 12. Readiness rule
+## 12. Architecture implementation alignment\n\nThe module and transaction rules in this contract must be realized through the enforceable boundaries, API semantics, database constraints, transactional outbox, and deployment controls in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). The architecture may choose different technologies, but it may not weaken these business invariants or introduce undocumented cross-module writes.\n\n## 13. Readiness rule
 
 A module is not implementation-ready merely because its own document has a workflow diagram or a list of states. Its state transitions, transaction boundaries, permissions, events, data ownership, privacy rules, failure recovery, and acceptance tests must agree with this cross-module contract and with every upstream/downstream module it touches.
 
