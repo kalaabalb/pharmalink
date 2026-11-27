@@ -343,6 +343,18 @@ The canonical registry contains 136 identifiers; 92 are mapped to the proposed f
 - `finance.sensitive_payment_data.read` is separately controlled and is not implied by ordinary payment, finance, or reconciliation access.
 - `support.case.create` may be made available to authenticated tenant members as a case-scoped service capability under abuse controls; it is not an operational tenant-role grant. It never grants `support.tenant_data.access`.
 
+For an exact machine-auditable inventory, the **44 canonical identifiers outside the 92-permission first-release baseline** are:
+
+| Domain | Identifiers outside the baseline | Disposition |
+|---|---|---|
+| Self-service identity | `account.register`, `account.sign_in` | Authentication policy; not tenant-role grants |
+| Canonical catalogue governance | `catalogue_correction.review`, `catalogue_correction.approve`, `barcode_mapping.propose`, `barcode_mapping.review`, `regulatory_classification.read`, `regulatory_classification.review` | Deferred governance/review capabilities; no first-release tenant grants |
+| Supplier-sensitive data and returns | `supplier.sensitive_data.read`, `supplier_return.create`, `supplier_return.approve` | Sensitive-field access separately gated; supplier returns excluded |
+| Deferred finance | `finance.expense.create`, `finance.expense.approve`, `finance.journal.read`, `finance.journal.post`, `finance.journal.reverse`, `finance.period.close`, `finance.sensitive_payment_data.read` | Expense and full-ledger/period-close workflows excluded; sensitive payment fields separately gated |
+| Public participation | `public_profile.configure`, `public_profile.publish`, `public_profile.pause`, `public_profile.update_contact`, `public_profile.update_location`, `public_catalogue.configure`, `public_catalogue.publish`, `public_catalogue.pause`, `public_availability.confirm`, `public_availability.publish`, `public_availability.pause`, `public_enquiry.read`, `public_report.submit` | Public surface excluded from first production release |
+| Moderation and verification | `moderation.case.read`, `moderation.case.triage`, `moderation.content.suppress`, `moderation.decision.record`, `moderation.appeal.review`, `verification.evidence.submit`, `verification.evidence.review`, `verification.claim.publish` | Platform governance and verification workflows excluded |
+| Support and platform administration | `support.case.create`, `support.tenant_data.access`, `platform.organization.restrict`, `platform.entitlement.manage`, `platform.security.admin` | Case creation is a service capability for authenticated members, not an operational role grant; data access and platform administration remain separately controlled |
+
 These dispositions are explicit exclusions or separate control paths, not missing permission mappings. A future release must add the relevant operations, role/scope rules, evidence gates, and tests before enabling any excluded capability.
 
 Support case creation may remain available to all authenticated tenant members, but it does not grant support staff access to tenant data. Platform support access requires its separate case-scoped, time-limited approval.
