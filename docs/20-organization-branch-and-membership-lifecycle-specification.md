@@ -138,6 +138,15 @@ A person may belong to multiple customer organizations. Each membership is indep
 
 Use the explicit permission identifiers in [Specification 18](18-proposed-permission-matrix.md), reconciled with the module specifications.
 
+The membership command contract distinguishes:
+- `membership.invite`: create and deliver a scoped invitation;
+- `membership.accept`: the authenticated intended invitee accepts their own invitation;
+- `membership.restrict`: an authorized organization administrator applies a scoped restriction/suspension with reason and review path;
+- `membership.revoke`: revoke membership and invalidate associated sessions/subscriptions/queued-command eligibility;
+- `role.assign` and `role.revoke`: assign or revoke explicit grants within the actor's delegation authority.
+
+Invitation acceptance is not role assignment, and revocation is not account deletion. A user accepting an invitation cannot self-select or expand the proposed role/branch scope.
+
 Role assignments:
 - are tenant-scoped and optionally branch-scoped;
 - have actor, time, reason, and effective period;
