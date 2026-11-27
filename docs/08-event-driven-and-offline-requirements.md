@@ -26,16 +26,19 @@ The user experience must remain correct when devices disconnect, events are dela
 
 This is an initial taxonomy; each event requires a schema and ownership review.
 
-| Domain | Candidate events |
+| Domain | Candidate committed events |
 |---|---|
 | Organization | OrganizationUpdated, BranchCreated, BranchStatusChanged |
 | Membership | InvitationIssued, MembershipActivated, MembershipRevoked, PermissionChanged |
-| Catalogue | CatalogueEntryLinked, CatalogueCorrectionSubmitted, CatalogueCorrectionReviewed |
-| Inventory | StockMovementCommitted, StockCountPosted, StockTransferDispatched, StockTransferReceived, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
-| Purchasing | PurchaseOrderSubmitted, PurchaseOrderApproved, GoodsReceiptRecorded, SupplierInvoiceRecorded |
-| Sales | SaleCommitted, SaleVoided, ReturnAccepted, PaymentStatusChanged |
-| Quality | RecallNoticeRecorded, AffectedStockFlagged, QualityDispositionRecorded |
-| Discovery | PublicProfilePublished, PublicProfilePaused, AvailabilitySnapshotChanged, AvailabilityBecameStale |
+| Catalogue governance | CanonicalCatalogueVersionPublished, CatalogueEntryLinked, TenantCatalogueEntryChanged, CatalogueCorrectionProposed, CatalogueCorrectionReviewed, BarcodeMappingReviewed |
+| Inventory ledger | StockMovementCommitted, StockCountPosted, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
+| Branch transfer | StockTransferDispatched, StockTransferReceived |
+| Purchasing | SupplierChanged, PurchaseOrderSubmitted, PurchaseOrderApproved, PurchaseOrderIssued, PurchaseOrderCancelled, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentStatusChanged |
+| Sales/POS | SaleCommitted, SaleVoided, ReturnAccepted, RefundStatusChanged, CashSessionOpened, CashSessionClosed |
+| Payments | PaymentAttemptInitiated, PaymentStatusChanged, PaymentReconciled |
+| Finance | FinancialEntryPosted, FinancialEntryReversed, ReconciliationBatchImported, ReconciliationExceptionResolved, FinancialPeriodClosed |
+| Quality | AffectedStockFlagged, QualityDispositionRecorded |
+| Public projection | PublicProfilePublished, PublicProfilePaused, PublicAvailabilityUpdated, PublicAvailabilityBecameStale |
 | Subscription | SubscriptionChanged, EntitlementChanged, InvoiceStatusChanged |
 | Platform | VerificationDecisionRecorded, SupportCaseUpdated, PrivilegedAccessGranted, SecurityIncidentRecorded |
 
@@ -160,17 +163,7 @@ Set numeric service objectives only after user research and load modeling. Alert
 
 ## 13. Event coverage for detailed business modules
 
-The following names are candidate domain events aligned to the inventory, POS, purchasing, finance, and catalogue specifications. They are facts that have committed, not commands or UI notifications. Final schemas and ownership must be reviewed before implementation.
-
-| Domain | Candidate committed events |
-|---|---|
-| Catalogue governance | CanonicalCatalogueVersionPublished, CatalogueCorrectionProposed, CatalogueCorrectionReviewed, BarcodeMappingReviewed, TenantCatalogueEntryChanged |
-| Inventory | StockMovementCommitted, StockCountPosted, StockTransferDispatched, StockTransferReceived, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
-| Sales/POS | SaleCommitted, SaleVoided, ReturnAccepted, RefundStatusChanged, CashSessionOpened, CashSessionClosed |
-| Payments | PaymentAttemptInitiated, PaymentStatusChanged, PaymentReconciled |
-| Purchasing | SupplierChanged, PurchaseOrderApproved, PurchaseOrderIssued, PurchaseOrderCancelled, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentStatusChanged |
-| Finance | FinancialEntryPosted, FinancialEntryReversed, ReconciliationBatchImported, ReconciliationExceptionResolved, FinancialPeriodClosed |
-| Public projection | PublicProfilePublished, PublicProfilePaused, PublicAvailabilityUpdated, PublicAvailabilityBecameStale |
+The canonical candidate event catalogue is maintained in Section 3 and aligned with the inventory, POS, purchasing, finance, and catalogue specifications. Final schemas, event ownership, and consumer behavior must be reviewed before implementation.
 
 ### Event ownership and transaction alignment
 
