@@ -27,6 +27,12 @@ Candidate entities:
 - **Credential verification:** a separate decision record with reviewer, source, date, outcome, and validity.
 - **Establishment evidence:** licence or other required evidence tied to an organization/branch and issuing authority.
 - **Device registration:** approved device identity, tenant/branch assignment, trust state, and revocation state.
+- **Customer tenant:** server-enforced data-isolation boundary and service customer workspace.
+- **Legal entity:** real-world legal person/business, distinct from a Pharmalink tenant and from an establishment.
+- **Organization authority record:** evidence of a person's authority to create/manage a customer workspace where required.
+- **Invitation:** single-use, time-limited offer to join a tenant with proposed scope and permissions.
+- **Service entitlement:** separately versioned software capability entitlement, not a legal licence.
+
 
 Identity is not the same thing as organization membership. A person may belong to multiple organizations. Revoking one membership must not delete the person's account or historical attribution.
 
@@ -187,3 +193,12 @@ The model must represent the following independently. Avoid a single organizatio
 The tenant owns its private operational records subject to applicable law and service terms. The platform is a processor/service provider where the applicable legal relationship so determines; that role must be confirmed contractually and legally, not hard-coded as an assumption. The platform controls its own security, billing, moderation, and verification decision records, while evidence supplied by a tenant must retain provenance and access restrictions.
 
 Deleting a public profile is not deleting the tenant. Closing a membership is not deleting the person's identity. Expiring a credential is not deleting its verification history. Tenant exit must preserve records that must lawfully be retained, provide a verified export, and apply a documented deletion schedule to remaining data.
+
+
+## 14. Organization and tenant relationship invariants
+
+The organization, tenant, legal-entity, establishment, membership, role assignment, professional credential, establishment evidence, public participation, and service entitlement relationships are specified in [Specification 20](20-organization-branch-and-membership-lifecycle-specification.md).
+
+The data model must not assume one tenant equals one legal entity, one licence, one branch, one owner, or one professional. The customer/tenant relationship must be explicit and reviewed before schema lock. A branch is a real-world establishment record and may have its own evidence, status, and public projection.
+
+Every tenant-owned record has an authoritative tenant owner. A branch-owned record has a branch reference or a documented organization-wide scope. Legal-entity links and evidence must retain effective dates and provenance so ownership changes do not rewrite historical transaction attribution.
