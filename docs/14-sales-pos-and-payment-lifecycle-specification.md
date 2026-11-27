@@ -211,7 +211,6 @@ Candidate permissions:
 - customer_return.create;
 - customer_return.submit;
 - customer_return.review;
-- inventory.return.disposition (inventory-owned stock disposition);
 - payment.initiate;
 - payment.confirm_manual;
 - payment.refund.request;
@@ -240,6 +239,9 @@ Automated tests must prove:
 - a failed print/email does not undo the sale;
 - receipt reissue does not create a new sale;
 - return stock is not automatically available for sale;
+- customer-return acceptance requires the distinct customer_return.review permission and cannot be performed by an unauthorized requester;
+- refund approval is separate from return acceptance, and neither action implies the other;
+- return stock disposition requires inventory.return.disposition and cannot be performed by a customer-return reviewer solely by virtue of that review permission;
 - partial return/refund totals reconcile to the original sale;
 - cash session variance is traceable;
 - expired/revoked membership and professional credentials block only the actions that depend on them;
