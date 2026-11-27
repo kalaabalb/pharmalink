@@ -94,6 +94,8 @@ Store claims and evidence separately from verification decisions. Record issuer,
 
 Verification status is not a substitute for the regulator’s authoritative register. Where direct authoritative verification is unavailable, label the method and confidence honestly and require manual review. Support re-verification and suspension when evidence expires or is challenged.
 
+The evidence model must distinguish three possible regulatory records where applicable: (1) an establishment licence tied to the establishment/legal entity, (2) an individual professional competency licence tied to the person, and (3) an establishment-linked certificate of competence or technical-manager designation tied to a specific person-establishment relationship. ES 7084:2024 and ES 7085:2024 surface the third concept; its exact legal subject, issuer, and scope require qualified Ethiopian confirmation. Never merge these records or treat one as automatic proof of another.
+
 ## 8. Acceptance criteria
 
 - Cross-tenant and cross-branch access attempts are denied server-side, including direct API calls and guessed identifiers.
@@ -134,6 +136,7 @@ The authorization model must not collapse platform access, establishment licensi
 | Branch membership/scope | Membership–branch relationship | assigned, suspended, removed | Which branch resources are accessible |
 | Management entitlement | Tenant and capability | enabled, read-only/grace, suspended, ended | Contractual/service availability, not professional authority |
 | Establishment evidence | Organization or branch | not requested, required, submitted, under review, verified, rejected, expired, suspended, superseded | Only the specific operation or public claim for which evidence is required |
+| Establishment-linked certificate of competence / technical-manager designation | Person–establishment relationship | not requested, required, submitted, under review, verified, rejected, expired, suspended, superseded | Only the specific designated responsibility or action whose policy requires this relationship evidence |
 | Professional credential | Person and credential scope | not requested, submitted, under review, verified, rejected, expired, suspended, revoked | Only professional actions requiring that credential and scope |
 | Public participation | Organization/branch and capability | opted out, draft, submitted, published, paused, rejected, withdrawn | Public projection and discovery |
 | Commerce capability | Organization/branch and approved capability | unavailable, review required, enabled, paused, revoked | Only the separately approved commerce workflow |
