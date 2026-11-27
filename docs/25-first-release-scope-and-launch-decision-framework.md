@@ -147,7 +147,7 @@ The release candidate is ready for implementation only when:
 - each included journey has complete, cross-consistent specifications;
 - no critical unresolved question is hidden in code assumptions;
 - authoritative data ownership, state machines, transaction boundaries, permissions, events, privacy, retention, and recovery are defined;
-- every enabled action maps to a canonical permission identifier, approved role/scope grant, approval rule, audit event, and positive/negative authorization tests;
+- every enabled action maps to a canonical permission identifier, approved role/scope grant, approval rule, audit event, and positive/negative authorization tests; Specification 18 §12 provides a proposed grant baseline for review, not automatic or approved production grants.
 - testable acceptance criteria exist for normal, alternate, denied, failure, retry, concurrency, offline, and recovery cases;
 - architecture and provider choices are justified by the actual workflows;
 - legal/accounting review is complete for the enabled capabilities;
