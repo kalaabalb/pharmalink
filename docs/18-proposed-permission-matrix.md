@@ -134,7 +134,38 @@ The following are separate checks and must never be represented by a single glob
 
 If a professional credential expires, only credential-dependent actions are blocked. If establishment evidence expires, affected operations/public claims are evaluated individually. Neither event automatically removes ordinary staff memberships or unrelated management permissions.
 
+
 The exact credential and establishment dependencies remain unresolved until the relevant Ethiopian federal/regional rules are reviewed. No role table in this draft overrides applicable law.
+
+### 7.1 Action-specific evidence dependency register (draft)
+
+This register defines the product's default separation rules. It does **not** make a legal determination that a particular establishment, product, or person may lawfully perform an activity. A dependency marked **conditional / unresolved** must be resolved for the launch jurisdiction, establishment category, product category, and exact activity before that capability is enabled.
+
+| Action or capability | Establishment evidence | Individual professional credential | First-release handling |
+|---|---|---|---|
+| Account registration, sign-in, invitation acceptance, ordinary membership | None | None | Available under identity and abuse controls; never gate on a pharmacy licence or professional credential |
+| Organization setup and private management configuration | Evidence of representative authority only where proportionate/required; not automatically a pharmacy operating licence | None | Permit setup and unrelated management while any required establishment review is pending; do not claim legal operating status |
+| Private catalogue maintenance, supplier records, purchase orders, purchasing queries | None by default | None | Ordinary tenant-scoped grants; product classification must not be invented from free text |
+| Goods receipt, batch capture, stock counts, holds, permitted inventory corrections | None by default for software access; establishment-specific operating obligations remain outside a blanket credential gate | None by default | Allow ordinary stock-management roles; restricted handling/disposal actions require their own reviewed policy |
+| In-branch POS sale of a product in a reviewed, supported category | Establishment eligibility for the actual category/location only where the reviewed law requires it | None for ordinary cashier operations unless the exact sale includes a legally reserved professional act | Enable only reviewed product/action combinations; separate ordinary sale recording from professional dispensing/authorization |
+| Prescription-controlled, restricted-category, professional dispensing, or other regulated act | Conditional; exact establishment category and licence scope must be confirmed | Conditional; exact professional category, scope, identity match, and current status must be confirmed | Disabled until the action-specific legal matrix and credential verification source are approved; a POS permission is never a substitute |
+| Payment initiation, manual confirmation, cash session, reconciliation, ordinary financial reporting | None | None | Gate by finance permissions, evidence, separation, and provider policy—not professional credentials |
+| Return review, refund request/approval, and ordinary sale correction | None by default | None by default | Gate by workflow permissions and accounting policy; if the return/disposition involves a separately regulated activity, evaluate that activity independently |
+| Inventory disposal, controlled/restricted stock handling, recall execution | Conditional; category, establishment, jurisdiction, method, and any witness requirements need review | Conditional only if the specific action is legally reserved to a qualified professional | Keep disabled until the relevant product-category and regional rules, evidence, and roles are approved |
+| Public establishment profile or establishment verification claim | Evidence required only for the specific claim and jurisdiction; publication is separately opt-in | No blanket individual credential requirement | Public discovery is deferred from first release; never imply that an individual credential verifies the whole establishment |
+| Public professional credential claim | Not a substitute for establishment evidence | The named person's verified credential and claim scope | Public claim must name the person, scope, issuer/method, and validity; no organization-wide inference |
+| Platform support, customer support case creation, and software administration | None | None | Separate service permissions; no legal/professional authority implied |
+
+**Enforcement rules:**
+
+1. The server resolves evidence dependencies from a versioned action-policy registry using the exact action, jurisdiction, establishment category, product classification, and effective date. A client may submit observed facts or evidence references but may not choose the policy, declare itself exempt, or assert that a credential is valid.
+2. A policy entry must state \`no_evidence_required\`, \`establishment_evidence_required\`, \`professional_credential_required\`, \`both_required\`, or \`unresolved\`. \`unresolved\` is a release blocker for the affected action/category; it must not be silently treated as \`no_evidence_required\`.
+3. A required establishment check binds evidence to the actual legal entity/establishment/branch, issuer, jurisdiction, establishment category, licence scope, validity period, and authoritative/manual verification method.
+4. A required professional check binds the credential to the acting person, identity match, issuer, professional category, jurisdiction, permitted scope, validity period, and current status. A role title or uploaded image alone never satisfies it.
+5. Evidence is checked at the point of authorization and rechecked for long-running approvals or delayed execution. Expiry, revocation, suspension, policy change, or scope mismatch blocks only the dependent action. It does not retroactively rewrite historical attribution or disable unrelated management access.
+6. If authoritative verification is unavailable, the state remains pending/manual-review as defined by policy. The system must not present submitted evidence as verified or silently downgrade a required check.
+7. The action-policy registry must retain source references, reviewer/legal approval, policy version, effective dates, decision rationale, and a regression-test set. A change to law, source, category, or policy requires review and controlled rollout.
+8. No regulated action may be enabled in production until its policy entry, evidence source/method, permitted actor scope, positive/negative tests, and accountable legal/regulatory approval are recorded.
 
 ## 8. Server-side authorization algorithm
 
