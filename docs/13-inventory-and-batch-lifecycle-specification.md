@@ -199,7 +199,7 @@ The same physical quantity must not be simultaneously available at source and de
 
 ## 13. Permissions and separation of duties
 
-The permission matrix must distinguish at least:
+The canonical identifiers are registered in [Specification 18](18-proposed-permission-matrix.md); its role grants remain a release blocker until approved. This module requires at least:
 - inventory.read;
 - inventory.receive;
 - inventory.count;
