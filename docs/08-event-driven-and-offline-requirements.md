@@ -28,8 +28,8 @@ This is an initial taxonomy; each event requires a schema and ownership review.
 
 | Domain | Candidate committed events |
 |---|---|
-| Organization | OrganizationUpdated, BranchCreated, BranchStatusChanged |
-| Membership | InvitationIssued, MembershipActivated, MembershipRevoked, PermissionChanged |
+| Organization | OrganizationCreated, OrganizationUpdated, OrganizationStatusChanged, OrganizationOwnershipTransferred, BranchCreated, BranchUpdated, BranchStatusChanged |
+| Membership and access | InvitationIssued, InvitationExpired, MembershipActivated, MembershipRestricted, MembershipRevoked, RoleAssignmentChanged, PermissionChanged, DeviceAccessRevoked |
 | Catalogue governance | CanonicalCatalogueVersionPublished, CatalogueEntryLinked, TenantCatalogueEntryChanged, CatalogueCorrectionProposed, CatalogueCorrectionReviewed, BarcodeMappingReviewed |
 | Inventory ledger | StockMovementCommitted, StockCountPosted, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
 | Branch transfer | StockTransferDispatched, StockTransferReceived |
