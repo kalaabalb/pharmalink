@@ -203,6 +203,8 @@ Do not infer a cash drawer balance solely from sale totals if other cash movemen
 Candidate permissions:
 - sale.create;
 - sale.read;
+- payment.read;
+- customer_return.read;
 - sale.discount.request;
 - sale.discount.approve;
 - sale.commit;
