@@ -76,3 +76,11 @@ Select these from requirements and evidence, not habit or preference.
 ## 4. Decision quality
 
 A decision must record context, options, rationale, consequences, evidence and revisit conditions. If evidence is missing, label the item a hypothesis or open question.
+
+## 3. Clarifying product decisions
+
+**P-16 — Platform access is not professional authorization.** Account registration and ordinary platform-management use do not require an individual professional licence. Professional verification is applied only to workflows, approvals, or claims that require it under the applicable rules.
+
+**P-17 — Management use does not require public selling.** A pharmacy may use Pharmalink privately. Public profile, product publication, availability sharing, enquiries, and future commerce features are independently opt-in and can be disabled without disabling management.
+
+**P-18 — Separate legal establishment status from platform eligibility.** Pharmalink account eligibility, a pharmacy's legal right to operate an establishment, and an individual's professional authorization are three different concepts. The platform must not conflate them.

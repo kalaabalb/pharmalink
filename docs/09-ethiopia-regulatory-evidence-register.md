@@ -114,3 +114,11 @@ Before implementing regulated workflows, obtain:
 The Food and Medicine Administration Proclamation PDF and Ministry of Justice law record are primary official sources. The Addis Ababa licensing portal is an official regional operational source. The drug-shop standard is surfaced through the Ethiopian Standards Institute portal and must be checked for current edition/status. The electronic-transactions source above is secondary and must be replaced by an official Gazette copy before reliance.
 
 This register is an initial evidence map, not a complete regulatory survey. No legal conclusion should be inferred from an omitted topic.
+
+## 10. Platform access versus regulated activity — product interpretation
+
+The platform owner's requirement is that Pharmalink must not require an individual's professional licence merely to register, sign in, join a pharmacy organization, or use ordinary management functions. A pharmacy may use Pharmalink privately without publishing or selling through the public-facing experience.
+
+This product requirement is distinct from legal requirements governing the pharmacy establishment or a regulated professional act. The application must not represent platform access as proof of legal establishment status, and it must not authorize an action that applicable law reserves to a qualified professional. Where a specific feature requires establishment evidence or a professional credential, gate only that feature or action and explain why the evidence is requested. Do not make the credential a blanket platform-entry requirement.
+
+The exact activities requiring a credential, the relevant establishment categories, and the acceptable evidence sources remain subject to current federal/regional legal review. This register does not infer that all retailers are exempt from professional or establishment obligations; it defines the product's access boundary.

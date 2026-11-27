@@ -111,3 +111,13 @@ Verification status is not a substitute for the regulator’s authoritative regi
 - Which credentials can be verified electronically, from which authoritative source, and how often?
 - Should a single person be allowed to own multiple branches under one tenant, subject to local licensing rules?
 - What is the support-access approval and emergency-access process?
+
+## 10. Platform membership is not a professional licence
+
+A person may create an account, join an organization, and use ordinary platform functions according to assigned permissions without presenting an individual professional licence. Do not require professional credentials at general registration, invitation acceptance, sign-in, or routine management use.
+
+Professional credential data is collected and checked only when there is a defined need: for example, a regulated action, a role whose legal scope requires it, or a public verification statement that explicitly depends on that credential. Such checks must be limited to the relevant action and must not automatically block unrelated management functions.
+
+Establishment licence evidence, an individual's professional credential, and Pharmalink's own organization/account verification are separate records and statuses. A pharmacy's choice not to publish or sell through the public-facing app must not prevent its staff from using private management features.
+
+**Permission design consequence:** distinguish platform permissions (manage catalogue, stock, suppliers, reports, staff) from regulated professional permissions. The latter must be gated by applicable role, credential status, and current law; the former must not inherit a blanket professional-licence requirement.

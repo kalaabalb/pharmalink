@@ -210,3 +210,16 @@ Administrative identity, strong authentication, least privilege, audit trail, se
 ## 6. Phasing principle
 
 The first release should solve a coherent, safe problem for a real pharmacy cohort. Do not attempt to ship everything at once. Foundational data ownership, tenant isolation, batch traceability, auditability and event contracts must nevertheless be designed before dependent modules.
+
+## 7. Platform access versus optional public participation
+
+The platform must support pharmacies that want management software only.
+
+- A pharmacy can register an organization and use permitted management capabilities without opting into public discovery or selling through the platform.
+- Public profile publication, product publication, availability sharing, public enquiries, and any future order/commerce feature are separate opt-in capabilities.
+- A pharmacy can enable some public capabilities while keeping others disabled, subject to approved product rules and law.
+- Disabling public participation must not disable private management, inventory, purchasing, reporting, or access to the pharmacy's own records.
+- Professional credentials are not a blanket prerequisite for account registration, staff access, or ordinary management functions. Credential checks are attached only to specific regulated actions, approval responsibilities, or verification claims where applicable.
+- Establishment licence information, where needed for a regulated workflow or a clearly described public verification claim, is distinct from an individual's professional credential. Do not turn either into a universal sign-up gate without a demonstrated legal basis.
+
+The initial public-facing feature set remains discovery and information. Online ordering, reservation, payment, delivery, and other commerce functions remain separate decisions requiring legal and operational review.

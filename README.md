@@ -42,3 +42,7 @@ Complete and challenge the product, operational, regulatory, UX and technical sp
 This repository is the authoritative planning record. Chat discussions and agent proposals are inputs; approved repository decisions govern the project.
 
 “Pharmalink” is a working name, not trademark or domain clearance.
+
+## Platform access and optional public commerce
+
+Pharmalink is a platform with pharmacy-management capabilities and a separate public-facing discovery/access experience. A pharmacy may use the management system privately without publishing its catalogue, advertising availability, accepting orders, or selling through the public-facing experience. Public listing and any commerce-related capabilities are opt-in, separately configurable, and subject to applicable legal and operational review. A professional credential is not a general requirement to create an account or use ordinary platform-management features; credential checks apply only to specific regulated activities or claims where required.

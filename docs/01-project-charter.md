@@ -161,3 +161,9 @@ Technical design may begin only after:
 - High-risk unknowns are resolved or explicitly accepted with mitigation.
 
 This charter does not claim these conditions are already satisfied.
+
+## 11. Platform access is separate from public selling
+
+Pharmalink serves two distinct usage modes within one platform: (1) private pharmacy/business management and (2) optional public-facing discovery and, only if separately approved, commerce-related capabilities. A pharmacy retailer may use management functions without publishing products, exposing stock availability, receiving public enquiries, accepting orders, or selling through Pharmalink. These choices are controlled by the pharmacy at business and branch level.
+
+Account creation, platform access, and ordinary management use must not be conditioned on an individual's professional licence. A professional credential is relevant only when a specific workflow or legal requirement calls for a qualified professional to perform or approve that action. Establishment licensing and professional credentials are different evidence types; any verification needed for a public trust claim or a regulated capability must be proportionate, transparent, and legally reviewed. This product rule does not waive any legal obligation a pharmacy has to operate its physical business lawfully.

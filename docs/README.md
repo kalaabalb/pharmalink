@@ -85,3 +85,14 @@ When changing a requirement:
 ## Implementation gate
 
 No production implementation begins until the relevant scope has approved workflows, state transitions, data ownership, role/permission rules, failure behavior, event/offline policy, security review, regulatory review where applicable, acceptance tests, and migration/recovery requirements. Approval is scoped; unresolved questions must remain visible rather than being silently guessed.
+
+## Product-owner clarification — platform access and direct-main workflow
+
+The product owner has explicitly clarified:
+- Pharmalink is a platform offering management capabilities and optional public-facing access/discovery.
+- A pharmacy retailer may use management functions without selling, listing products, or publishing availability through the app.
+- Public participation is opt-in and independently controllable.
+- An individual professional licence is not a general account-registration or ordinary platform-use requirement. Credential checks are scoped to specific regulated actions or verification claims.
+- Documentation and implementation work should be committed directly to `main` by default. Do not require the product owner to open and merge a pull request for routine work.
+
+These are user-owned product decisions and override earlier draft assumptions that implied a blanket professional credential gate.

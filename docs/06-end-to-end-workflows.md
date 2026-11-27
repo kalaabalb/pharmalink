@@ -124,3 +124,15 @@ For every workflow, create tests for:
 - audit and notification completeness;
 - reversal/correction path;
 - data export and retention implications.
+
+## 14. Management-only onboarding and optional public participation
+
+1. A retailer creates an account and an organization profile using the minimum information required to establish the tenant and secure its access.
+2. The retailer selects management-only use by default; no public listing or selling is enabled implicitly.
+3. The retailer configures branches, staff, roles, catalogue, suppliers, inventory, and other permitted management capabilities.
+4. The retailer may separately opt into a public business profile, product discovery, and availability publication.
+5. Each public capability has its own eligibility checks, disclosure, publication controls, and pause/withdrawal behavior.
+6. Any future ordering, reservation, payment, or delivery capability is a separate opt-in workflow and must not be assumed merely because a pharmacy is listed.
+7. Professional credentials are requested only when a specific regulated workflow or legal verification requirement needs them. A missing professional credential must not block unrelated management-only use.
+
+A retailer can turn public participation off while retaining its management account and historical records. Platform access does not itself certify that the establishment is licensed, nor does it authorize any regulated professional activity.
