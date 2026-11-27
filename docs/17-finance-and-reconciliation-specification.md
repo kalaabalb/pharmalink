@@ -231,6 +231,7 @@ Canonical identifiers and the unresolved role-grant register are maintained in [
 - Local report snapshots may be cached only with scope, permission, generation time, and stale/offline labels.
 - Financial commands use idempotency keys and server-side authorization.
 - Financial events are published through the transactional outbox only after commit.
+- Candidate event names include CashMovementPosted, CashSessionOpened, CashSessionCounted, CashSessionClosed, ReconciliationImported, ReconciliationMatched, and ReconciliationExceptionResolved. Each event represents a committed finance-owned fact; provider/bank evidence remains separately attributable.
 - Consumers are idempotent and recover missed events through replay/reconciliation.
 - Relevant dashboards subscribe to changes; do not poll continuously for unchanged financial totals.
 - Push notifications must not expose sensitive amounts or account details unless a specific reviewed notification policy permits it.
