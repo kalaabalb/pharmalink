@@ -203,6 +203,57 @@ An operation without this traceability is not implementation-ready. A UI control
 
 The command/query inventory in this specification is complemented by [Specification 30](30-workflow-state-transition-and-recovery-contract.md), which defines candidate aggregate transitions, guards, transaction ordering, event semantics, and failure recovery. API contracts must represent each approved transition as an explicit command with expected version, server-derived actor/scope, canonical permission, idempotency behavior, and stable result. Do not expose generic status mutation.
 
+
+
+## 4.9 First-release workflow-to-operation traceability matrix
+
+This is a logical traceability baseline for the proposed private-operations release in Specification 25. It is **not an approved launch scope, final route list, or final event registry**. Operation IDs are stable design identifiers; HTTP paths and schemas are defined later in the API contract. Candidate event names must be registered and versioned before implementation. A workflow not approved for the release must not be exposed merely because an operation appears here.
+
+| Workflow / step | Logical command or query ID | Required permission(s) | Authoritative owner and transaction boundary | Candidate committed event(s) | Minimum acceptance-test IDs |
+|---|---|---|---|---|---|
+| Create private organization workspace | `organization.create` | `organization.manage` | Identity/Organization; create tenant, initial owner membership, and bootstrap grants atomically | `OrganizationCreated`, `MembershipActivated` | ORG-001, ORG-002 |
+| Create branch | `branch.create` | `branch.manage` | Organization; branch belongs to tenant; no legal operating claim inferred | `BranchCreated` | ORG-003, TENANT-001 |
+| Invite and accept member | `membership.invitation.create`, `membership.invitation.accept` | `membership.invite`, `membership.accept` | Identity/Organization; invitation token single-use; acceptance bound to intended account | `MembershipInvitationCreated`, `MembershipActivated` | ORG-004, AUTH-001, AUTH-002 |
+| Restrict or revoke membership | `membership.restrict`, `membership.revoke` | `membership.restrict`, `membership.revoke` | Identity/Organization; session, subscription, and queued-command invalidation is coordinated and versioned | `MembershipRestricted`, `MembershipRevoked` | AUTH-003, OFFLINE-001 |
+| Maintain tenant catalogue | `catalogue.item.create`, `catalogue.item.update`, `catalogue.item.disable` | `tenant_catalogue.create`, `tenant_catalogue.update`, `tenant_catalogue.disable` | Catalogue; tenant-local identity, source provenance, and versioned presentation/unit mapping | `TenantCatalogueItemCreated`, `TenantCatalogueItemUpdated`, `TenantCatalogueItemDisabled` | CAT-001 through CAT-006 |
+| Create and approve purchase order | `purchase_order.create`, `purchase_order.submit`, `purchase_order.approve`, `purchase_order.issue`, `purchase_order.cancel`, `purchase_order.close` | Corresponding `purchase_order.*` permission for each command | Purchasing; each approved/issued version is immutable; order approval never creates stock | `PurchaseOrderSubmitted`, `PurchaseOrderApproved`, `PurchaseOrderIssued`, `PurchaseOrderCancelled`, `PurchaseOrderClosed` | PUR-001 through PUR-008 |
+| Record and accept goods receipt | `goods_receipt.create`, `goods_receipt.accept`, `goods_receipt.commit` | `goods_receipt.create`, `goods_receipt.accept`, `inventory.receive` | Purchasing + Inventory orchestration; accepted receipt lines and stock movements commit atomically with outbox | `GoodsReceiptAccepted`, `StockMovementPosted` | REC-001 through REC-008, INV-001 |
+| Count stock and post adjustment | `inventory.count.record`, `inventory.adjustment.request`, `inventory.adjustment.approve` | `inventory.count`, `inventory.adjust.request`, `inventory.adjust.approve` | Inventory; count snapshot/cutoff preserved; adjustment is a linked movement, not a balance overwrite | `StockCountRecorded`, `StockAdjustmentRequested`, `StockAdjustmentPosted` | INV-002 through INV-009 |
+| Transfer stock between branches | `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.transfer.cancel` | Matching `inventory.transfer.*` permission per transition | Inventory; dispatch creates in-transit quantity; destination receipt is a separate leg | `StockTransferDispatched`, `StockTransferReceived`, `StockTransferCancelled` | XFER-001 through XFER-007 |
+| Hold, release, or dispose stock | `inventory.hold.apply`, `inventory.hold.release`, `inventory.disposal.request`, `inventory.disposal.approve` | `inventory.hold`, `inventory.release`, `inventory.disposal.request`, `inventory.disposal.approve` | Inventory; eligibility recalculated against expiry, recall, quality, and evidence rules | `StockHoldApplied`, `StockHoldReleased`, `StockDisposalPosted` | INV-010 through INV-015 |
+| Create and validate sale | `sale.draft.create`, `sale.validate`, `sale.commit` | `sale.create`, `sale.commit` | Sales orchestrates Inventory; sale lines, price/tax snapshots, stock issue, audit, and outbox commit atomically | `SaleCommitted`, `StockMovementPosted` | POS-001 through POS-009 |
+| Initiate and confirm payment | `payment.initiate`, `payment.confirm.manual`, `payment.provider.callback` | `payment.initiate`; `payment.confirm_manual` for manual confirmation; provider callback uses a dedicated authenticated service identity | Payment adapter + Payments; external confirmation is verified and persisted independently from sale commit | `PaymentInitiated`, `PaymentConfirmed`, `PaymentFailed`, `PaymentDisputed` | PAY-001 through PAY-010 |
+| Request and complete refund | `payment.refund.request`, `payment.refund.approve`, `payment.refund.execute` | `payment.refund.request`, `payment.refund.approve` | Payments; refund references original payment; provider/cash completion requires authoritative evidence | `RefundRequested`, `RefundApproved`, `RefundConfirmed`, `RefundFailed` | PAY-011 through PAY-016 |
+| Process customer return and stock disposition | `customer_return.create`, `customer_return.submit`, `customer_return.review`, `inventory.return.disposition` | `customer_return.create`, `customer_return.submit`, `customer_return.review`, then `inventory.return.disposition` for stock action | Sales owns customer return; Inventory owns stock disposition; refund remains a separate Payments aggregate | `CustomerReturnSubmitted`, `CustomerReturnAccepted`, `CustomerReturnRejected`, `CustomerReturnDispositionRecorded` | RET-001 through RET-010 |
+| Open, count, and close cash session | `cash_session.open`, `cash_session.count`, `cash_session.close` | `finance.cash_session.open`, `finance.cash_session.count`, `finance.cash_session.close` | Finance; session snapshot and cash movements are authoritative; close records variance without rewriting sales | `CashSessionOpened`, `CashSessionCounted`, `CashSessionClosed` | CASH-001 through CASH-009 |
+| Reconcile payment/cash evidence | `finance.reconciliation.import`, `finance.reconciliation.match`, `finance.reconciliation_exception.resolve` | `finance.reconcile`, `finance.reconciliation_exception.resolve` | Finance; source file/event provenance, idempotent import, unmatched and disputed rows retained | `ReconciliationImported`, `ReconciliationMatched`, `ReconciliationExceptionResolved` | FIN-001 through FIN-008 |
+| Read operational reports | `inventory.report.read`, `sales.report.read`, `purchasing.report.read`, `finance.report.read` | Domain read permissions such as `inventory.read`, `sale.read`, `supplier.read`, `finance.read` | Read models are projections; each report states tenant/branch, as-of time, filters, freshness, and calculation basis | No business event; projection freshness/lag telemetry only | REPORT-001 through REPORT-008 |
+| Export tenant records | `tenant.export.request`, `tenant.export.download` | Domain-specific export permission and tenant/branch scope | Export service; asynchronous job, immutable artifact manifest, expiry, access audit and integrity check | `TenantExportRequested`, `TenantExportCompleted`, `TenantExportExpired` | EXP-001 through EXP-006 |
+
+### 4.9.1 Operation contract completion requirements
+
+Before implementation, each logical command/query above must have a versioned API schema that specifies:
+- request fields, validation, canonical identifiers, and prohibited client-controlled fields;
+- response shape, aggregate version, stable operation ID, and error codes;
+- authentication, tenant/branch/resource scope, required permissions, and action-specific evidence gates;
+- idempotency key and payload binding for writes;
+- optimistic concurrency/version preconditions;
+- transaction boundary, authoritative writes, unique constraints, and outbox event;
+- audit record, actor, reason, policy version, and correlation ID;
+- timeout/unknown outcome, retry, compensation, and reconciliation behavior;
+- rate limits, data classification, retention, and observability;
+- contract, authorization, concurrency, failure-injection, and end-to-end tests.
+
+Queries must define field-level visibility, source versus projection semantics, pagination/filter allowlists, freshness, cache behavior, and export restrictions. A report query must not be implemented by giving the client unrestricted database access.
+
+### 4.9.2 Test identifier convention
+
+The IDs in the matrix are planning identifiers, not evidence that tests already exist. The implementation test registry must map each ID to an automated test, test owner, build, result, and defect link. Tests must include successful, denied, duplicate, stale-version, concurrent, timeout-after-commit, event replay, cross-tenant, cross-branch, revoked-permission, and recovery cases wherever applicable.
+
+### 4.9.3 First-release exclusions
+
+Public profile/catalogue/availability publication, public enquiries, moderation, verification claims, platform support data access, full general-ledger posting, statutory tax filing, fiscal-device integrations, and regulated product workflows remain outside this matrix unless Specification 25 is formally amended and the relevant legal, operational, security, and product gates pass.
+
 ## 5. Database architecture and integrity contract
 
 The database technology and hosting provider remain open. A relational transactional database, with PostgreSQL as a candidate, is the leading hypothesis because the domain requires relational integrity, multi-row transactions, uniqueness, concurrency control, and reporting. Validate it against hosting, operations, backup, regional availability, cost, and team expertise before selection.
