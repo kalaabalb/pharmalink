@@ -266,7 +266,7 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `tenant_catalogue.disable` | Owner; delegated Manager | Preserve references from historical transactions |
 | `catalogue_correction.propose` | Owner, Manager, assigned Professional, Inventory, Purchasing | Proposal only; cannot mutate canonical shared catalogue |
 | `inventory.read` | Owner, Manager, assigned Professional, Inventory; Cashier limited to sale-relevant availability; Purchasing limited to purchasing scope; Accountant/Auditor read-only | Branch scope and field-level filtering |
-| `inventory.receive`, `goods_receipt.create` | Owner, Manager, Inventory; Purchasing if explicitly assigned | Actual branch, item, batch, expiry, unit, quantity and source evidence |
+| `inventory.receive`, `goods_receipt.create` | Owner, Manager, Inventory; Purchasing if explicitly assigned | `goods_receipt.create` permits draft creation; `inventory.receive` is required with `goods_receipt.accept` for authorized acceptance/receipt posting. The final `goods_receipt.commit` is an internal continuation, not a separately granted action. Actual branch, item, batch, expiry, unit, quantity and source evidence |
 | `goods_receipt.accept` | Owner or delegated Manager; assigned Inventory/Purchasing operator | Inspection/discrepancy policy; approval separation for material exceptions |
 | `inventory.count` | Owner, Manager, Inventory; Professional if assigned | Count scope, cutoff, counter identity, device and version |
 | `inventory.adjust.request` | Owner, Manager, Inventory | Reason and evidence; requester identity retained |
