@@ -364,10 +364,11 @@ The API contract/OpenAPI or equivalent schema must instantiate these envelopes p
 The authorization service must evaluate professional and establishment evidence through a versioned **action-policy registry**, not a global tenant/person verification boolean.
 
 Each policy entry must contain:
+- a distinct evidence subject/type model: establishment licence (establishment), professional competency licence (person), and establishment-linked certificate of competence/technical-manager designation (person-to-establishment relationship). These types are not interchangeable; the exact certificate issuer, legal subject, and scope require jurisdiction-specific confirmation.
 - stable policy ID/version and exact logical action(s);
 - jurisdiction and effective-from/effective-to dates;
 - establishment category and product/regulatory classification predicates, where relevant;
-- required evidence mode: `no_evidence_required`, `establishment_evidence_required`, `professional_credential_required`, `both_required`, or `unresolved`;
+- evidence mode: `no_evidence_required`, `evidence_required`, or `unresolved`, plus an explicit `required_evidence_types` list containing zero or more of `establishment_licence`, `professional_competency_licence`, and `establishment_linked_certificate_of_competence`;
 - establishment evidence type, issuer/source, legal entity/branch binding, licence scope, validity and verification method, if required;
 - professional credential type, issuer/source, person identity match, professional scope, jurisdiction, validity and current status, if required;
 - permitted actor/role and any delegation, approval, witness, re-authentication, or separation constraints;
