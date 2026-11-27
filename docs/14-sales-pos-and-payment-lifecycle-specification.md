@@ -193,7 +193,7 @@ Do not infer a cash drawer balance solely from sale totals if other cash movemen
 - A local cart/draft may be saved offline only if the local data policy permits it; it is not a committed sale and must be visibly labeled.
 - Do not queue a sale for automatic finalization later unless a separate offline sales design proves stock allocation, price validity, authorization expiry, payment, receipt numbering, and duplicate handling safe.
 - A client timeout after submit must query the command outcome before retrying.
-- SaleCommitted, SaleVoided, PaymentInitiated, PaymentConfirmed, PaymentFailed, PaymentDisputed, RefundRequested, RefundApproved, RefundConfirmed, RefundFailed, CustomerReturnSubmitted, CustomerReturnAccepted, CustomerReturnRejected, and CustomerReturnDispositionRecorded are candidate domain events. Payment/refund events represent distinct committed transitions, not a generic UI status update.
+- SaleCommitted, SaleDiscountApproved, SaleVoidRequested, SaleVoided, ReceiptReissued, PaymentInitiated, PaymentConfirmed, PaymentFailed, PaymentDisputed, RefundRequested, RefundApproved, RefundConfirmed, RefundFailed, CustomerReturnSubmitted, CustomerReturnAccepted, CustomerReturnRejected, and CustomerReturnDispositionRecorded are candidate domain events. Payment/refund events represent distinct committed transitions, not a generic UI status update.
 - Publish events through the transactional outbox after the authoritative transaction commits.
 - Clients subscribe to relevant branch/session changes; do not poll continuously for unchanged sales/payment state.
 - Payment-provider callbacks are external events and must be verified, deduplicated, and reconciled.
