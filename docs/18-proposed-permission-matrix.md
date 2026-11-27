@@ -278,11 +278,11 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `inventory.disposal.approve` | Owner or delegated Manager; separate approver where required | Grant only if disposal is included; no self-approval; legal witness/evidence rules must be resolved |
 | `inventory.return.disposition` | Owner, Manager, Inventory; Professional only where a reviewed product rule requires it | Separate from customer-return acceptance and refund; returned goods remain non-saleable until disposition |
 | `supplier.read` | Owner, Manager, Purchasing; Inventory/Accountant limited | Tenant scope; sensitive banking/contact fields excluded unless separately granted |
-| `requisition.read`, `quotation.read` | Owner, Manager, Purchasing; Inventory limited where assigned | Tenant/branch scope and source-document permissions |
+| `requisition.read`, `quotation.read` | Owner, Manager, Purchasing; Inventory limited where assigned | Grant only if requisition/quotation workflows are included; otherwise disabled |
 | `purchase_order.read` | Owner, Manager, Purchasing; Inventory and Accountant limited; Auditor read-only | Order detail and branch scope; supplier-sensitive fields filtered |
 | `goods_receipt.read` | Owner, Manager, Inventory, Purchasing; Accountant limited; Auditor read-only | Receipt/batch detail; pricing fields separately filtered |
-| `supplier_invoice.read` | Owner, Manager if delegated, Purchasing, Accountant; Auditor read-only | Invoice and matching evidence; sensitive financial fields restricted |
-| `supplier_payment.read` | Owner, Accountant; Purchasing/Manager only if delegated; Auditor read-only | Payment references and reconciliation status; bank details separately gated |
+| `supplier_invoice.read` | Owner, Manager if delegated, Purchasing, Accountant; Auditor read-only | Grant only if invoice workflow is included; invoice and matching evidence; sensitive financial fields restricted |
+| `supplier_payment.read` | Owner, Accountant; Purchasing/Manager only if delegated; Auditor read-only | Grant only if supplier-payment workflow is included; payment references and reconciliation status; bank details separately gated |
 | `supplier.create`, `supplier.update` | Owner, Manager, Purchasing | Tenant scope and duplicate review |
 | `supplier.block` | Owner; delegated Manager | Reason, impact on open orders and appeal/review path |
 | `requisition.create`, `requisition.submit`, `quotation.record` | Owner, Manager, Purchasing; Inventory may create requisitions if assigned | Grant only if pilot research requires requisition/quotation workflows; otherwise disable and use the approved minimal PO path |
@@ -291,18 +291,18 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `purchase_order.approve` | Owner or delegated Manager; not the requester | Threshold and separation rules |
 | `purchase_order.issue`, `purchase_order.cancel`, `purchase_order.close` | Owner, Manager, Purchasing; Accountant may close only if explicitly delegated | Issue only approved version; cancellation resolves outstanding quantity; closure checks financial follow-up |
 | `supplier_invoice.record` | Purchasing, Accountant, Owner/Manager if assigned | Grant only after invoice matching/payable policy and accountant review are approved; preserve supplier-stated values and document provenance |
-| `supplier_invoice.match` | Accountant, Purchasing | Match to PO/accepted receipt; retain line-level discrepancies |
-| `supplier_invoice.exception.resolve` | Accountant; Owner/Manager only by explicit delegation | Evidence and reason; material exceptions cannot be self-approved |
-| `supplier_invoice.dispute` | Purchasing, Accountant, Owner/Manager if assigned | Dispute blocks payable settlement pending resolution |
-| `supplier_invoice.approve` | Accountant or Owner/Manager specifically delegated; not the requester | Approved matching/accounting policy and separation of duties |
+| `supplier_invoice.match` | Accountant, Purchasing | Grant only if invoice workflow is included; match to PO/accepted receipt; retain line-level discrepancies |
+| `supplier_invoice.exception.resolve` | Accountant; Owner/Manager only by explicit delegation | Grant only if invoice workflow is included; evidence and reason; material exceptions cannot be self-approved |
+| `supplier_invoice.dispute` | Purchasing, Accountant, Owner/Manager if assigned | Grant only if invoice workflow is included; dispute blocks payable settlement pending resolution |
+| `supplier_invoice.approve` | Accountant or Owner/Manager specifically delegated; not the requester | Grant only if invoice workflow is included; approved matching/accounting policy and separation of duties |
 | `supplier_payment.initiate` | Owner; Purchasing only if explicitly assigned | Grant only for an approved supported payment method and accounting workflow; approved obligation, amount/currency, idempotency and evidence |
-| `supplier_payment.confirm`, `supplier_payment.reconcile` | Accountant; Owner only under a separately approved control model | Authoritative bank/provider evidence; initiation is not settlement |
+| `supplier_payment.confirm`, `supplier_payment.reconcile` | Accountant; Owner only under a separately approved control model | Grant only if supplier payments are included; authoritative bank/provider evidence; initiation is not settlement |
 | `sale.read` | Owner, Manager, assigned Professional, Cashier for permitted sales history; Accountant/Auditor read-only where needed | Original sale and permitted branch scope |
 | `payment.read` | Owner, Manager, Accountant; Cashier for assigned sales; Auditor read-only where approved | Payment attempt/status only; sensitive provider/bank data remains separately gated |
 | `customer_return.read` | Owner, Manager, Cashier for assigned branch; Professional if assigned; Accountant/Auditor limited read | Return status linked to an authorized original sale |
 | `sale.create`, `sale.commit` | Cashier, Owner, Manager; Professional if assigned | Branch/session; category eligibility and exact regulated-action gate |
-| `sale.discount.request` | Cashier, Owner, Manager, assigned Professional | Threshold and reason |
-| `sale.discount.approve` | Owner or delegated Manager; not requester | Threshold and separation |
+| `sale.discount.request` | Cashier, Owner, Manager, assigned Professional | Grant only if the discount policy is approved; threshold and reason |
+| `sale.discount.approve` | Owner or delegated Manager; not requester | Grant only if the discount policy is approved; threshold and separation |
 | `sale.void.request` | Cashier, Owner, Manager | Original sale and reason |
 | `sale.void.approve` | Owner or delegated Manager; not requester | Linked correction; stock disposition remains separate |
 | `customer_return.create`, `customer_return.submit` | Cashier, Owner, Manager; Professional if assigned | Original sale, lines, quantities, condition, timing and reason |
