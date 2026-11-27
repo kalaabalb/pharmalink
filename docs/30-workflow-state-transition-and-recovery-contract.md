@@ -165,7 +165,8 @@ Batch expiry, recall, damage, disposal, returns, and valuation follow Specificat
 | Return | Accepted | Complete disposition → Disposition complete | inventory.return.disposition; separate inventory decision records restock, quarantine, disposal, or other approved outcome |
 | Supplier invoice | absent | Record → Recorded | supplier_invoice.record; supplier, document identity, amount/currency, lines and source evidence |
 | Supplier invoice | Recorded | Match → Matching / Exception | supplier_invoice.match; compare to purchase order and accepted receipts; preserve line-level differences |
-| Supplier invoice | Matching | Resolve exception → Matching or Exception resolved | supplier_invoice.exception.resolve; evidence and rationale recorded; unresolved material discrepancy blocks approval |\n| Supplier invoice | Matching / Exception resolved | Approve / dispute → Approved / Disputed | supplier_invoice.approve; accounting policy, authority, duplicate check, approval separation |
+| Supplier invoice | Matching | Resolve exception → Matching or Exception resolved | supplier_invoice.exception.resolve; evidence and rationale recorded; unresolved material discrepancy blocks approval |
+| Supplier invoice | Matching / Exception resolved | Approve / dispute → Approved / Disputed | supplier_invoice.approve; accounting policy, authority, duplicate check, approval separation |
 | Supplier invoice | Approved | Record settlement allocation → Partially paid / Paid | Only after independently confirmed supplier payment and reconciliation; never from invoice approval alone |
 | Refund | absent | Request → Pending approval or Pending provider | payment.refund.request; original payment/sale, eligible amount, reason |
 | Refund | Pending approval | Approve/reject → Approved/Rejected | payment.refund.approve; authority, amount and separation checks |
