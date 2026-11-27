@@ -486,6 +486,61 @@ The implementation decision between shared tables with tenant keys, schema-per-t
 
 Database row-level security may be an additional defense if its operational and connection-pooling behavior is verified. It must not replace application authorization or tests.
 
+
+### 5.2.1 Trusted request context and resource resolution
+
+Every authenticated request must resolve a server-side authorization context containing the authenticated person or service identity, active tenant membership, effective permission set, permitted branch scope, session/device state, and applicable policy versions. The client may request a tenant or branch context when a person belongs to multiple organizations, but the server must verify active membership and scope before accepting the context. A resource ID, URL path, filter, header, token claim supplied by an untrusted client, or previously cached selection is never proof of ownership or authorization.
+
+For every resource operation, resolve the resource from its authoritative owner and verify that its tenant and (where applicable) branch match the trusted context. Nested-resource operations must validate the complete ownership chain, not merely the parent ID supplied by the client. Bulk operations must independently constrain every selected record; one authorized record must not authorize neighboring IDs. When a resource is outside scope, return the same externally observable not-found/not-visible behavior used for absent resources, without revealing its existence through response detail, count, or materially different timing.
+
+### 5.2.2 Branch scope and organization-wide records
+
+Every operational record must be classified as tenant-wide, branch-owned, platform-owned, person-owned, or a deliberately public projection. Branch-owned records must carry a branch reference or an equivalent enforceable ownership path. A branch reference must be proven to belong to the same tenant as the record; a valid branch ID from another tenant is invalid even if both IDs exist. Organization-wide access is a separate explicit scope, not a wildcard inferred from missing branch ID. A member assigned to one branch receives no access to another branch unless an explicit organization-wide or multi-branch grant permits the requested action. Cross-branch reports and exports must apply the same explicit scope and disclose the included branches to the requester.
+
+### 5.2.3 Persistence constraints and transaction enforcement
+
+The physical ownership registry must identify the authoritative tenant and branch path for every tenant-owned table and projection. Where records reference other tenant-owned records, use tenant-scoped composite foreign keys or an equivalent database-enforced constraint so that a child in tenant A cannot reference a parent in tenant B. Uniqueness constraints must include tenant scope where values are only unique within a tenant. Branch-scoped references must enforce branch-to-tenant consistency at the database boundary where supported. Application checks remain necessary but are not a substitute for these constraints.
+
+If row-level security is selected, define the trusted session context, transaction-local setup/reset behavior, connection-pool hygiene, migration/maintenance bypass, worker identity, and test coverage. Context must be set from authenticated server state within the transaction and reliably cleared; pooled connections must never carry one request's tenant context into another. Table-owner, superuser, migration, and service roles that can bypass row policies require separate controls and adversarial tests. RLS is defense-in-depth, not the sole authorization layer.
+
+### 5.2.4 Secondary data paths and derived systems
+
+The same authorization boundary applies to every derivative or transport of tenant data:
+- **Search and reports:** filter before aggregation and pagination; never compute global totals and then filter visible rows if the result can reveal hidden counts or values. Every projection records source ownership, tenant/branch scope, transformation version, and freshness/cursor.
+- **Caches:** include tenant, branch scope, effective authorization/version, resource identity, and relevant query parameters in cache identity. Never cache an authorization decision or private response under a key that can collide across tenants or memberships. Permission, membership, branch, and resource visibility changes invalidate or version affected entries; cache misses must reauthorize.
+- **Realtime and event delivery:** authorize subscription creation, every channel/topic/resource binding, and reconnect. Derive destinations from committed event ownership, not client-selected topic strings. Filter payloads for the subscriber's current branch/tenant scope; re-check after membership or permission changes and on durable replay. A notification is not authority to fetch a resource.
+- **Files and exports:** resolve metadata and ownership before issuing a short-lived grant. Bind download grants to a specific object, tenant, intended purpose, and expiry; re-check authorization when feasible at download time. Opaque object keys do not replace authorization. Temporary artifacts and generated previews inherit source sensitivity and scope.
+- **Background jobs and queues:** each job carries an immutable initiating tenant/scope reference, initiating actor or service identity, operation, resource references, and correlation/idempotency identity. Workers load current authorization/policy as required, verify every resource's ownership, and use narrowly scoped service credentials. Queue routing, retries, dead letters, scheduled jobs, and replay must not broaden scope. A global worker credential is not a license for unrestricted data access.
+- **Analytics and telemetry:** tenant data is excluded or minimized by default. Any tenant-specific operational view is separately authorized; metric labels must not expose confidential identifiers or permit reconstruction of private activity.
+
+### 5.2.5 Platform operations and exceptional access
+
+Platform support, verification, billing, security, and operational functions must access only the platform-owned records required for their function. A platform role does not imply a standing right to browse pharmacy operational records. Exceptional tenant-data access requires a recorded case or incident, stated purpose, exact tenant and resource scope, named requester and approver, minimum necessary permission, read-only default, re-authentication, short expiry, and tamper-evident audit. Mutating access requires a separate explicit grant and approved change procedure. Emergency break-glass access must be time-limited, immediately alerted, restricted to the incident scope, and independently reviewed after use. Impersonation must never be silent: the system must preserve both the human operator identity and the tenant context, visibly label the session, and record all reads and writes. No support workflow may ask for or use a customer's password or OTP.
+
+### 5.2.6 Tenant-safe import, export, backup, and restore
+
+Import jobs must bind to one authorized tenant and explicitly declared branch scope; every row is validated against that scope before commit. Export manifests must identify the requesting tenant, included branches, dataset, filters, schema version, record counts, checksums, creation time, expiry, and authorized requester. An export must not include another tenant's rows through joins, attachments, shared identifiers, or aggregate queries. Download authorization is re-evaluated and artifacts expire and are deleted according to policy.
+
+Backup and restore procedures must preserve tenant/branch ownership, stable identifiers, uniqueness, foreign-key integrity, audit provenance, and event/outbox relationships. A tenant-level restore or export/import must not copy platform secrets, unrelated tenants, or global records the tenant does not own. If a full-database restore is used, the restored environment remains isolated from production until reconciliation, tenant-boundary checks, and duplicate/out-of-order event controls pass. Selective tenant restore must be treated as a dependency-aware migration, not a raw row copy. See Specification 26 for the operational procedure and evidence.
+
+### 5.2.7 Required negative and isolation test matrix
+
+The architecture test registry must include automated adversarial cases for each applicable interface and data path:
+1. Tenant A user substitutes Tenant B IDs in path, query, body, header, nested reference, pagination cursor, or bulk list; read and write are denied without existence disclosure.
+2. A branch-A-only member attempts branch B resources, reports, search, exports, files, and subscriptions within the same tenant; denied unless a current explicit grant covers branch B.
+3. A child record in tenant A attempts to reference a parent, branch, attachment, or aggregate in tenant B; database constraint or transaction rejects it.
+4. Search, dashboard, aggregate, count, autocomplete, and pagination cannot leak foreign tenant or branch data.
+5. Cache keys cannot collide across tenants, branches, memberships, permission versions, or query scopes; revocation invalidates or makes stale entries unusable.
+6. Realtime topic guessing, reconnect, replay, cursor reuse, and membership revocation cannot expose out-of-scope events.
+7. A user cannot download another tenant's file by guessing an object key, reusing an expired grant, changing an export ID, or following an attachment reference.
+8. A queued job cannot be reassigned to another tenant by editing payload metadata; retries, dead-letter redrive, and scheduled execution revalidate scope and idempotency.
+9. Support staff cannot browse tenant data without an active case-bound grant; grant expiry/revocation stops access, and every exceptional read/write is attributable.
+10. Import, export, backup, full restore, and tenant-selective restore preserve tenant boundaries and reconcile record counts, hashes, relationships, and event state.
+11. RLS, if used, is tested under pooled connections, transaction rollback, worker/service roles, migration roles, and attempted policy bypass.
+12. Revoking membership, role, branch assignment, or support grant takes effect across API, cache, subscriptions, files, and queued work within the approved revocation objective.
+
+A test is not satisfied by a mocked authorization function alone. Persistence tests use the selected database engine and production-equivalent roles; integration tests exercise actual query, queue, storage, and realtime adapters. Record test ID, tenant/branch fixture identities, execution role, expected denial, observed result, and build evidence. Any confirmed cross-tenant disclosure or mutation is a critical security incident and release blocker.
+
 ### 5.3 Data types and schema rules
 
 - Use exact decimal or integer-minor-unit representation for money, with explicit currency and documented scale.
