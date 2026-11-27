@@ -152,7 +152,7 @@ Until review is complete:
 
 Before implementing regulated workflows, obtain:
 1. A current federal law and implementing-directive matrix.
-2. A region-by-region, establishment-category-by-establishment-category, and action-by-action establishment/professional evidence matrix for the launch geography. It must distinguish ordinary sale recording from legally reserved dispensing or other professional acts, identify exact product categories and evidence sources, and state which checks are not required.
+2. A region-by-region, establishment-category-by-establishment-category, product-category-by-product-category, and action-by-action establishment/professional evidence matrix for the launch geography. It must distinguish ordinary administrative preparation and data capture from accountable inspection/acceptance, professional procurement or stock sign-off, medicine dispensing/counselling/handover, return-to-stock decisions, disposal/recall execution, and other legally reserved acts. For each exact action, identify the legal source, permitted actor and any lawful delegation, establishment/person/relationship evidence types, authoritative verification method, validity/scope, and explicit cases where no professional or establishment evidence is required. It must not infer that a broad workflow label (such as POS, goods receipt, inventory, purchasing, or returns) has one uniform credential rule.
 3. A product-category and public-display boundary assessment.
 4. A written assessment of online ordering, reservation, delivery, and payment model legality.
 5. A data protection impact and cross-border processing assessment.
