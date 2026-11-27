@@ -179,6 +179,7 @@ A user must not be able to approve their own high-impact canonical correction wh
 - Catalogue snapshots may be cached for authorized local search with version and last-synchronized metadata.
 - Offline search must label potentially stale data and must not claim current regulatory status.
 - Canonical updates are published as versioned events; clients subscribe and update only affected records.
+- Candidate tenant-catalogue events include TenantCatalogueItemCreated, TenantCatalogueItemUpdated, and TenantCatalogueItemDisabled. Canonical shared-catalogue correction events must be separately named and must preserve source/version provenance.
 - Do not poll continuously for catalogue changes.
 - A reconnecting client uses an event cursor/replay or authoritative snapshot to recover missed updates.
 - Tenant-local draft items may be queued for review, but cannot become canonical or publicly verified solely because they were created offline.
