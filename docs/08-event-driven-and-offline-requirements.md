@@ -181,4 +181,8 @@ The canonical candidate event catalogue is maintained in Section 3 and aligned w
 ### Inventory event naming rule
 
 `StockMovementCommitted` is the canonical event for each accepted stock-ledger movement; its versioned payload identifies the movement type (receipt, sale issue, adjustment, hold, release, disposal, transfer leg, and so on). Do not emit parallel `StockReceived` or `StockAdjusted` events for the same ledger fact. Workflow-level events such as `StockTransferDispatched` and `StockTransferReceived` may be emitted in addition when they represent distinct transfer aggregate state transitions. Consumers must use movement IDs and aggregate versions to prevent double application.
-\n\n## Architecture and transport implementation contract\n\nThe required outbox, consumer deduplication, durable cursor/replay, subscription authorization, and offline command rules are implemented under [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). Transport and broker choices remain open until evaluated against reconnect behavior, mobile support, cost, provider exit, and operational ownership. Frequent polling is not an acceptable substitute.\n
+
+
+## Architecture and transport implementation contract
+
+The required outbox, consumer deduplication, durable cursor/replay, subscription authorization, and offline command rules are implemented under [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). Transport and broker choices remain open until evaluated against reconnect behavior, mobile support, cost, provider exit, and operational ownership. Frequent polling is not an acceptable substitute.
