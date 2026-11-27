@@ -27,6 +27,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 11-nonfunctional-requirements-and-release-gates.md | Quality attributes, testing, migration, recovery, release gates | Draft |
 | 12-functional-product-and-production-deployability-contract.md | Definition of a real functional, deployable, supportable product | Draft |
 | 13-inventory-and-batch-lifecycle-specification.md | Inventory, batch/lot traceability, stock movements, transfers, expiry, and recall | Draft |
+| 14-sales-pos-and-payment-lifecycle-specification.md | Private POS, sales, payment state, receipts, returns, refunds, and reconciliation | Draft |
 
 ## Review dimensions
 
