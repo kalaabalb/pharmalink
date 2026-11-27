@@ -125,3 +125,32 @@ Until owners, runbooks, alerting, recovery evidence, and support boundaries exis
 - [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md): privacy incident handling.
 - [Specification 24](24-cross-module-transaction-and-implementation-contract.md): transaction integrity and event replay.
 - [Specification 26](26-data-migration-import-export-backup-and-restoration-specification.md): backup and disaster recovery.
+
+## 18. Tenant-data access operations and isolation incident runbook
+
+### 18.1 Normal support diagnostics
+
+Support should begin with customer-provided request IDs, timestamps, error codes, and non-sensitive screenshots or descriptions. Prefer diagnostics that return service health, job state, projection freshness, and safe validation outcomes without exposing pharmacy records. Confirm the requester’s identity and authority for the relevant tenant before discussing tenant-specific status. A support case does not itself grant access to the tenant's database, files, reports, or event stream.
+
+### 18.2 Exceptional tenant-data access procedure
+
+Where direct tenant-data access is genuinely necessary, the support case or incident record must state the business purpose, customer/tenant, exact resources or bounded query, requested actions, data classification, duration, requester, approver, and expected outcome. Grant the minimum permission, read-only by default, with re-authentication and automatic expiry. Mutating access requires a separate approved change instruction, explicit scope, before/after evidence, and customer communication where appropriate. The access system must preserve the support operator's identity and must not replace it with the customer's identity. All reads, downloads, writes, queries, and failed attempts within the privileged session are audited. The grant must be revoked immediately when the task ends or the case is closed. An independent reviewer examines the grant and activity afterward.
+
+Emergency break-glass access is limited to containment or restoration of an active incident when normal approval is unavailable and delay would materially increase harm. It requires a named incident commander, recorded justification, smallest possible tenant/resource scope, shortest feasible expiry, immediate alert to security/operations ownership, and retrospective independent review. Break-glass does not authorize bypassing data-integrity controls, making unapproved business decisions, or hiding operator identity. If the system cannot enforce or audit the required scope, use a safer recovery method rather than granting broad database access.
+
+### 18.3 Isolation alert triage and containment
+
+Treat any credible indication of cross-tenant disclosure, cross-branch access outside an explicit grant, tenant-context confusion in a worker/cache/realtime path, foreign-tenant mutation, or unlogged privileged access as Critical until disproven. The incident commander must:
+1. preserve relevant audit, access, application, database, queue, cache, object-storage, and provider evidence with timestamps and integrity metadata;
+2. identify the suspected access path, identities/service roles, affected tenant and branch scope, data classes, time window, and whether reads, exports, or mutations occurred;
+3. revoke suspect sessions, grants, credentials, tokens, subscriptions, download links, and queued work as appropriate;
+4. pause the affected endpoint, worker, export, subscription, cache path, or integration if isolation cannot be established; do not disable unrelated private management capabilities without evidence that they are affected;
+5. prevent replay or retry from repeating an unauthorized or uncertain side effect;
+6. involve security, privacy, legal/regulatory, and customer communication owners according to the incident facts; qualified review determines notification duties and timing;
+7. restore only after the ownership defect is fixed, affected data is assessed, integrity is reconciled, and regression tests cover the exploit path.
+
+Do not clear caches, queues, logs, or database state before evidence is preserved. Do not assume that the absence of a successful write proves there was no disclosure; read access, aggregate inference, and artifact download must also be assessed.
+
+### 18.4 Operational acceptance evidence
+
+Before production, demonstrate that support grants can be created, narrowed, expired, revoked, and independently reviewed; that a support user cannot enumerate tenant records without a grant; that impersonation is visibly labeled and preserves operator attribution; and that a simulated cross-tenant alert reaches an owner with an executable containment runbook. The test must include API, database, object storage, exports, event subscriptions, caches, background jobs, and restore operations. Record test owner, identities, scope, timestamps, expected/observed access, audit evidence, and corrective actions.
