@@ -165,8 +165,8 @@ Only applicable checks are required. An irrelevant check must not become an acci
 - If establishment evidence expires or is suspended, evaluate each affected operation and public claim separately. Do not automatically lock every staff account.
 - Public listing publication and commerce enablement require explicit organization authorization and capability-specific review. They are not implied by creating a tenant or branch.
 
-## 12. Minimum permission-matrix deliverable
+## 12. Permission-matrix deliverable
 
-Before implementation, create a matrix with one row per permission and at least these columns: permission identifier, description, allowed actor/role, tenant scope, branch scope, resource scope, management entitlement, establishment evidence dependency, professional credential dependency, approval requirement, re-authentication requirement, offline eligibility, audit event, and negative-test cases.
+The initial proposed matrix is maintained in [Specification 18](18-proposed-permission-matrix.md). It is a Draft, not yet approved. Before implementation, reconcile it against every module specification and ensure each permission has a stable identifier, purpose, allowed actor/role, tenant/branch/resource scope, management entitlement, establishment evidence dependency, professional credential dependency, approval and re-authentication rules, offline eligibility, audit event, and positive/negative test cases.
 
-The matrix must include allowed and denied examples for owner, manager, pharmacist/professional, cashier, inventory operator, purchasing operator, accountant, auditor, and platform support. “Owner” must never be treated as a universal bypass for professional or regulatory constraints.
+The matrix must include allowed and denied examples for owner, manager, pharmacist/professional, cashier, inventory operator, purchasing operator, accountant, auditor, and platform support. “Owner” must never be treated as a universal bypass for professional or regulatory constraints. Organization, branch, invitation, membership, and offboarding behavior is detailed in [Specification 20](20-organization-branch-and-membership-lifecycle-specification.md).
