@@ -37,6 +37,7 @@ This is an initial taxonomy; each event requires a schema and ownership review.
 | Sales/POS | SaleCommitted, SaleDiscountApproved, SaleVoidRequested, SaleVoided, CustomerReturnSubmitted, CustomerReturnAccepted, CustomerReturnRejected, CustomerReturnDispositionRecorded, ReceiptReissued, CashSessionOpened, CashSessionCounted, CashSessionClosed |
 | Payments | PaymentInitiated, PaymentConfirmed, PaymentFailed, PaymentDisputed, RefundRequested, RefundApproved, RefundConfirmed, RefundFailed, PaymentReconciled |
 | Finance | CashMovementPosted, ReconciliationImported, ReconciliationMatched, ReconciliationExceptionResolved, FinancialEntryPosted, FinancialEntryReversed, FinancialPeriodClosed |
+| Data management | TenantExportRequested, TenantExportCompleted, TenantExportExpired |
 | Quality | AffectedStockFlagged, QualityDispositionRecorded |
 | Public projection | PublicProfilePublicationConfigured, PublicProfilePublished, PublicProfilePaused, PublicProfileChanged, PublicCatalogueEntryPublished, PublicCatalogueEntryPaused, PublicAvailabilityConfirmed, PublicAvailabilityUpdated, PublicAvailabilityBecameStale, PublicEnquiryReceived, PublicReportSubmitted, ModerationCaseOpened, PublicContentSuppressed, ModerationDecisionRecorded, ModerationAppealFiled, VerificationClaimChanged |
 | Subscription | SubscriptionChanged, ServiceEntitlementChanged, InvoiceStatusChanged |
