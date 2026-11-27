@@ -241,3 +241,8 @@ Resolve each decision, or explicitly defer the affected capability with a safe o
 - [Specification 21](21-external-integrations-and-provider-lifecycle-specification.md): provider exit, callbacks, and external reconciliation.
 - [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md): retention, rights, deletion, and processors.
 - [Specification 24](24-cross-module-transaction-and-implementation-contract.md): transaction, idempotency, and event replay rules.
+- [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md): accountable recovery roles, incident command, operational runbooks, and restore/recovery acceptance.
+- [Specification 29](29-application-architecture-api-database-and-deployment-contract.md): physical data ownership registry, schema/migration controls, tenant constraints, and schema-lock evidence gate (§§5.5–5.8).
+- [Specification 30](30-workflow-state-transition-and-recovery-contract.md): aggregate state, unknown outcomes, idempotent replay, and post-restore transition/reconciliation rules.
+
+Before migration scripts or production backup procedures are approved, the selected source/destination schema and recovery process must be reconciled against the physical ownership registry and database constraints required by Specification 29. The migration must preserve aggregate identity, tenant/branch ownership, immutable source facts, correction links, and event/outbox consistency; a structurally successful import is not sufficient if those invariants fail.
