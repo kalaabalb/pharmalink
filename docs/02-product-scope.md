@@ -209,7 +209,7 @@ Administrative identity, strong authentication, least privilege, audit trail, se
 
 ## 6. Phasing principle
 
-The first release should solve a coherent, safe problem for a real pharmacy cohort. Do not attempt to ship everything at once. Foundational data ownership, tenant isolation, batch traceability, auditability and event contracts must nevertheless be designed before dependent modules.
+The first release should solve a coherent, safe problem for a real pharmacy cohort. Do not attempt to ship everything at once. Foundational data ownership, tenant isolation, batch traceability, auditability and event contracts must nevertheless be designed before dependent modules. [Specification 25](25-first-release-scope-and-launch-decision-framework.md) defines a proposed candidate scope and the evidence gates required before approval.
 
 ## 7. Platform access versus optional public participation
 
