@@ -111,7 +111,11 @@ A release cannot be approved until:
 
 The detailed control model is defined in [Specification 26](26-data-migration-import-export-backup-and-restoration-specification.md). Release evidence must demonstrate controlled import and opening-balance reconciliation, usable tenant export, protected backups, and an end-to-end restore exercise. A configured backup job without a successful restore test does not satisfy this gate.
 
-## 11. Numeric targets still open
+## 11. Operational readiness and incident response
+
+The operating model, ownership register, alerting, severity model, support-access controls, event/provider runbooks, and post-deployment verification are specified in [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). This is a blocking production gate: the team must demonstrate that named owners can execute the runbooks, not merely that documents exist.
+
+## 12. Numeric targets still open
 
 Do not invent service-level objectives. Establish targets after user research, representative device/network measurements, architecture evaluation, and cost analysis. At minimum, set:
 - p50/p95/p99 latency for critical journeys;
@@ -124,15 +128,11 @@ Do not invent service-level objectives. Establish targets after user research, r
 - security incident acknowledgement and response targets.
 
 
-## 10A. Operational readiness and incident response
-
-The operating model, ownership register, alerting, severity model, support-access controls, event/provider runbooks, and post-deployment verification are specified in [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). This is a blocking production gate: the team must demonstrate that named owners can execute the runbooks, not merely that documents exist.
-
-## 11. Approval record
+## 13. Approval record
 
 Every release gate should record scope, evidence links, test results, known limitations, unresolved risks, approver, date, and any time-bounded exception. Exceptions must not silently become permanent requirements.
 
-## 12. Production product means deployable and operational—not a demo
+## 14. Production product means deployable and operational—not a demo
 
 The release target is a functional product that a real pharmacy organization can safely deploy and use for the approved scope. A prototype, static interface, scripted walkthrough, seeded showcase, or mocked API is not a production release.
 
@@ -174,11 +174,11 @@ Before a production release, the repository must contain or reference:
 
 A release is not production-ready merely because it deploys successfully. The deployed build must pass end-to-end acceptance, security, migration, backup-restore, observability, and operational-readiness checks.
 
-## 13. Capability-level release status
+## 15. Capability-level release status
 
 Every feature must be assigned one explicit status: **not built**, **internal-only**, **pilot**, **production-enabled**, **paused**, or **retired**. The status must be enforced by the backend, reflected accurately in the UI, documented for support, and included in release evidence. A feature cannot be described as production-enabled while it relies on mock services, manual database edits, undocumented operator intervention, or unverified legal assumptions.
 
 
-## 14. Detailed UX and accessibility acceptance
+## 16. Detailed UX and accessibility acceptance
 
 The interaction, accessibility, responsive behavior, localization, date/time/number conventions, and low-bandwidth interface requirements are detailed in [Specification 23](23-user-experience-accessibility-and-localization-specification.md). WCAG 2.2 AA is the proposed design/test baseline; the supported device matrix and language/calendar decisions remain open until user research and accessibility review.
