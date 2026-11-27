@@ -145,3 +145,8 @@ The authoritative organization onboarding and branch-setup sequence is defined i
 - Platform access is not proof of establishment licensing and does not authorize a regulated professional act.
 
 These boundaries apply to all workflows in this document. A capability-specific legal review may restrict a particular operation, but must not be converted into an unrelated account-wide gate.
+
+
+## 15. State-transition implementation contract
+
+The cross-module transition register, including allowed transitions, guards, permission checks, atomic effects, events, audit, and failure recovery, is defined in [Specification 30](30-workflow-state-transition-and-recovery-contract.md). Workflow steps in this document must map to explicit server-side commands; UI status changes or client-side state updates are not authoritative transitions.
