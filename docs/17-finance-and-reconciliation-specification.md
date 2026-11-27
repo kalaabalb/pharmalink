@@ -223,7 +223,7 @@ Candidate permissions:
 - finance.export;
 - finance.sensitive_payment_data.read.
 
-The final matrix must define branch/tenant scope, approval thresholds, self-approval restrictions, re-authentication, audit events, and export controls. A cashier does not automatically gain access to profit, supplier bank, payroll, or owner financial data. A business owner does not bypass professional/legal controls on regulated workflows.
+Canonical identifiers and the unresolved role-grant register are maintained in [Specification 18](18-proposed-permission-matrix.md). The final grant mapping must define branch/tenant scope, approval thresholds, self-approval restrictions, re-authentication, audit events, and export controls. A cashier does not automatically gain access to profit, supplier bank, payroll, or owner financial data. A business owner does not bypass professional/legal controls on regulated workflows.
 
 ## 14. Offline and event-driven behavior
 
