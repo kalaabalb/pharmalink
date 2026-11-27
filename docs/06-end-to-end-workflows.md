@@ -18,16 +18,24 @@ Global invariants:
 
 ## 2. Organization onboarding and branch setup
 
-1. An applicant creates an organization profile and identifies the establishment type and operating location.
-2. The applicant submits the evidence required for that establishment category and identifies the responsible professional where applicable.
-3. The platform records each evidence item, source, submission time, review state, and reviewer decision.
-4. The organization remains in a restricted onboarding state until required checks are satisfied.
-5. An approved owner creates or activates a branch only when the necessary establishment evidence is accepted.
-6. The owner invites staff and assigns scoped permissions.
-7. The owner confirms the initial operating configuration, including locale, currency, tax configuration status, receipt preferences, and permitted service capabilities.
-8. The branch becomes operational only after required setup gates pass.
+**Invariant:** account access, organization membership, private management setup, establishment evidence review, professional credential verification, and public participation are separate workflows. A person does not need an individual professional licence merely to register, accept an invitation, sign in, or use ordinary permitted management functions.
 
-Failure paths: duplicate organization, incomplete evidence, inconsistent address, expired credential, rejected application, reviewer conflict, appeal, and regulator/source verification outage. A submitted application is not an approved licence.
+1. A person creates an account or accepts an invitation using the platform's identity and anti-abuse controls. No professional credential is requested as a general account prerequisite.
+2. The person creates an organization workspace or accepts an organization invitation. The system checks for likely duplicates and records the applicant's authority to create or administer the workspace without treating that assertion as proof of establishment licensing.
+3. The organization selects its intended operating configuration. Management-only is the default; public participation and commerce-related capabilities remain off unless explicitly selected and separately approved.
+4. The organization records its business identity and adds one or more draft branches. Branch setup can proceed for private management configuration without claiming that the branch is legally authorized to operate.
+5. The organization may submit establishment evidence when required for a specific operation, establishment category, public trust claim, or legal review. The evidence record identifies the relevant organization/branch, issuing authority, jurisdiction, evidence type, validity dates, source, and verification status.
+6. The owner or authorized administrator invites staff and assigns tenant- and branch-scoped permissions. Ordinary staff membership does not require an individual professional licence.
+7. The system requests professional credential evidence only when a defined role, action, or public verification claim requires it. The credential is linked to the person and its verified scope, not treated as an organization-wide credential.
+8. The organization configures private operational settings such as locale, currency, opening balances, stock units, tax configuration status, receipt preferences, and branch controls. Unresolved tax or regulatory configuration must be visible and must not be represented as legally approved.
+9. The system evaluates each requested capability independently. Missing or pending establishment evidence may block a particular legally dependent operation or public claim; it must not silently disable unrelated management features.
+10. The organization reviews and confirms its membership, role, branch, and configuration setup. Every material change is audited.
+
+**Separate public-participation path:** the organization explicitly opts into a public profile, product discovery, or availability publication. Each capability has its own eligibility rules, data disclosure, review, publication state, pause/withdrawal control, and audit trail. Commerce is not enabled by public listing and requires its own legal, provider, payment, consumer-protection, and operational approval.
+
+**Failure and recovery paths:** duplicate organization; invitation sent to the wrong identity; applicant authority disputed; incomplete or inconsistent evidence; establishment evidence expired or rejected; professional credential not verified or outside scope; source registry unavailable; reviewer conflict; appeal; branch address correction; public listing rejected or paused; and account recovery. These failures must produce a scoped outcome and clear next action. They must not convert one failed evidence check into an unrelated account-wide lock.
+
+**Important boundary:** Pharmalink workspace creation is not an establishment licence, and a management account is not permission to conduct a regulated professional act. This workflow does not waive any legal obligation to lawfully establish or operate a physical pharmacy.
 
 ## 3. Catalogue setup and data correction
 
