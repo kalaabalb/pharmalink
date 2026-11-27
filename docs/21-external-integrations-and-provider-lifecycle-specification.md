@@ -258,6 +258,11 @@ Automated and operational tests must prove:
 - provider change preserves transaction references and reconciles in-flight activity;
 - production monitoring detects webhook backlog, dead-letter growth, quota exhaustion, and unexpected cost.
 
+
+## 15A. Service-wide incident coordination
+
+Provider-specific outage behavior is governed by this specification; service-wide incident command, customer communications, alerting, escalation, and post-incident review are defined in [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). A provider incident must preserve the distinction between external delivery state and Pharmalink's authoritative business state.
+
 ## 16. Open decisions before implementation
 
 1. Which external integrations are essential to the first validated vertical slice?
