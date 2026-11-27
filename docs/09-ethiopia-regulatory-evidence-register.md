@@ -122,3 +122,8 @@ The platform owner's requirement is that Pharmalink must not require an individu
 This product requirement is distinct from legal requirements governing the pharmacy establishment or a regulated professional act. The application must not represent platform access as proof of legal establishment status, and it must not authorize an action that applicable law reserves to a qualified professional. Where a specific feature requires establishment evidence or a professional credential, gate only that feature or action and explain why the evidence is requested. Do not make the credential a blanket platform-entry requirement.
 
 The exact activities requiring a credential, the relevant establishment categories, and the acceptable evidence sources remain subject to current federal/regional legal review. This register does not infer that all retailers are exempt from professional or establishment obligations; it defines the product's access boundary.
+
+
+## 11. Privacy implementation specification
+
+The Personal Data Protection Proclamation evidence recorded above is mapped to product and operational controls in [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md). That specification remains Draft until qualified Ethiopian counsel validates legal roles, lawful bases, data-subject rights, retention, breach duties, and cross-border processing for the actual Pharmalink service model.
