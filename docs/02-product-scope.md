@@ -137,13 +137,13 @@ Search generic/brand names, strength and dosage form; support approved language 
 
 ### 2.3 Availability
 Candidate states:
-- Available — recently confirmed
-- Limited availability — only if reliably supported
+- Recently confirmed
+- Limited — only if reliably supported
 - Unavailable
 - Unknown
 - Stale — last update too old
 
-Do not expose exact stock quantities by default. Every availability state needs a last-confirmed time and freshness policy. Offline pharmacies cannot appear freshly confirmed.
+Do not expose exact stock quantities by default. Every availability state needs a last-confirmed time and freshness policy. Offline pharmacies cannot appear freshly confirmed. Public listing and availability are opt-in, time-bounded projections governed by [Specification 19](19-public-discovery-and-availability-specification.md). A pharmacy can operate in management-only mode. Medicine/product publication remains disabled until the applicable legal category and content rules are reviewed.
 
 ### 2.4 Public trust and governance
 - Explain exactly what a platform verification badge means
