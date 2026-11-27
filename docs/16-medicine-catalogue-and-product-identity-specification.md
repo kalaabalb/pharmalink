@@ -202,7 +202,7 @@ Candidate permissions:
 - catalogue.export;
 - public_catalogue.publish.
 
-The final permission matrix must define platform-global versus tenant scope, branch scope, approval separation, source-evidence access, re-authentication, audit events, and offline eligibility.
+Canonical identifiers and the unresolved role-grant register are maintained in [Specification 18](18-proposed-permission-matrix.md). The final grant mapping must define platform-global versus tenant scope, branch scope, approval separation, source-evidence access, re-authentication, audit events, and offline eligibility.
 
 ## 14. Required test scenarios
 
