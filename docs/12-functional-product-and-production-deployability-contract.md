@@ -189,7 +189,7 @@ The operating model must identify:
 - release communications and post-deployment verification.
 
 A production product must be supportable by an accountable operator, not only by the developer who wrote it.
-The API operation inventory and first-release workflow-to-command/query/permission/event/test traceability matrix are specified in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md), §4.7–§4.9. Every enabled UI action must map to an implemented API operation; a visual control without an operation contract is not a working feature.
+The API operation inventory and first-release workflow-to-command/query/permission/event/test traceability matrix are specified in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md), §4.7–§4.9. Common command/query envelopes and critical operation payload/authority requirements are specified in §4.10–§4.11; operation-specific schemas remain mandatory before implementation. Every enabled UI action must map to an implemented API operation; a visual control without an operation contract is not a working feature.
 
 The detailed production operating model—including named ownership, observability, actionable alerts, incident response, scoped support access, provider/event operations, deployment verification, and continuity—is specified in [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). Production is not supportable until the required owners, runbooks, and operational acceptance evidence exist.
 
