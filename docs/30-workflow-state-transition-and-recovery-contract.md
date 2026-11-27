@@ -68,7 +68,7 @@ The tables below define the minimum candidate transitions for the first-release 
 | Organization | absent | Create → Draft | organization.manage; authenticated account; duplicate check; record creator and claimed authority; create private workspace only |
 | Organization | Draft | Activate permitted management → Active | organization.manage; required workspace configuration and membership/owner invariants pass; does not assert legal establishment authorization |
 | Organization | Active | Restrict capability → Restricted | platform.organization.restrict; defined capability, evidence/policy basis, reason, scope, review date; unrelated management capabilities remain available |
-| Organization | Restricted | Restore capability → Active or Restricted | Restriction-specific review passes; only reviewed capability restored |
+| Organization | Restricted | Restore capability → Active or Restricted | platform.organization.restrict; restriction-specific review passes; only reviewed capability restored |
 | Organization | Active/Restricted | Suspend service scope → Suspended | platform.organization.restrict and, where applicable, platform.entitlement.manage; approved policy, scope, reason, notification and appeal path; retain records/export/legal access |
 | Organization | Active/Restricted/Suspended | Begin offboarding → Closing | organization.manage; authorized request and identity/authority check; export/retention plan created |
 | Organization | Closing | Complete closure → Closed | organization.manage; export, retention, legal hold, and deletion obligations completed or explicitly tracked; irreversible actions evidenced |
@@ -105,11 +105,14 @@ A credential transition changes eligibility only for actions whose approved poli
 |---|---|---|---|
 | Supplier | absent | Create → Draft | supplier.create; tenant scope; duplicate candidate check |
 | Supplier | Draft | Activate → Active | supplier.update; required operational fields and review pass |
-| Supplier | Active | Deactivate / block / review → Inactive / Blocked / Under review | supplier.block or approved lifecycle authority; reason; prohibit configured new operations while preserving history |
+| Supplier | Active | Deactivate / block / review → Inactive / Blocked / Under review | supplier.update for deactivation/review or supplier.block for block; reason; prohibit configured new operations while preserving history |
 | Supplier | Inactive/Under review | Reactivate → Active | supplier.update; review and authorization pass; blocked supplier requires explicit unblock decision |
+| Requisition (if included) | absent | Create → Draft | requisition.create; valid organization/branch scope and product references |
 | Requisition (if included) | Draft | Submit → Pending approval | requisition.submit; valid items, units, branch, quantities |
 | Requisition | Pending approval | Approve / reject → Approved / Rejected | requisition.approve; threshold and separation rules; reason |
-| Purchase order | Draft | Create → Draft | purchase_order.create; valid supplier, branch, lines, units and expected cost snapshot |\n| Purchase order | Draft | Submit → Pending approval | purchase_order.submit; supplier and line validation; expected cost/unit snapshot |
+| Quotation | absent | Record → Recorded | quotation.record; supplier, source, currency, validity, terms, and quoted unit snapshot |
+| Purchase order | Draft | Create → Draft | purchase_order.create; valid supplier, branch, lines, units and expected cost snapshot |
+| Purchase order | Draft | Submit → Pending approval | purchase_order.submit; supplier and line validation; expected cost/unit snapshot |
 | Purchase order | Pending approval | Approve / reject → Approved / Rejected | purchase_order.approve; approval threshold and requester/approver separation |
 | Purchase order | Approved | Issue → Issued | purchase_order.issue; supplier channel/address and immutable issued version captured |
 | Purchase order | Issued | Record acknowledgement → Acknowledged | Evidence of supplier response; does not create stock |
