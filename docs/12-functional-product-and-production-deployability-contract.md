@@ -51,6 +51,7 @@ The implementation specification must define, at minimum:
 - organization creation, duplicate detection, invitation acceptance, membership changes, and branch assignment;
 - management-only operation as a first-class mode;
 - permission grants, approval separation, and audit attribution;
+- every enabled action maps to the canonical permission registry in [Specification 18](18-proposed-permission-matrix.md), with an approved role/scope grant and tested denial cases;
 - independently managed establishment evidence, professional credentials, management entitlements, public participation, and commerce capability states.
 
 ### Pharmacy operations
@@ -188,6 +189,8 @@ The operating model must identify:
 - release communications and post-deployment verification.
 
 A production product must be supportable by an accountable operator, not only by the developer who wrote it.
+The API operation inventory and workflow-to-command/query traceability requirements are specified in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). Every enabled UI action must map to an implemented API operation; a visual control without an operation contract is not a working feature.
+
 The detailed production operating model—including named ownership, observability, actionable alerts, incident response, scoped support access, provider/event operations, deployment verification, and continuity—is specified in [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). Production is not supportable until the required owners, runbooks, and operational acceptance evidence exist.
 
 
