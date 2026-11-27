@@ -199,6 +199,10 @@ For every enabled first-release workflow, maintain traceability from:
 
 An operation without this traceability is not implementation-ready. A UI control must not be built as a working feature until its operation contract and backend behavior exist.
 
+## 4.8 Workflow transition registry alignment
+
+The command/query inventory in this specification is complemented by [Specification 30](30-workflow-state-transition-and-recovery-contract.md), which defines candidate aggregate transitions, guards, transaction ordering, event semantics, and failure recovery. API contracts must represent each approved transition as an explicit command with expected version, server-derived actor/scope, canonical permission, idempotency behavior, and stable result. Do not expose generic status mutation.
+
 ## 5. Database architecture and integrity contract
 
 The database technology and hosting provider remain open. A relational transactional database, with PostgreSQL as a candidate, is the leading hypothesis because the domain requires relational integrity, multi-row transactions, uniqueness, concurrency control, and reporting. Validate it against hosting, operations, backup, regional availability, cost, and team expertise before selection.
