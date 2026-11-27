@@ -191,7 +191,7 @@ The implementation must prove at least:
 
 ## 12. Architecture implementation alignment
 
-The module and transaction rules in this contract must be realized through the enforceable boundaries, API semantics, database constraints, transactional outbox, and deployment controls in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). The architecture may choose different technologies, but it may not weaken these business invariants or introduce undocumented cross-module writes.
+The module and transaction rules in this contract must be realized through the enforceable boundaries, API semantics, database constraints, transactional outbox, and deployment controls in [Specification 29](29-application-architecture-api-database-and-deployment-contract.md). The architecture may choose different technologies, but it may not weaken these business invariants or introduce undocumented cross-module writes. Specification 29 §§5.6–5.8 additionally require a physical ownership registry, a workflow-by-workflow local atomic-boundary map, a database constraint/concurrency catalogue, and evidence before schema lock. The transaction map is an implementation constraint, not permission to enable a workflow that Specification 25 excludes or marks conditional.
 
 ## 13. State-transition and recovery alignment
 
