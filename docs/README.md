@@ -32,6 +32,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 16-medicine-catalogue-and-product-identity-specification.md | Canonical medicine identity, presentations, barcodes, provenance, search, and correction | Draft |
 | 17-finance-and-reconciliation-specification.md | Financial records, cashbook, receivables/payables, reconciliation, and reporting | Draft |
 | 18-proposed-permission-matrix.md | Draft role-to-permission matrix with evidence dependencies and negative authorization tests | Draft |
+| 19-public-discovery-and-availability-specification.md | Public pharmacy discovery, opt-in profiles, medicine search, availability freshness, moderation, and privacy | Draft |
 
 ## Review dimensions
 
