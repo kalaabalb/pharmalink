@@ -42,7 +42,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 26-data-migration-import-export-backup-and-restoration-specification.md | Controlled imports, opening balances, tenant export, backups, restore testing, and disaster recovery | Draft |
 | 27-inventory-valuation-stock-reconciliation-and-cost-integrity-specification.md | Cost provenance, valuation policy decision framework, stock reconciliation, write-offs, and cost integrity | Draft |
 | 28-production-operations-incident-response-and-service-continuity-specification.md | Service ownership, observability, alerting, incident response, support access, releases, and continuity | Draft |
-| 29-application-architecture-api-database-and-deployment-contract.md | Domain boundaries, API/database/deployment contracts, and first-release workflow-to-operation traceability | Draft |
+| 29-application-architecture-api-database-and-deployment-contract.md | Domain boundaries, API/database/deployment contracts, workflow traceability, and command/query schema rules | Draft |
 | 30-workflow-state-transition-and-recovery-contract.md | Explicit workflow transitions, guards, cross-module ordering, failure recovery, and acceptance tests | Draft |
 
 ## Review dimensions
