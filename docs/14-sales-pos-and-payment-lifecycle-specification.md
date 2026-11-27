@@ -33,6 +33,15 @@ Public ordering, payment collection, reservation, and delivery remain separate c
 
 The cross-module transaction, idempotency, event, and correction rules in [Specification 24](24-cross-module-transaction-and-implementation-contract.md) are mandatory. In particular, sale commitment and stock issue are atomic; external payment confirmation and settlement are separate, independently verified state transitions.
 
+### 2.1 Financial sale record versus regulated medicine handover
+
+A POS permission authorizes only the software transaction steps explicitly granted to that account. It does not confer professional authority, establishment authority, or permission to perform a regulated service.
+
+For any medicine-related transaction, the product must distinguish the financial/stock record from the regulated professional act of dispensing or issuing the medicine. A committed sale, receipt, payment confirmation, or cashier identity must never be treated as proof that a legally required professional decision or handover occurred. If a future release supports such a regulated action, it requires its own action-policy entry and must evaluate the applicable establishment licence, individual professional competency licence, and establishment-linked certificate of competence/designation where required. The exact evidence combination and any lawful exception must be confirmed for the jurisdiction, establishment category, and product/action before enablement.
+
+An exception concerning prescription requirements must not be assumed to waive professional-scope or establishment requirements. Where the applicable policy is unresolved, the affected medicine-related action remains unavailable; ordinary private management and unrelated POS capabilities are not globally blocked.
+
+
 ## 3. Sale lifecycle
 
 Candidate sale states:
