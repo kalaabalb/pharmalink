@@ -46,3 +46,7 @@ This repository is the authoritative planning record. Chat discussions and agent
 ## Platform access and optional public commerce
 
 Pharmalink is a platform with pharmacy-management capabilities and a separate public-facing discovery/access experience. A pharmacy may use the management system privately without publishing its catalogue, advertising availability, accepting orders, or selling through the public-facing experience. Public listing and any commerce-related capabilities are opt-in, separately configurable, and subject to applicable legal and operational review. A professional credential is not a general requirement to create an account or use ordinary platform-management features; credential checks apply only to specific regulated activities or claims where required.
+
+## Production release standard
+
+The intended outcome is a deployable, functional product for a validated first-release scope—not a demo. Every enabled capability must use real persistent data, server-enforced permissions, actual business transactions, defined failure/recovery behavior, automated tests, monitoring, and documented operations. Mock data and simulated success are prohibited in production. See the [production deployability contract](docs/12-functional-product-and-production-deployability-contract.md).
