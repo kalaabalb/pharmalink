@@ -5,7 +5,7 @@
 
 ## 1. Product delivery commitment
 
-The target is a deployable, secure, maintainable product that real pharmacy organizations can use for the explicitly approved first-release scope. “The documentation is complete” means the team can implement, test, deploy, operate, support, recover, and evolve that scope without inventing critical rules during coding.
+The target is a deployable, secure, maintainable product that real pharmacy organizations can use for the explicitly approved first-release scope. “The documentation is complete” means the team can implement, test, deploy, operate, support, recover, and evolve that scope without inventing critical rules during coding. The proposed first-release candidate, end-to-end journeys, exclusions, and evidence gates are set out in [Specification 25](25-first-release-scope-and-launch-decision-framework.md); that proposal remains subject to product-owner approval and field, legal, and accounting validation.
 
 It does not mean every possible Pharmalink capability must ship in the first release. It means the selected release is coherent and genuinely functional from end to end. Deferred features must be clearly unavailable, not simulated.
 
