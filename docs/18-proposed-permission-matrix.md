@@ -272,6 +272,7 @@ This section narrows grant design to the private pharmacy-operations candidate i
 - Every other grant is explicit, tenant-scoped, and branch-scoped where the resource is branch-owned. Role templates are convenience bundles, not authorization evidence.
 - A person may hold multiple roles, but each effective permission is still recorded and evaluated independently.
 - No professional credential is required for ordinary membership, account access, purchasing, inventory management, or general software administration. A credential gate is added only to the exact regulated action/category that qualified review identifies.
+- A role grant or permission is necessary but never sufficient for an action whose action-policy registry requires establishment or professional evidence. The server must evaluate the applicable jurisdiction/category/action policy at execution time; a grant cannot override an unresolved or failed evidence dependency.
 - Where an approval action is listed, the requester cannot approve their own request unless a documented, legally/accountingly acceptable single-person exception is approved with compensating review.
 - Cashier, inventory, purchasing, and accountant grants are constrained to assigned branches and duties. A job title alone never creates access.
 - Public discovery/availability permissions and platform-global support/security permissions are not part of the private first-release grant baseline. They remain disabled or separately controlled until their own release gates pass.
