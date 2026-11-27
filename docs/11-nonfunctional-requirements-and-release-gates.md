@@ -122,3 +122,49 @@ Do not invent service-level objectives. Establish targets after user research, r
 ## 11. Approval record
 
 Every release gate should record scope, evidence links, test results, known limitations, unresolved risks, approver, date, and any time-bounded exception. Exceptions must not silently become permanent requirements.
+
+## 12. Production product means deployable and operational—not a demo
+
+The release target is a functional product that a real pharmacy organization can safely deploy and use for the approved scope. A prototype, static interface, scripted walkthrough, seeded showcase, or mocked API is not a production release.
+
+For every capability declared available, all of the following must be true:
+
+- **Real persistence:** data is stored in a production-grade database with defined constraints, transactions, migrations, backups, and restore procedures. In-memory state or browser-only storage is not the authoritative record.
+- **Real authorization:** every read and write is enforced server-side using tenant, branch, membership, permission, entitlement, resource-state, and applicable regulated-action checks.
+- **Real business rules:** stock, purchasing, sales, returns, finance, and other enabled workflows execute actual domain transactions. Totals, stock balances, and reports are derived from authoritative records, not hard-coded examples.
+- **Real failure behavior:** network loss, duplicate requests, concurrent edits, provider timeouts, event gaps, expired sessions, and partial failures produce defined recoverable states. The interface must not report success before the authoritative operation succeeds.
+- **Real integrations or honest exclusion:** enabled payment, messaging, identity, maps, printing, or external-data features use configured providers and tested failure handling. If an integration is not implemented, the feature is clearly unavailable; it must not simulate success.
+- **Real operational controls:** production configuration, secret management, deployment process, health checks, structured logs, metrics, alerting, incident response, support ownership, and rollback/recovery procedures exist.
+- **Real data lifecycle:** import, export, correction, retention, deletion, tenant exit, and migration behavior are specified and tested.
+- **Real security assurance:** tenant isolation, permission boundaries, credential handling, rate limits, abuse controls, dependency review, and security tests pass.
+- **Real user acceptance:** representative pharmacy staff complete end-to-end tasks using realistic devices and network conditions, with observed usability and correctness evidence.
+
+### Demo and test data rules
+
+- Demo fixtures and synthetic records must be isolated from production and visibly identified.
+- Production must not silently fall back to mock data when an API, database, or provider is unavailable.
+- A failed request must never be replaced by a fabricated success response or fake stock/financial values.
+- Test accounts and sample organizations must not be mixed with real tenant data.
+- No public listing, verification badge, payment status, or availability claim may be fabricated for presentation purposes.
+
+### Minimum deployment and operations package
+
+Before a production release, the repository must contain or reference:
+1. reproducible environment setup and deployment instructions;
+2. environment-variable and secret inventory with no committed secret values;
+3. database schema and forward migration strategy;
+4. backup, restore, and disaster-recovery runbooks with successful restore evidence;
+5. production/staging separation and safe test-data policy;
+6. health/readiness checks and dependency-failure behavior;
+7. structured logging, metrics, alert thresholds, and dashboards;
+8. event/outbox monitoring, replay, dead-letter, and reconciliation runbooks;
+9. security incident, privacy incident, and service outage procedures;
+10. tenant onboarding, support, export, suspension, and offboarding procedures;
+11. release checklist, rollback decision criteria, and post-release verification;
+12. named operational ownership and support escalation path.
+
+A release is not production-ready merely because it deploys successfully. The deployed build must pass end-to-end acceptance, security, migration, backup-restore, observability, and operational-readiness checks.
+
+## 13. Capability-level release status
+
+Every feature must be assigned one explicit status: **not built**, **internal-only**, **pilot**, **production-enabled**, **paused**, or **retired**. The status must be enforced by the backend, reflected accurately in the UI, documented for support, and included in release evidence. A feature cannot be described as production-enabled while it relies on mock services, manual database edits, undocumented operator intervention, or unverified legal assumptions.
