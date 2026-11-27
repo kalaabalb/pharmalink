@@ -266,7 +266,7 @@ Availability of the public discovery service must not be coupled to the ability 
 
 ## 15. Permissions and audit events
 
-Candidate permissions:
+Canonical identifiers and the unresolved role-grant register are maintained in [Specification 18](18-proposed-permission-matrix.md). These permissions are not granted by ordinary pharmacy-management access; public participation, moderation, and verification require separate scope and approval.
 - public_profile.configure;
 - public_profile.publish;
 - public_profile.pause;
