@@ -211,6 +211,7 @@ Candidate permissions:
 - finance.cashbook.read;
 - finance.cash_movement.create;
 - finance.cash_session.open;
+- finance.cash_session.count;
 - finance.cash_session.close;
 - finance.reconcile;
 - finance.reconciliation_exception.resolve;
