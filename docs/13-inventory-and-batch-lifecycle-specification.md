@@ -208,11 +208,11 @@ The canonical identifiers are registered in [Specification 18](18-proposed-permi
 - inventory.transfer.create;
 - inventory.transfer.dispatch;
 - inventory.transfer.receive;
+- inventory.transfer.cancel;
 - inventory.hold;
 - inventory.release;
 - inventory.disposal.request;
 - inventory.disposal.approve;
-- inventory.return.disposition;
 - inventory.return.disposition;
 - inventory.export.
 
