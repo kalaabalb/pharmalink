@@ -31,7 +31,7 @@ This is an initial taxonomy; each event requires a schema and ownership review.
 | Organization | OrganizationUpdated, BranchCreated, BranchStatusChanged |
 | Membership | InvitationIssued, MembershipActivated, MembershipRevoked, PermissionChanged |
 | Catalogue | CatalogueEntryLinked, CatalogueCorrectionSubmitted, CatalogueCorrectionReviewed |
-| Inventory | StockReceived, StockCountRecorded, StockAdjusted, StockTransferred, StockHeld, StockReleased |
+| Inventory | StockMovementCommitted, StockCountPosted, StockTransferDispatched, StockTransferReceived, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
 | Purchasing | PurchaseOrderSubmitted, PurchaseOrderApproved, GoodsReceiptRecorded, SupplierInvoiceRecorded |
 | Sales | SaleCommitted, SaleVoided, ReturnAccepted, PaymentStatusChanged |
 | Quality | RecallNoticeRecorded, AffectedStockFlagged, QualityDispositionRecorded |
@@ -165,7 +165,7 @@ The following names are candidate domain events aligned to the inventory, POS, p
 | Domain | Candidate committed events |
 |---|---|
 | Catalogue governance | CanonicalCatalogueVersionPublished, CatalogueCorrectionProposed, CatalogueCorrectionReviewed, BarcodeMappingReviewed, TenantCatalogueEntryChanged |
-| Inventory | StockMovementCommitted, StockReceived, StockCountPosted, StockAdjusted, StockTransferDispatched, StockTransferReceived, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
+| Inventory | StockMovementCommitted, StockCountPosted, StockTransferDispatched, StockTransferReceived, StockHeld, StockReleased, StockDisposed, RecallNoticeRecorded |
 | Sales/POS | SaleCommitted, SaleVoided, ReturnAccepted, RefundStatusChanged, CashSessionOpened, CashSessionClosed |
 | Payments | PaymentAttemptInitiated, PaymentStatusChanged, PaymentReconciled |
 | Purchasing | SupplierChanged, PurchaseOrderApproved, PurchaseOrderIssued, PurchaseOrderCancelled, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentStatusChanged |
@@ -182,3 +182,7 @@ The following names are candidate domain events aligned to the inventory, POS, p
 - Consumers must be idempotent and version-aware. Event replay must not re-run stock, money, payment, or notification side effects.
 - Public projection events must not expose private stock quantities or tenant-only details.
 - Schema changes must be versioned and tested against all consumers. Breaking event contracts require coordinated migration; do not keep obsolete contracts indefinitely merely for compatibility.
+
+### Inventory event naming rule
+
+`StockMovementCommitted` is the canonical event for each accepted stock-ledger movement; its versioned payload identifies the movement type (receipt, sale issue, adjustment, hold, release, disposal, transfer leg, and so on). Do not emit parallel `StockReceived` or `StockAdjusted` events for the same ledger fact. Workflow-level events such as `StockTransferDispatched` and `StockTransferReceived` may be emitted in addition when they represent distinct transfer aggregate state transitions. Consumers must use movement IDs and aggregate versions to prevent double application.
