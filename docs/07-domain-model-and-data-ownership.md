@@ -147,3 +147,43 @@ Define retention by record class and applicable law before implementation. Accou
 - Every record has an explicit tenant/branch ownership rule or is explicitly platform-global.
 - No sensitive patient-data domain is introduced without a separate approved specification.
 - Domain events are versioned and distinct from audit records.
+
+## 13. Independent access and verification aggregates
+
+The model must represent the following independently. Avoid a single organization `verified` boolean.
+
+- **PersonAccount:** authentication identity and account lifecycle.
+- **Organization/Tenant:** customer workspace and its platform relationship.
+- **Membership:** person-to-organization relationship, invitation state, activation/revocation, and attribution.
+- **Branch:** operational location under an organization, with its own configuration and lifecycle.
+- **BranchAssignment:** membership-to-branch scope, including effective dates and revocation.
+- **PermissionGrant:** explicit permission, scope, grantor, reason, effective period, and revocation.
+- **ManagementEntitlement:** organization capability/plan state and contractual limits. It does not represent legal or professional authorization.
+- **EstablishmentEvidence:** evidence concerning an organization or branch, including type, issuer, jurisdiction, identifier, evidence reference, validity dates, verification method, status, reviewer, and decision history.
+- **ProfessionalCredential:** evidence concerning an individual, including credential category, issuer, jurisdiction, identifier, evidence reference, validity dates, and asserted scope.
+- **CredentialVerificationDecision:** immutable decision record tied to a credential version, with source, method, reviewer, timestamp, outcome, reason, and limitations.
+- **PublicParticipationSetting:** explicit opt-in and field/capability-level publication settings for an organization or branch.
+- **PublicProjection:** derived public-safe representation with publication version, source revision, visibility state, and suppression/pause reason.
+- **CapabilityReview:** review of a particular operation or public capability, with required evidence and outcome. It must not become a universal tenant gate.
+- **VerificationAppeal:** appeal and re-review history linked to the original decision without overwriting it.
+
+### State and data invariants
+
+1. An account can exist without any organization membership.
+2. A membership can be active without a professional credential.
+3. An organization can maintain private management configuration without public publication.
+4. A branch record can exist in a draft/private setup state without the product claiming that the branch is legally authorized to operate.
+5. Establishment evidence belongs to the organization or branch and jurisdiction it actually describes; it is not copied to staff members as their credential.
+6. Professional credentials belong to a person and have a defined category and scope; they are not inherited by the organization, owner, or coworkers.
+7. Verification decisions are versioned and attributable. New evidence or a re-review creates a new decision record rather than silently rewriting the old one.
+8. Public projections are derived data. Pausing or withdrawing publication removes or suppresses the public projection but does not delete private source records or historical publication events.
+9. A failed public review cannot mutate account, membership, stock, sales, supplier, or finance lifecycle.
+10. Expiry/revocation of one credential affects only actions whose authorization rules depend on that credential. Historical actions retain their original actor and authorization context for audit.
+11. Subscription/entitlement state is separate from ownership and retention of tenant data. Suspension must not erase records or prevent lawful export and required record access.
+12. Every verification decision and every change to permission, membership, publication, or entitlement has actor, time, reason, scope, and correlation metadata.
+
+### Ownership and deletion additions
+
+The tenant owns its private operational records subject to applicable law and service terms. The platform is a processor/service provider where the applicable legal relationship so determines; that role must be confirmed contractually and legally, not hard-coded as an assumption. The platform controls its own security, billing, moderation, and verification decision records, while evidence supplied by a tenant must retain provenance and access restrictions.
+
+Deleting a public profile is not deleting the tenant. Closing a membership is not deleting the person's identity. Expiring a credential is not deleting its verification history. Tenant exit must preserve records that must lawfully be retained, provide a verified export, and apply a documented deletion schedule to remaining data.
