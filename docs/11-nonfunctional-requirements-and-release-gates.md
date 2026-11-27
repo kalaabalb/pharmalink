@@ -168,3 +168,8 @@ A release is not production-ready merely because it deploys successfully. The de
 ## 13. Capability-level release status
 
 Every feature must be assigned one explicit status: **not built**, **internal-only**, **pilot**, **production-enabled**, **paused**, or **retired**. The status must be enforced by the backend, reflected accurately in the UI, documented for support, and included in release evidence. A feature cannot be described as production-enabled while it relies on mock services, manual database edits, undocumented operator intervention, or unverified legal assumptions.
+
+
+## 14. Detailed UX and accessibility acceptance
+
+The interaction, accessibility, responsive behavior, localization, date/time/number conventions, and low-bandwidth interface requirements are detailed in [Specification 23](23-user-experience-accessibility-and-localization-specification.md). WCAG 2.2 AA is the proposed design/test baseline; the supported device matrix and language/calendar decisions remain open until user research and accessibility review.
