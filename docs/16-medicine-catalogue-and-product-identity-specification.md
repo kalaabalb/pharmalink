@@ -161,6 +161,29 @@ Where a classification is uncertain or a source is unavailable:
 
 The current applicable Ethiopian federal and regional rules must be reviewed before enabling regulated classifications or actions. This specification does not itself determine those classifications.
 
+### 10.1 Classification record and fail-closed use contract
+
+A regulatory classification is a versioned evidence-backed decision, not a mutable text field on a product. The implementation must keep source facts, reviewer decisions, and action policy separate.
+
+Each classification decision must retain, as applicable:
+
+- jurisdiction and relevant administrative/geographic scope;
+- exact product identity and presentation/version to which it applies;
+- classification dimension (for example prescription status, restricted/controlled status, sale condition, dispensing condition, or advertising/publication condition);
+- normalized decision value and explicit uncertainty state;
+- authoritative source/issuer, source identifier, source document/version, retrieval or verification method, and evidence reference;
+- effective-from/effective-to dates, decision time, review time, and superseded decision link;
+- reviewer identity, permission, reason, and approval/separation reference;
+- policy version and the specific actions affected by the classification.
+
+Do not use a single generic `approved` flag for all classification dimensions. A product may have a verified identity while its prescription classification is unresolved; one classification may be current while another is expired or under review. Represent those independently.
+
+Minimum decision states are `unreviewed`, `pending_evidence`, `verified`, `rejected`, `conflicted`, `expired`, and `superseded`. These states describe evidence/review lifecycle, not the legal classification value itself. Never convert missing, expired, conflicted, or superseded evidence into a permissive category.
+
+Action eligibility is evaluated from the current effective classification plus jurisdiction, establishment category/licence state, exact action, actor authority, and policy version. The client cannot submit the final classification, select a more permissive jurisdiction, override an effective date, or claim an exemption. Historical transactions retain the classification/policy decision references used at the time; a later correction triggers impact analysis and prospective controls, not silent rewriting.
+
+Where the authoritative source is unavailable or the classification is unresolved, block only the dependent regulated/public action. Continue to permit unrelated private catalogue maintenance and operational record preparation within their own rules.
+
 ## 11. Catalogue correction and quality workflow
 
 1. A user reports an incorrect or missing product attribute with supporting source evidence.
