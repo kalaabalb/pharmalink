@@ -389,7 +389,7 @@ For the operations above and all other state-changing commands:
 
 At minimum:
 - sale commit rejects stale price/tax configuration, expired/recalled/held stock, duplicate command, and concurrent oversell;
-- goods receipt rejects duplicate receipt, invalid batch/expiry, unit mismatch, and unaccepted/rejected lines;
+- goods receipt rejects duplicate receipt, invalid batch/expiry, unit mismatch, and unaccepted/rejected lines; the internal `goods_receipt.commit` continuation rejects client invocation, missing accepted-line references, stale receipt version, and duplicate posting; it runs only after the initiating acceptance action passes `goods_receipt.accept` and `inventory.receive` authorization;
 - manual payment confirmation rejects insufficient/invalid evidence, wrong amount/currency, wrong scope, and prohibited self-confirmation;
 - provider callback rejects invalid signatures, unknown attempts, replay, duplicate, and out-of-order events without corrupting state;
 - refund approval does not mark refund complete and cannot be replayed into duplicate execution;
