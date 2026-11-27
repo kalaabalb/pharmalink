@@ -192,6 +192,7 @@ The same physical quantity must not be simultaneously available at source and de
 - Offline users may view only an authorized encrypted snapshot with a last-confirmed time and visible offline state.
 - Local drafts may be prepared where approved, but are not authoritative stock movements.
 - Every committed stock transaction writes its domain event to the transactional outbox in the same database transaction.
+- Candidate event names include StockMovementPosted, StockCountRecorded, StockAdjustmentRequested, StockAdjustmentPosted, StockTransferDispatched, StockTransferReceived, StockTransferCancelled, StockHoldApplied, StockHoldReleased, StockDisposalPosted, CustomerReturnDispositionRecorded, and RecallDecisionRecorded. These are candidate names pending the versioned registry in Specification 29.
 - Event consumers are idempotent and version-aware.
 - Clients subscribe to relevant branch/product changes; do not poll continuously for unchanged balances.
 - On reconnect, the client replays from a durable cursor or fetches an authoritative snapshot, then reconciles local drafts/commands.
