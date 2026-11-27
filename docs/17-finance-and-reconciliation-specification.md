@@ -253,7 +253,7 @@ Automated tests must prove:
 - closed periods and issued documents cannot be silently rewritten;
 - subscription suspension does not erase history or block lawful export.
 
-## 16. Open decisions before implementation
+## 16. Inventory valuation dependency\n\nInventory cost and valuation behavior is specified in [Specification 27](27-inventory-valuation-stock-reconciliation-and-cost-integrity-specification.md). Finance reports must use its approved, versioned method and disclose provisional or unknown cost coverage. Do not independently implement a competing cost calculation in the finance module.\n\n## 17. Open decisions before implementation
 
 1. Is the first release a cashbook/operational reporting tool, a journal-export tool, or a full general ledger?
 2. Which accounting standards and local statutory requirements apply to target customers?
