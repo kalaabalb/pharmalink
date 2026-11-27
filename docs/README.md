@@ -25,6 +25,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 09-ethiopia-regulatory-evidence-register.md | Primary-source legal/regulatory evidence and unresolved interpretation | Draft |
 | 10-security-privacy-and-threat-model.md | Trust boundaries, threats, access control, data protection | Draft |
 | 11-nonfunctional-requirements-and-release-gates.md | Quality attributes, testing, migration, recovery, release gates | Draft |
+| 12-functional-product-and-production-deployability-contract.md | Definition of a real functional, deployable, supportable product | Draft |
 
 ## Review dimensions
 
@@ -96,3 +97,12 @@ The product owner has explicitly clarified:
 - Documentation and implementation work should be committed directly to `main` by default. Do not require the product owner to open and merge a pull request for routine work.
 
 These are user-owned product decisions and override earlier draft assumptions that implied a blanket professional credential gate.
+
+
+## Production-product standard
+
+Document completion is not permission to ship a demo. The selected first release must be a coherent vertical slice that a real pharmacy can deploy and use for its approved scope. Every enabled capability must have authoritative persistence, server-side authorization, real business transactions, failure/recovery behavior, automated acceptance evidence, observability, and an operational owner.
+
+The production deployability contract in [12-functional-product-and-production-deployability-contract.md](12-functional-product-and-production-deployability-contract.md) is mandatory across all modules. Mock services and synthetic fixtures are permitted only in isolated development/test contexts and must never silently substitute for production functionality.
+
+A capability that is not fully implemented and verified must be marked unavailable, internal-only, pilot, paused, or deferred—not presented as working.
