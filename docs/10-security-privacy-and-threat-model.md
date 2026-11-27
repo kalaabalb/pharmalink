@@ -149,3 +149,8 @@ Required negative tests include:
 - a role or credential change is enforced server-side for existing sessions and queued offline commands.
 
 Verification evidence is confidential. Store the minimum necessary reference and metadata, restrict reviewer access, log every view/download, and define retention/deletion rules. Do not expose document URLs or raw evidence in ordinary API responses, logs, analytics, or push notifications.
+
+
+## 13. External provider security boundary
+
+External providers, webhooks, file storage, messaging, maps, and payment services are governed by [Specification 21](21-external-integrations-and-provider-lifecycle-specification.md). Provider callbacks are untrusted external inputs until authenticated, validated, replay-protected, and processed through an authorized domain command. Provider secrets and sensitive payloads must not enter client bundles, source control, or ordinary logs.
