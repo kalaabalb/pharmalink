@@ -78,7 +78,7 @@ The implementation specification must define, at minimum:
 
 ## 5. Architecture and implementation specifications required
 
-The module specifications are complemented by [Specification 21](21-external-integrations-and-provider-lifecycle-specification.md), which governs external provider selection, contracts, secrets, webhooks, outage handling, and provider exit, and [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md), which governs personal-data purposes, notices, rights, retention, deletion, and privacy incident handling. No third-party capability is production-enabled merely because a sandbox integration succeeds.
+The module specifications are complemented by [Specification 21](21-external-integrations-and-provider-lifecycle-specification.md), which governs external provider selection, contracts, secrets, webhooks, outage handling, and provider exit, and [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md), which governs personal-data purposes, notices, rights, retention, deletion, and privacy incident handling, and [Specification 23](23-user-experience-accessibility-and-localization-specification.md), which defines the required interaction, accessibility, responsive, and localization behavior. No third-party capability is production-enabled merely because a sandbox integration succeeds.
 
 
 Before coding a module, its specification must include:
