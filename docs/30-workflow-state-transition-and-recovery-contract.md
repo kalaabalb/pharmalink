@@ -159,13 +159,13 @@ Batch expiry, recall, damage, disposal, returns, and valuation follow Specificat
 | Payment | Pending confirmation | Confirm → Confirmed | Verified authoritative evidence; provider callback or approved manual confirmation; deduplicate and reconcile |
 | Payment | Pending confirmation | Fail/cancel/expire → Failed / Cancelled / Expired | Authoritative failure/cancel/expiry evidence or reviewed manual outcome |
 | Payment | Confirmed | Reverse/dispute → Reversed / Disputed | Provider/bank evidence; linked financial correction and reconciliation case |
-| Return | absent | Create → Draft | Return references original sale and line/quantity; no stock or payment effect |
-| Return | Draft | Submit → Pending inspection | Return reason, actor, time, source sale and eligibility window recorded |
-| Return | Pending inspection | Accept / reject → Accepted / Rejected | Authorized review; accepted quantity and condition recorded; no automatic restock/refund |
-| Return | Accepted | Complete disposition → Disposition complete | Separate inventory decision records restock, quarantine, disposal, or other approved outcome |
-| Supplier invoice | absent | Record → Recorded | invoice.record; supplier, document identity, amount/currency, lines and source evidence |
-| Supplier invoice | Recorded | Match → Matching / Exception | Compare to purchase order and accepted receipts; preserve line-level differences |
-| Supplier invoice | Matching | Approve / dispute → Approved / Disputed | invoice.approve; accounting policy, authority, duplicate check, approval separation |
+| Return | absent | Create → Draft | customer_return.create; references original sale and line/quantity; no stock or payment effect |
+| Return | Draft | Submit → Pending inspection | customer_return.submit; return reason, actor, time, source sale and eligibility window recorded |
+| Return | Pending inspection | Accept / reject → Accepted / Rejected | customer_return.review; authorized review; accepted quantity and condition recorded; no automatic restock/refund |
+| Return | Accepted | Complete disposition → Disposition complete | inventory.return.disposition; separate inventory decision records restock, quarantine, disposal, or other approved outcome |
+| Supplier invoice | absent | Record → Recorded | supplier_invoice.record; supplier, document identity, amount/currency, lines and source evidence |
+| Supplier invoice | Recorded | Match → Matching / Exception | supplier_invoice.match; compare to purchase order and accepted receipts; preserve line-level differences |
+| Supplier invoice | Matching | Resolve exception → Matching or Exception resolved | supplier_invoice.exception.resolve; evidence and rationale recorded; unresolved material discrepancy blocks approval |\n| Supplier invoice | Matching / Exception resolved | Approve / dispute → Approved / Disputed | supplier_invoice.approve; accounting policy, authority, duplicate check, approval separation |
 | Supplier invoice | Approved | Record settlement allocation → Partially paid / Paid | Only after independently confirmed supplier payment and reconciliation; never from invoice approval alone |
 | Refund | absent | Request → Pending approval or Pending provider | payment.refund.request; original payment/sale, eligible amount, reason |
 | Refund | Pending approval | Approve/reject → Approved/Rejected | payment.refund.approve; authority, amount and separation checks |
