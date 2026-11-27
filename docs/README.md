@@ -35,6 +35,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 19-public-discovery-and-availability-specification.md | Public pharmacy discovery, opt-in profiles, medicine search, availability freshness, moderation, and privacy | Draft |
 | 20-organization-branch-and-membership-lifecycle-specification.md | Tenant, legal-entity relationships, branches, invitations, roles, ownership, suspension, and offboarding | Draft |
 | 21-external-integrations-and-provider-lifecycle-specification.md | Provider due diligence, webhooks, payment, messaging, maps, storage, outages, and exit | Draft |
+| 22-privacy-and-personal-data-lifecycle-specification.md | Data inventory, purpose limitation, notices, rights, retention, deletion, processors, and privacy incidents | Draft |
 
 ## Review dimensions
 
