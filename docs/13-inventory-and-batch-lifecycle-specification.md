@@ -267,3 +267,8 @@ The detailed cost provenance, valuation-method decision framework, landed-cost a
 12. What are the expected peak transaction volumes, branch sizes, and device constraints from field research?
 
 No implementation should invent answers to these decisions. Each must be resolved, scoped as not applicable, or explicitly deferred with a safe default before the affected capability is enabled.
+
+
+## 18. Cross-module transition alignment
+
+The shared state-transition, transaction ordering, event, and recovery contract is defined in [Specification 30](30-workflow-state-transition-and-recovery-contract.md). Inventory-specific stock status and movement rules in this document remain authoritative; the shared contract does not make a batch saleable without the inventory eligibility checks defined here.
