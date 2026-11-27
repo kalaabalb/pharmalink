@@ -458,6 +458,72 @@ Database row-level security may be an additional defense if its operational and 
 - Application startup must not run unbounded or destructive migrations automatically.
 - Large backfills run as observable, resumable jobs with rate limits and checkpoints.
 
+
+### 5.6 Physical ownership and cross-module write discipline
+
+The conceptual ownership model in Specifications 07 and 24 must be translated into a physical schema ownership registry before the first production migration. The registry is a design artifact reviewed with the schema; it is not a requirement to create one database schema per module.
+
+For every table or durable record family, the registry must state:
+- owning domain module and accountable code owner;
+- tenant/organization/branch ownership rule, including explicitly platform-global records;
+- authoritative versus projection/cache/archive classification;
+- aggregate root and version/concurrency strategy, where applicable;
+- permitted write entry point and permitted readers;
+- foreign-key and uniqueness scope;
+- retention, deletion, export, and legal-hold class;
+- event(s) emitted after commit and projection consumers, if any.
+
+A module owns the meaning and mutation rules of its records. Another module must not bypass that owner by issuing direct writes to its tables, even when both modules share one relational database. Cross-module orchestration must call the owning module's application command/interface and participate in a documented local transaction where atomicity is required. Shared database access is not shared domain ownership.
+
+The following minimum transaction map is required for the first-release workflow set. It identifies the minimum atomic boundary; provider/bank actions remain external and cannot be made atomic with the local database.
+
+| Business operation | Authoritative write owners | Minimum local atomic boundary | Explicitly outside that boundary |
+|---|---|---|---|
+| Sale commit | Sales; Inventory; Audit/Outbox | Sale and immutable lines, exact stock issue movement(s), aggregate versions, audit reference, and outbox intent commit together | Payment-provider collection, settlement, analytics/search projection |
+| Goods receipt acceptance | Purchasing/Receiving; Inventory; Audit/Outbox | Accepted receipt quantities and corresponding stock movements, source references, audit reference, and outbox intent commit together | Supplier invoice approval, payable recognition, supplier payment |
+| Transfer dispatch | Inventory transfer workflow and stock ledger | Transfer state/version, source stock reduction, in-transit custody movement, audit, and outbox intent commit together | Physical transport and destination acceptance |
+| Transfer receipt | Inventory transfer workflow and stock ledger | Accepted destination quantity, in-transit reduction/closure, discrepancy state, audit, and outbox intent commit together | Any later discrepancy settlement or supplier/financial claim |
+| Customer-return disposition | Returns workflow; Inventory; Audit/Outbox | Approved disposition decision and exactly the resulting accepted inventory movement(s), linked to return line and audit/outbox | Customer refund or payment-provider reversal |
+| Payment confirmation | Payment; Audit/Outbox | Verified, deduplicated payment evidence, payment state/version, correlation to the intended attempt, audit, and outbox intent commit together | Provider-side capture/settlement and later bank reconciliation |
+| Refund confirmation | Payment; Audit/Outbox | Verified refund evidence, refund state/version, original payment linkage, audit, and outbox intent commit together | Physical returned-goods disposition |
+| Supplier invoice approval | Purchasing/Finance under approved accounting policy | Invoice decision, duplicate/matching evidence, payable recognition or explicit no-posting outcome, audit, and outbox intent commit together | Supplier payment initiation and bank settlement |
+| Supplier payment confirmation | Finance/Payment integration | Verified settlement evidence, allocation to approved obligations, payment state, reconciliation references, audit, and outbox intent commit together | Bank/provider settlement itself |
+| Cash-session close | Finance/Cash; Audit/Outbox | Final counted snapshot, accepted cash movements/cutoff, variance decision, close state/version, audit, and outbox intent commit together | Later bank deposit and external statement reconciliation |
+
+If the chosen workflow is not included in the approved first release, its row is a future design constraint, not permission to implement it. If an operation cannot meet its stated atomic boundary in the selected architecture, the architecture or workflow must be redesigned before implementation; do not weaken the invariant by silently splitting authoritative writes.
+
+### 5.7 Database constraint and concurrency checklist
+
+For each physical aggregate and relationship, schema review must identify the concrete database enforcement mechanism for the following applicable invariants:
+
+- **Tenant and branch consistency:** tenant-owned rows carry or reach one unambiguous tenant; branch references prove that the branch belongs to the same tenant. Composite foreign keys or an equivalent database-enforced design prevent cross-tenant parent/child links.
+- **Scoped uniqueness:** business identifiers are unique in their actual scope (for example, tenant, branch, provider, or document issuer), not accidentally global. The scope and treatment of reused external identifiers are documented.
+- **Idempotency:** command idempotency keys are unique within a documented actor/tenant/operation scope; the stored request fingerprint prevents reuse with a materially different payload; outcome and retention behavior are defined.
+- **Aggregate concurrency:** state-changing commands use a version or equivalent conditional-write guard. A stale write cannot silently overwrite a newer committed transition.
+- **Stock integrity:** movement identity and source-command identity prevent duplicate posting; stock allocation and availability checks are concurrency-safe; a cached position is never the only negative-stock guard.
+- **Financial integrity:** currency, precision, sign, allocation, and balancing constraints are explicit; finalized financial records cannot be updated through ordinary application paths.
+- **Outbox/inbox integrity:** outbox identity is unique to its source fact/transaction; consumer deduplication identity is stable and scoped to consumer plus event; retry does not create a second business effect.
+- **Reference integrity:** finalized records retain valid links to their source, correction, reversal, and evidence records; deletion behavior cannot orphan legally or operationally required history.
+- **State integrity:** persisted states are constrained to registered values; legal transitions are enforced by the owning application service and protected by version checks, not by arbitrary client-supplied status values.
+- **Temporal integrity:** effective periods and expiry windows are represented consistently; overlapping or impossible periods are rejected where the domain requires it.
+
+The schema review must distinguish constraints that can be expressed directly in the selected database from invariants that require a transaction, application service, or controlled workflow. Every invariant must have one named enforcement point and a negative test. “Validated in the UI” is never an enforcement point.
+
+Do not introduce a generic cross-module foreign-key or shared writable table merely to simplify reporting. Read models may join authorized source data or consume events, but their rebuild and reconciliation procedure must remain explicit. Reporting access must not become a hidden write path into an owning module.
+
+### 5.8 Schema-lock and migration evidence gate
+
+Before the first production schema is approved, attach or link:
+1. the physical table/record ownership registry required by §5.6;
+2. an entity-relationship diagram showing tenant, legal-entity, organization, branch, and global-reference boundaries;
+3. the constraint catalogue required by §5.7, including enforcement point and test ID;
+4. the transaction map for every included workflow, with proof that all local atomic writes and outbox rows share the intended transaction;
+5. representative query plans and index rationale for high-volume operational paths;
+6. migration, backup, restore, and data-reconciliation procedures for the selected database and hosting topology;
+7. a threat-test report covering cross-tenant references, guessed identifiers, duplicate commands, stale versions, and unauthorized background jobs.
+
+This evidence gate is a prerequisite to schema lock and production migration design. It does not require choosing a database vendor prematurely, and it does not approve any unresolved first-release workflow or accounting/legal policy.
+
 ## 6. Transactional outbox, event delivery, and realtime
 
 - The domain transaction writes its authoritative facts and outbox rows atomically.
