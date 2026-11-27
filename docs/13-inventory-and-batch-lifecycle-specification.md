@@ -213,6 +213,7 @@ The canonical identifiers are registered in [Specification 18](18-proposed-permi
 - inventory.disposal.request;
 - inventory.disposal.approve;
 - inventory.return.disposition;
+- inventory.return.disposition;
 - inventory.export.
 
 A role template may group permissions, but the server evaluates explicit grants and scope. A non-professional user may perform permitted inventory-management tasks without a professional licence. A regulated professional credential is checked only when the specific action requires it under the reviewed rules.
@@ -240,6 +241,7 @@ At minimum, automated tests must prove:
 - concurrent sales cannot oversell the same eligible stock;
 - expired, recalled, damaged, and held stock cannot be allocated to an ordinary sale;
 - a return is not automatically saleable;
+- only a user with inventory.return.disposition can record the stock disposition; customer-return acceptance alone cannot make stock available;
 - a count cannot overwrite newer movements;
 - transfer dispatch removes source availability and receipt adds destination availability exactly once;
 - duplicate, delayed, reordered, and replayed events do not duplicate stock effects;
