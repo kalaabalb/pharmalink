@@ -198,7 +198,7 @@ Canonical identifiers and the unresolved role-grant register are maintained in [
 - Offline drafts must show their local/pending state and cannot create stock or payables until accepted by the server.
 - Commands carry idempotency keys and base versions.
 - Server-side authorization and business rules are revalidated on synchronization.
-- Candidate events include SupplierChanged, PurchaseOrderApproved, PurchaseOrderIssued, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceMatched, SupplierInvoiceExceptionResolved, SupplierInvoiceDisputed, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentStatusChanged, and SupplierBalanceReconciled.
+- Candidate events include SupplierChanged, PurchaseOrderSubmitted, PurchaseOrderApproved, PurchaseOrderIssued, PurchaseOrderCancelled, PurchaseOrderClosed, GoodsReceiptAccepted, SupplierInvoiceRecorded, SupplierInvoiceMatched, SupplierInvoiceExceptionResolved, SupplierInvoiceDisputed, SupplierInvoiceApproved, SupplierReturnDispatched, SupplierPaymentStatusChanged, and SupplierBalanceReconciled.
 - Events are written through the transactional outbox and consumers tolerate duplicate delivery and replay.
 - Relevant screens subscribe to branch/tenant events; do not poll continuously for unchanged supplier or order state.
 
