@@ -149,7 +149,7 @@ Batch expiry, recall, damage, disposal, returns, and valuation follow Specificat
 | Sale | absent | Create draft → Draft | sale.create; branch/session context; no stock/financial commitment |
 | Sale | Draft | Submit validation → Pending validation | Server revalidates identity, price/tax snapshot, eligible stock, permissions, and action-specific regulated gates |
 | Sale | Pending validation | Validation failure → Draft or Rejected | Return line-specific safe errors; no stock/financial commitment |
-| Sale | Pending validation | Commit → Committed | sale.commit; atomic sale, line snapshots, stock issue, required internal financial facts, audit, and outbox |
+| Sale | Pending validation | Commit → Committed | sale.commit; atomic sale, line snapshots, stock issue, audit, and outbox; this does not imply payment confirmation or an unapproved accounting posting |
 | Sale | Committed | Request void → Correction pending | sale.void.request; original reference, reason, affected lines; no immediate erase/reversal |
 | Sale correction | Correction pending | Approve/reject → Approved/Rejected | sale.void.approve or applicable approval; separation and policy checks |
 | Sale | Committed | Accept return → Partially returned / Returned | Return references original lines/quantities; stock disposition is a separate inventory decision |
@@ -159,6 +159,14 @@ Batch expiry, recall, damage, disposal, returns, and valuation follow Specificat
 | Payment | Pending confirmation | Confirm → Confirmed | Verified authoritative evidence; provider callback or approved manual confirmation; deduplicate and reconcile |
 | Payment | Pending confirmation | Fail/cancel/expire → Failed / Cancelled / Expired | Authoritative failure/cancel/expiry evidence or reviewed manual outcome |
 | Payment | Confirmed | Reverse/dispute → Reversed / Disputed | Provider/bank evidence; linked financial correction and reconciliation case |
+| Return | absent | Create → Draft | Return references original sale and line/quantity; no stock or payment effect |
+| Return | Draft | Submit → Pending inspection | Return reason, actor, time, source sale and eligibility window recorded |
+| Return | Pending inspection | Accept / reject → Accepted / Rejected | Authorized review; accepted quantity and condition recorded; no automatic restock/refund |
+| Return | Accepted | Complete disposition → Disposition complete | Separate inventory decision records restock, quarantine, disposal, or other approved outcome |
+| Supplier invoice | absent | Record → Recorded | invoice.record; supplier, document identity, amount/currency, lines and source evidence |
+| Supplier invoice | Recorded | Match → Matching / Exception | Compare to purchase order and accepted receipts; preserve line-level differences |
+| Supplier invoice | Matching | Approve / dispute → Approved / Disputed | invoice.approve; accounting policy, authority, duplicate check, approval separation |
+| Supplier invoice | Approved | Record settlement allocation → Partially paid / Paid | Only after independently confirmed supplier payment and reconciliation; never from invoice approval alone |
 | Refund | absent | Request → Pending approval or Pending provider | payment.refund.request; original payment/sale, eligible amount, reason |
 | Refund | Pending approval | Approve/reject → Approved/Rejected | payment.refund.approve; authority, amount and separation checks |
 | Refund | Approved | Initiate → Pending provider/cash execution | Provider/cash reference and idempotency key |
