@@ -181,7 +181,7 @@ The following is the minimum application-operation inventory implied by the curr
 
 #### Event catalogue requirement
 
-Before implementation, create a versioned event registry with one entry per event type. Each entry must define producer/owning module, triggering committed transition, schema version, stable event ID, aggregate ID/version, tenant/branch scope, payload classification, consumers, ordering assumptions, retention, replay policy, and compatibility/deprecation plan.
+The candidate event taxonomy is maintained in [Specification 08](08-event-driven-and-offline-requirements.md), Section 3. Before implementation, create a versioned event registry with one entry per event type. Each entry must define producer/owning module, triggering committed transition, schema version, stable event ID, aggregate ID/version, tenant/branch scope, payload classification, consumers, ordering assumptions, retention, replay policy, and compatibility/deprecation plan.
 
 The event names already proposed in module specifications—such as `GoodsReceiptAccepted`, `PurchaseOrderApproved`, `PublicAvailabilityUpdated`, and `PublicAvailabilityBecameStale`—are candidate names, not an approved complete catalogue. No consumer may infer a business transition from a generic notification such as `RecordUpdated`.
 
