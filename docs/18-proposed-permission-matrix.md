@@ -283,11 +283,6 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `goods_receipt.read` | Owner, Manager, Inventory, Purchasing; Accountant limited; Auditor read-only | Receipt/batch detail; pricing fields separately filtered |
 | `supplier_invoice.read` | Owner, Manager if delegated, Purchasing, Accountant; Auditor read-only | Invoice and matching evidence; sensitive financial fields restricted |
 | `supplier_payment.read` | Owner, Accountant; Purchasing/Manager only if delegated; Auditor read-only | Payment references and reconciliation status; bank details separately gated |
-| `requisition.read`, `quotation.read` | Owner, Manager, Purchasing; Inventory limited where assigned | Tenant/branch scope and source-document permissions |
-| `purchase_order.read` | Owner, Manager, Purchasing; Inventory and Accountant limited; Auditor read-only | Order detail and branch scope; supplier-sensitive fields filtered |
-| `goods_receipt.read` | Owner, Manager, Inventory, Purchasing; Accountant limited; Auditor read-only | Receipt/batch detail; pricing fields separately filtered |
-| `supplier_invoice.read` | Owner, Manager if delegated, Purchasing, Accountant; Auditor read-only | Invoice and matching evidence; sensitive financial fields restricted |
-| `supplier_payment.read` | Owner, Accountant; Purchasing/Manager only if delegated; Auditor read-only | Payment references and reconciliation status; bank details separately gated |
 | `supplier.create`, `supplier.update` | Owner, Manager, Purchasing | Tenant scope and duplicate review |
 | `supplier.block` | Owner; delegated Manager | Reason, impact on open orders and appeal/review path |
 | `requisition.create`, `requisition.submit`, `quotation.record` | Owner, Manager, Purchasing; Inventory may create requisitions if assigned | Branch, units, supplier, quote validity and source evidence |
@@ -303,8 +298,6 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `supplier_payment.initiate` | Owner; Purchasing only if explicitly assigned | Approved obligation, amount/currency, idempotency and evidence |
 | `supplier_payment.confirm`, `supplier_payment.reconcile` | Accountant; Owner only under a separately approved control model | Authoritative bank/provider evidence; initiation is not settlement |
 | `sale.read` | Owner, Manager, assigned Professional, Cashier for permitted sales history; Accountant/Auditor read-only where needed | Original sale and permitted branch scope |
-| `payment.read` | Owner, Manager, Accountant; Cashier for assigned sales; Auditor read-only where approved | Payment attempt/status only; sensitive provider/bank data remains separately gated |
-| `customer_return.read` | Owner, Manager, Cashier for assigned branch; Professional if assigned; Accountant/Auditor limited read | Return status linked to an authorized original sale |
 | `payment.read` | Owner, Manager, Accountant; Cashier for assigned sales; Auditor read-only where approved | Payment attempt/status only; sensitive provider/bank data remains separately gated |
 | `customer_return.read` | Owner, Manager, Cashier for assigned branch; Professional if assigned; Accountant/Auditor limited read | Return status linked to an authorized original sale |
 | `sale.create`, `sale.commit` | Cashier, Owner, Manager; Professional if assigned | Branch/session; category eligibility and exact regulated-action gate |
