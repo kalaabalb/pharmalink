@@ -382,6 +382,32 @@ No regulated action may be enabled in production while its policy is `unresolved
 
 
 
+### 4.10.7 Regulatory action granularity and decision lifecycle
+
+An action-policy key must be narrower than a screen, module, or broad permission whenever the legal responsibility differs within that workflow. Do not treat “POS”, “sale”, “goods receipt”, “inventory”, “purchase”, or “return” as a single regulatory action.
+
+| Operational stage | Meaning | Credential/evidence rule |
+|---|---|---|
+| Administrative preparation | Drafting a purchase, receipt, stock count, sale basket, return, or other operational record | No professional credential solely for data entry; normal membership, permission, scope, and management-entitlement checks still apply |
+| Physical observation/data capture | Recording observed quantities, batch identifiers, expiry, condition, or discrepancy | No blanket professional credential for ordinary capture; any legally reserved inspection or accountable attestation is a separate action |
+| Operational acceptance/posting | Accepting a receipt, committing a stock movement, or finalizing an administrative record | Evaluate the exact action and establishment/product context; do not infer a credential requirement or exemption from the word “accept” |
+| Professional inspection/sign-off | Attesting to quality, suitability, procurement, storage, dispensing, or another matter assigned by applicable law/standard to a qualified professional or designated technical manager | Require the exact verified person credential and/or establishment-linked designation only where the approved jurisdiction/category/action policy says so |
+| Sale recording/payment | Recording a permitted in-branch transaction and processing its financial lifecycle | Separate ordinary transaction recording from medicine dispensing, professional counselling, prescription validation, or handover |
+| Regulated dispensing/handover | Performing the legally reserved professional act associated with a medicine or restricted product | Disabled unless the action-specific legal matrix identifies the allowed actor, product class, establishment eligibility, evidence types, scope, and verification source and receives accountable legal/regulatory approval |
+| Disposal/recall execution | Recording and carrying out regulated stock destruction, return, quarantine, or recall steps | Separate ordinary record preparation from professional authorization, witness, and execution requirements; unresolved category-specific rules keep the affected action disabled |
+
+Mandatory rules:
+
+1. **No permission implies professional authority.** A grant such as `goods_receipt.accept`, `inventory.receive`, or `sale.commit` authorizes only the software operation described by that permission. It cannot substitute for legally required inspection, professional sign-off, dispensing, or handover authorization.
+2. **Split mixed operations.** If one interaction combines ordinary data entry with a regulated attestation, define separate logical operations and permission/evidence decisions. The server must not treat a cashier, purchasing operator, or inventory operator as the professional approver.
+3. **Do not over-gate.** Where legal review confirms that an administrative step needs no professional credential, encode an explicit `no_evidence_required` policy for that precise action, jurisdiction, establishment category, and product class. Do not inherit a credential requirement from an adjacent regulated action.
+4. **Do not infer exemptions.** If law, standards, regional rules, or product classification remain unresolved, mark only the affected action policy `unresolved` and disable that action. Keep unrelated private management and independently lawful record preparation available.
+5. **Represent delegation explicitly.** Where a qualified professional may delegate supporting tasks, record the delegated task, delegator, delegate identity, scope, validity, limits, and source policy. Delegation does not transfer credential ownership or exceed the delegator's lawful scope.
+6. **Separate decision from execution.** Revalidate identity, credential status, establishment relationship, policy version, resource state, and witness/separation conditions at the legally accountable action boundary, including delayed execution.
+7. **Preserve provenance.** Store policy decision reference, evidence references, actor, exact operation, resource/product classification, jurisdiction, checked-at time, and policy version. Never copy raw credential documents into domain events or operational logs.
+
+Before enabling a regulated workflow, its action decomposition must be reflected consistently in the operation inventory, canonical permission registry, role-grant baseline, transition contract, API schema, audit event, and positive/negative tests. A broad UI action must not conceal multiple actors or legal responsibilities.
+
 ## 4.11 Critical command schema minimums
 
 The following are minimum semantic request/response requirements for high-impact operations. They are not final field names or wire schemas. The approved API contract must turn them into exact versioned schemas and operation tests.
