@@ -208,6 +208,10 @@ Candidate permissions:
 - sale.commit;
 - sale.void.request;
 - sale.void.approve;
+- customer_return.create;
+- customer_return.submit;
+- customer_return.review;
+- inventory.return.disposition (inventory-owned stock disposition);
 - payment.initiate;
 - payment.confirm_manual;
 - payment.refund.request;
