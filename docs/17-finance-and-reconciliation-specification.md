@@ -273,3 +273,8 @@ Inventory cost and valuation behavior is specified in [Specification 27](27-inve
 12. What is the expected reporting scale and export format required by pilot pharmacies?
 
 Until these decisions are validated, label reports accurately as operational/provisional and do not claim full accounting or tax compliance.
+
+
+## 18. Cross-module transition alignment
+
+The shared cash-session and reconciliation transition contract is defined in [Specification 30](30-workflow-state-transition-and-recovery-contract.md). Finance-specific posting, currency, tax, and accounting treatment remain governed by this specification and qualified accounting review.
