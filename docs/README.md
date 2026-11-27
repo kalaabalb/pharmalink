@@ -29,6 +29,7 @@ This directory is the authoritative working specification for Pharmalink. Docume
 | 13-inventory-and-batch-lifecycle-specification.md | Inventory, batch/lot traceability, stock movements, transfers, expiry, and recall | Draft |
 | 14-sales-pos-and-payment-lifecycle-specification.md | Private POS, sales, payment state, receipts, returns, refunds, and reconciliation | Draft |
 | 15-supplier-and-purchasing-lifecycle-specification.md | Supplier records, purchase orders, receipts, invoices, returns, and supplier payments | Draft |
+| 16-medicine-catalogue-and-product-identity-specification.md | Canonical medicine identity, presentations, barcodes, provenance, search, and correction | Draft |
 
 ## Review dimensions
 
