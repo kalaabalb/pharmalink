@@ -188,6 +188,8 @@ The operating model must identify:
 - release communications and post-deployment verification.
 
 A production product must be supportable by an accountable operator, not only by the developer who wrote it.
+The detailed production operating model—including named ownership, observability, actionable alerts, incident response, scoped support access, provider/event operations, deployment verification, and continuity—is specified in [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). Production is not supportable until the required owners, runbooks, and operational acceptance evidence exist.
+
 
 ## 13. Explicit non-demo acceptance rule
 
