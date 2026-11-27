@@ -150,11 +150,6 @@ Required negative tests include:
 
 Verification evidence is confidential. Store the minimum necessary reference and metadata, restrict reviewer access, log every view/download, and define retention/deletion rules. Do not expose document URLs or raw evidence in ordinary API responses, logs, analytics, or push notifications.
 
-
-## 15. Production operations and incident response
-
-Service ownership, observability, incident command, scoped support access, event-pipeline operations, provider-outage handling, and release runbooks are governed by [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). Security/privacy incidents must use its coordination model alongside the specific privacy requirements in [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md).
-
 ## 13. External provider security boundary
 
 External providers, webhooks, file storage, messaging, maps, and payment services are governed by [Specification 21](21-external-integrations-and-provider-lifecycle-specification.md). Provider callbacks are untrusted external inputs until authenticated, validated, replay-protected, and processed through an authorized domain command. Provider secrets and sensitive payloads must not enter client bundles, source control, or ordinary logs.
@@ -163,3 +158,7 @@ External providers, webhooks, file storage, messaging, maps, and payment service
 ## 14. Personal-data lifecycle requirements
 
 Detailed privacy controls—including purpose inventory, notices, data-subject requests, retention, deletion, processor management, cross-border data flows, and privacy incident response—are specified in [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md). Treat pharmacy transaction and medicine-search data as potentially health-revealing when linked to an identifiable person; do not use it for unrelated profiling or advertising.
+
+## 15. Production operations and incident response
+
+Service ownership, observability, incident command, scoped support access, event-pipeline operations, provider-outage handling, and release runbooks are governed by [Specification 28](28-production-operations-incident-response-and-service-continuity-specification.md). Security/privacy incidents must use its coordination model alongside the specific privacy requirements in [Specification 22](22-privacy-and-personal-data-lifecycle-specification.md).
