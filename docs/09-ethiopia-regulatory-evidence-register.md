@@ -81,7 +81,6 @@ The surfaced standard identifies requirements concerning drug-shop practices, pr
 ## 6. Electronic Transactions Proclamation No. 1205/2020
 
 **Primary-source Gazette copy:** Federal Negarit Gazette, 26th Year No. 57, Addis Ababa, 30 June 2020; Proclamation No. 1205/2020 begins at Gazette page 12,581. The Ministry of Trade and Regional Integration hosts a copy of the Gazette:
-https://www.motri.gov.et/sites/default/files/resource/%E1%8B%A8%E1%8A%A4%E1%88%8C%E1%8A%AD%E1%83%...%20.pdf
 
 **Official Ministry of Justice law-register copy:**  
 https://laws.moj.gov.et/registries/view/1414/am
