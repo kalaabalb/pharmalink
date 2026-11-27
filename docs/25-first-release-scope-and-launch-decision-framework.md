@@ -46,6 +46,20 @@ The following is a recommended candidate, not an approved scope decision. It del
 
 A candidate may be narrowed further after field research. It must not be expanded merely because a screen or API can be built.
 
+### Conditional sub-scope rules
+
+The capability rows above do not authorize every related workflow. Apply these boundaries when turning the candidate into an approved release:
+
+- **Branch transfers:** enable only if the pilot includes multiple operating branches and has tested dispatch, in-transit custody, receipt, discrepancy, consolidated reporting, and branch-scoped authorization. Otherwise keep transfer commands and UI disabled.
+- **Requisitions and quotations:** include only if field research shows the pharmacy uses them; a direct purchase-order flow may be sufficient for the first cohort.
+- **Supplier invoices, disputes, and supplier payments:** enable only after the invoice matching/payable policy, accountant review, and supported payment evidence/provider method are approved. Recording an invoice is not proof of a payable settlement.
+- **Discounts and voids:** enable only with explicit thresholds, reason capture, approval separation, and accounting treatment.
+- **Disposal:** enable only after the product-category-specific disposal method, evidence, authorization, and any witness/legal requirements are reviewed.
+- **Supplier returns and expense tracking:** remain excluded unless a concrete pilot requirement and complete end-to-end policy are approved.
+- **Catalogue corrections:** tenant-local catalogue maintenance may be included; platform-global canonical correction approval remains a separate governance workflow.
+
+An operation may appear in Specification 29's traceability matrix as a conditional candidate. That does not make it part of the launch build. The product-owner-approved capability list must explicitly mark each one Included, Conditional, or Deferred before implementation.
+
 ## 3. First cohort and pilot model
 
 The launch cohort must be defined by actual research, not assumptions about all Ethiopian pharmacies.
