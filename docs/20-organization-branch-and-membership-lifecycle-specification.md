@@ -178,6 +178,13 @@ Emergency access is not a broad permanent administrator role and must not bypass
 
 Establishment evidence and professional credentials are separate records with separate subjects and scopes.
 
+The evidence model must also support a third, distinct type: an **establishment-linked certificate of competence / technical-manager designation** where the applicable standard or authority requires it. The surfaced ES 7084:2024 and ES 7085:2024 texts define a certificate of competence connected to a person carrying out pharmacy services and tie the technical-manager designation to that certificate. The exact legal subject, issuing authority, scope, and relationship to the establishment licence and individual professional competency licence remain subject to qualified Ethiopian legal/regulatory confirmation. Until confirmed, do not merge this record into either of the other two types or assume that one automatically satisfies another.
+
+Minimum evidence subjects:
+- establishment licence: the legal establishment/entity and its licensed premises/category;
+- professional competency licence: the individual person and their professional category/scope;
+- establishment-linked certificate of competence/designation: the specific person-to-establishment relationship, designated responsibility, applicable service scope, and effective period.
+
 Each evidence record should preserve:
 - subject person or organization/branch;
 - evidence type and claimed issuer;
@@ -188,6 +195,7 @@ Each evidence record should preserve:
 - submitted, reviewed, approved, rejected, expired, revoked, or superseded state;
 - reviewer, decision rationale, timestamps, and appeal/re-review history.
 - exact claim/action scope for which the evidence may be relied upon; evidence must not become a general organization/person verification flag;
+- for establishment-linked competence/designation evidence, the exact person, establishment/branch, designated function, and relationship to the underlying professional credential and establishment licence;
 - identity-match result for person credentials, or legal-entity/establishment/branch binding for establishment evidence;
 - authoritative source reference or documented manual-review method, source-check timestamp, source result, and reviewer identity;
 - licence/credential scope and restrictions as stated by the issuer, without expanding the issuer's wording;
