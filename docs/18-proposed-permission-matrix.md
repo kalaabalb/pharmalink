@@ -156,6 +156,28 @@ This register defines the product's default separation rules. It does **not** ma
 | Public professional credential claim | Not a substitute for establishment evidence | Only if the claim is specifically about that person's establishment-linked certificate/designation | The named person's verified professional competency licence and claim scope | Public claim must name the person, scope, issuer/method, and validity; no organization-wide inference |
 | Platform support, customer support case creation, and software administration | None | None | None | Separate service permissions; no legal/professional authority implied |
 
+### 7.2 Action decomposition: administrative work versus regulated responsibility
+
+The broad workflow rows above are not blanket legal classifications. A permission authorizes a software action only; it does not prove that the holder may perform a regulated pharmacy act. The operation catalog must split the following responsibilities whenever the applicable rules assign them to different actors:
+
+| Workflow | Ordinary permitted platform work | Separate action requiring its own policy decision |
+|---|---|---|
+| Purchasing | Create supplier records, draft/submit purchase orders, record supplier references | Professional procurement approval or accountable sign-off where the applicable establishment standard or law reserves it |
+| Goods receiving | Record delivery facts, quantities, batch/expiry observations, and discrepancy drafts | Professional inspection, quality/suitability attestation, or accountable acceptance where required; do not assume every receipt entry is regulated |
+| Inventory | Count stock, record observations, prepare a correction request, apply permitted holds | Approve a regulated disposition, attest to medicine suitability, or perform disposal/recall duties where required |
+| In-branch POS | Search permitted items, prepare a basket, record a legally permitted transaction, process payment | Prescription validation, professional dispensing, counselling, or medicine handover where legally reserved |
+| Returns/refunds | Record return request, review transaction facts, request/approve a financial refund under policy | Decide whether returned medicine may re-enter stock, perform regulated quarantine/disposal, or attest to product suitability |
+| Catalogue | Maintain tenant-local descriptive and operational data | Make a regulated classification, substitution, therapeutic, or platform-global canonical decision where that authority is separately governed |
+
+Rules for permission and credential mapping:
+
+- Keep ordinary data capture available to appropriately scoped non-professional staff where legal review does not reserve that task. Do not require a credential merely because a screen belongs to a pharmacy workflow.
+- A permission such as `goods_receipt.accept`, `inventory.receive`, or `sale.commit` is not itself a professional credential or a substitute for a separately required sign-off.
+- Where one interface currently combines ordinary acceptance and professional attestation, split the underlying operations and record which actor performed each action. The UI may present a coherent workflow, but the server must enforce each distinct authority boundary.
+- If delegation is legally permitted, record the delegator, delegate, exact task, scope, effective period, limits, and governing policy. Never represent delegated work as the delegate holding the delegator's credential.
+- For each launch jurisdiction, establishment category, product category, and exact operation, the action-policy registry must explicitly record `no_evidence_required`, `evidence_required`, or `unresolved`. Unresolved regulated actions stay disabled; unrelated management and data-preparation functions remain available.
+- These rows are product-design decomposition, not a legal conclusion that a given task is delegable or credential-free. Qualified local review must decide the exact boundaries.
+
 **Enforcement rules:**
 
 1. The server resolves evidence dependencies from a versioned action-policy registry using the exact action, jurisdiction, establishment category, product classification, and effective date. A client may submit observed facts or evidence references but may not choose the policy, declare itself exempt, or assert that a credential is valid.
