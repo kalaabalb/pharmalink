@@ -51,7 +51,7 @@ The implementation specification must define, at minimum:
 - organization creation, duplicate detection, invitation acceptance, membership changes, and branch assignment;
 - management-only operation as a first-class mode;
 - permission grants, approval separation, and audit attribution;
-- every enabled action maps to the canonical permission registry in [Specification 18](18-proposed-permission-matrix.md), with an approved role/scope grant and tested denial cases;
+- every enabled action maps to the canonical permission registry in [Specification 18](18-proposed-permission-matrix.md), with an approved role/scope grant and tested denial cases; The proposed first-release role-grant baseline in Specification 18 §12 is a review draft only; no grant is production-approved until explicitly accepted.
 - independently managed establishment evidence, professional credentials, management entitlements, public participation, and commerce capability states.
 
 ### Pharmacy operations
