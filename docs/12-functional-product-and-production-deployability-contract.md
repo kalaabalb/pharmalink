@@ -92,7 +92,7 @@ Before coding a module, its specification must include:
 - observability signals and support actions;
 - test fixtures, acceptance tests, and migration strategy.
 
-The initial architecture may use a modular monolith if validated, but module boundaries must be enforceable in code. Avoid premature microservices and avoid a monolith whose modules freely mutate each other's data. The final architecture decision must follow workflow, consistency, event, security, scale, and operational analysis.
+The initial architecture may use a modular monolith if validated, but module boundaries must be enforceable in code. Avoid premature microservices and avoid a monolith whose modules freely mutate each other's data. The final architecture decision must follow workflow, consistency, event, security, scale, and operational analysis. The detailed module, API, database, event, deployment, and technology-decision contract is [Specification 29](29-application-architecture-api-database-and-deployment-contract.md).
 
 ## 6. Production data and integrity requirements
 
