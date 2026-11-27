@@ -271,11 +271,11 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `inventory.count` | Owner, Manager, Inventory; Professional if assigned | Count scope, cutoff, counter identity, device and version |
 | `inventory.adjust.request` | Owner, Manager, Inventory | Reason and evidence; requester identity retained |
 | `inventory.adjust.approve` | Owner or delegated Manager; never the requester | Threshold, evidence, separation and audit |
-| `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.transfer.cancel` | Owner, Manager, Inventory; Purchasing only if explicitly assigned | Source/destination branch scopes differ; cancellation only before dispatch |
+| `inventory.transfer.create`, `inventory.transfer.dispatch`, `inventory.transfer.receive`, `inventory.transfer.cancel` | Owner, Manager, Inventory; Purchasing only if explicitly assigned | Grant only if the pilot includes multiple operational branches and transfer workflows pass acceptance; otherwise keep all transfer commands disabled. Source/destination scopes differ; cancellation only before dispatch |
 | `inventory.hold` | Owner, Manager, Inventory; assigned Professional where appropriate | Any staff may report concern; only an authorized role applies the hold |
 | `inventory.release` | Owner, Manager, Inventory; verified Professional only where the hold reason/legal rule requires it | Evidence-specific release; expiry/recall restrictions remain independently enforced |
-| `inventory.disposal.request` | Owner, Manager, Inventory | Reason, quantity, batch, evidence and method |
-| `inventory.disposal.approve` | Owner or delegated Manager; separate approver where required | No self-approval; legal witness/evidence rules remain open |
+| `inventory.disposal.request` | Owner, Manager, Inventory | Grant only if the disposal workflow is explicitly included and its product-category/legal evidence rules are approved; otherwise disabled |
+| `inventory.disposal.approve` | Owner or delegated Manager; separate approver where required | Grant only if disposal is included; no self-approval; legal witness/evidence rules must be resolved |
 | `inventory.return.disposition` | Owner, Manager, Inventory; Professional only where a reviewed product rule requires it | Separate from customer-return acceptance and refund; returned goods remain non-saleable until disposition |
 | `supplier.read` | Owner, Manager, Purchasing; Inventory/Accountant limited | Tenant scope; sensitive banking/contact fields excluded unless separately granted |
 | `requisition.read`, `quotation.read` | Owner, Manager, Purchasing; Inventory limited where assigned | Tenant/branch scope and source-document permissions |
@@ -285,17 +285,17 @@ This section narrows grant design to the private pharmacy-operations candidate i
 | `supplier_payment.read` | Owner, Accountant; Purchasing/Manager only if delegated; Auditor read-only | Payment references and reconciliation status; bank details separately gated |
 | `supplier.create`, `supplier.update` | Owner, Manager, Purchasing | Tenant scope and duplicate review |
 | `supplier.block` | Owner; delegated Manager | Reason, impact on open orders and appeal/review path |
-| `requisition.create`, `requisition.submit`, `quotation.record` | Owner, Manager, Purchasing; Inventory may create requisitions if assigned | Branch, units, supplier, quote validity and source evidence |
+| `requisition.create`, `requisition.submit`, `quotation.record` | Owner, Manager, Purchasing; Inventory may create requisitions if assigned | Grant only if pilot research requires requisition/quotation workflows; otherwise disable and use the approved minimal PO path |
 | `requisition.approve` | Owner or delegated Manager; not the requester | Threshold and separation rules |
 | `purchase_order.create`, `purchase_order.submit` | Owner, Manager, Purchasing; Inventory if assigned | Supplier, branch, approved item/unit and quotation snapshot |
 | `purchase_order.approve` | Owner or delegated Manager; not the requester | Threshold and separation rules |
 | `purchase_order.issue`, `purchase_order.cancel`, `purchase_order.close` | Owner, Manager, Purchasing; Accountant may close only if explicitly delegated | Issue only approved version; cancellation resolves outstanding quantity; closure checks financial follow-up |
-| `supplier_invoice.record` | Purchasing, Accountant, Owner/Manager if assigned | Preserve supplier-stated values and document provenance |
+| `supplier_invoice.record` | Purchasing, Accountant, Owner/Manager if assigned | Grant only after invoice matching/payable policy and accountant review are approved; preserve supplier-stated values and document provenance |
 | `supplier_invoice.match` | Accountant, Purchasing | Match to PO/accepted receipt; retain line-level discrepancies |
 | `supplier_invoice.exception.resolve` | Accountant; Owner/Manager only by explicit delegation | Evidence and reason; material exceptions cannot be self-approved |
 | `supplier_invoice.dispute` | Purchasing, Accountant, Owner/Manager if assigned | Dispute blocks payable settlement pending resolution |
 | `supplier_invoice.approve` | Accountant or Owner/Manager specifically delegated; not the requester | Approved matching/accounting policy and separation of duties |
-| `supplier_payment.initiate` | Owner; Purchasing only if explicitly assigned | Approved obligation, amount/currency, idempotency and evidence |
+| `supplier_payment.initiate` | Owner; Purchasing only if explicitly assigned | Grant only for an approved supported payment method and accounting workflow; approved obligation, amount/currency, idempotency and evidence |
 | `supplier_payment.confirm`, `supplier_payment.reconcile` | Accountant; Owner only under a separately approved control model | Authoritative bank/provider evidence; initiation is not settlement |
 | `sale.read` | Owner, Manager, assigned Professional, Cashier for permitted sales history; Accountant/Auditor read-only where needed | Original sale and permitted branch scope |
 | `payment.read` | Owner, Manager, Accountant; Cashier for assigned sales; Auditor read-only where approved | Payment attempt/status only; sensitive provider/bank data remains separately gated |
