@@ -214,14 +214,14 @@ Candidate permissions:
 - payment.refund.approve;
 - receipt.read;
 - receipt.reissue;
-- cash_session.open;
-- cash_session.count;
-- cash_session.close;
-- reconciliation.read;
-- reconciliation.resolve;
+- finance.cash_session.open;
+- finance.cash_session.count;
+- finance.cash_session.close;
+- finance.read;
+- finance.reconciliation_exception.resolve;
 - sales.export.
 
-The permission matrix must define role/branch scope, amount thresholds, approval separation, re-authentication, audit event, and offline eligibility. Ordinary in-store POS permissions do not imply professional authority for regulated dispensing. Professional credential checks apply only to the regulated action that requires them.
+Canonical identifiers and the unresolved role-grant register are maintained in [Specification 18](18-proposed-permission-matrix.md). Role grants, branch scope, amount thresholds, approval separation, re-authentication, audit events, and offline eligibility must be approved before enabling each action. Ordinary in-store POS permissions do not imply professional authority for regulated dispensing. Professional credential checks apply only to the regulated action that requires them.
 
 ## 13. Required test scenarios
 
