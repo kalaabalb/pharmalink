@@ -138,7 +138,7 @@ A timed-out client must query the authoritative transaction outcome using its id
 - The allocation policy (including whether and how FEFO applies) must be configurable only within approved rules and must be visible in the transaction record.
 - The server validates current stock and permission at commit time; a client-side balance is informational only.
 - A sale cannot commit if the required eligible quantity is unavailable under the approved policy.
-- Sale, sale lines, payment state transition, stock issue movements, and audit references must have explicit transaction boundaries. Payment-provider side effects require their own idempotent state machine and reconciliation.
+- Sale, sale lines, stock issue movements, and audit references must commit atomically within the internal sale transaction. Payment initiation, provider confirmation, settlement, refund, and reconciliation are separate payment lifecycle transitions; they must not be treated as part of the same atomic database transaction as sale commitment. Apply the shared rules in [Specification 24](24-cross-module-transaction-and-implementation-contract.md) and the payment lifecycle in [Specification 14](14-sales-pos-and-payment-lifecycle-specification.md).
 - A sale must not be marked paid merely because the client received a success screen or a provider request was sent.
 - A sale reversal must restore stock only through a separately validated return/disposition process; it must not automatically restore all goods as available.
 
